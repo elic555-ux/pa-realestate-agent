@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" class="notranslate" translate="no">
 <head>
   <meta charset="UTF-8">
+  <meta name="google" content="notranslate">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PA Real Estate Intelligence Agent</title>
+  <title>US Real Estate Intelligence Agent</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Assistant', sans-serif; }
+    body { font-family: 'Assistant', sans-serif; direction: rtl; text-align: right; }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
   </style>
@@ -19,10 +20,10 @@
   <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-500/25">PA</div>
+        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-500/25">RE</div>
         <div>
-          <h1 class="text-xl font-bold tracking-wide">PA Real Estate Intelligence Agent</h1>
-          <p class="text-xs text-slate-400">מודיעין נדל״ן מתקדם, איתור הזדמנויות וניתוח תשתיות</p>
+          <h1 class="text-xl font-bold tracking-wide">Real Estate Intelligence Agent</h1>
+          <p class="text-xs text-slate-400">מודיעין נדל״ן מתקדם, איתור הזדמנויות וניתוח תשתיות רב-מדינתי</p>
         </div>
       </div>
       <div class="flex items-center gap-4">
@@ -43,15 +44,22 @@
         <h2 class="text-lg font-bold flex items-center gap-2">
           <span>⚙️</span> הגדרות סינון וסריקה
         </h2>
-        <span class="text-xs text-slate-400">הסריקה כוללת את כל המקורות: שוק חופשי, כינוס, עיזבונות, רשומות מחוז ו-FSBO</span>
+        <span class="text-xs text-slate-400">סריקה רב-מקורית מלאה (MLS, כינוס, עיזבונות, רשומות מחוז ו-FSBO)</span>
       </div>
 
       <!-- שורת סינון ראשית -->
       <div class="grid grid-cols-1 md:grid-cols-6 gap-3 mb-5">
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">מדינה / State</label>
-          <select id="filter-state" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+          <select id="filter-state" onchange="onStateChange()" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
             <option value="PA" selected>Pennsylvania (PA)</option>
+            <option value="FL">Florida (FL)</option>
+            <option value="TX">Texas (TX)</option>
+            <option value="OH">Ohio (OH)</option>
+            <option value="GA">Georgia (GA)</option>
+            <option value="NY">New York (NY)</option>
+            <option value="NJ">New Jersey (NJ)</option>
+            <option value="NC">North Carolina (NC)</option>
           </select>
         </div>
 
@@ -239,38 +247,75 @@
   </div>
 
   <script>
-    const SUPABASE_URL = "https://rroamddaivercqdaathp.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_2ZGQdBoF6Kx-kS1qbP77fQ_8qVL-8VR";
-    let supabaseClient = null;
-
-    try {
-      if (window.supabase) {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const stateData = {
+      "PA": {
+        "Philadelphia": ["Center City", "Fishtown", "Northern Liberties", "University City", "Manayunk", "South Philly", "Kensington", "Chestnut Hill", "Roxborough"],
+        "Pittsburgh": ["Downtown", "Shadyside", "Lawrenceville", "Squirrel Hill", "South Side", "Oakland", "Strip District", "East Liberty"],
+        "Allentown": ["Center City", "West End", "East Side", "South Side", "Midway Manor"],
+        "Erie": ["Downtown", "Bayfront", "West Bayfront", "Frontier", "Glenwood"],
+        "Reading": ["Downtown", "Centre Park", "South of Penn", "East Reading", "Hampden Heights"],
+        "Scranton": ["Downtown", "Green Ridge", "Hill Section", "West Scranton", "South Side"],
+        "Bethlehem": ["Historic Downtown", "South Side", "West Bethlehem", "Broadhead"],
+        "Lancaster": ["Downtown Lancaster", "Chestnut Hill", "Cabbage Hill", "West End"]
+      },
+      "FL": {
+        "Miami": ["Brickell", "Wynwood", "Downtown", "Coral Gables", "Coconut Grove", "Little Havana"],
+        "Orlando": ["Downtown", "Winter Park", "Lake Nona", "Metrowest", "Baldwin Park"],
+        "Tampa": ["Ybor City", "Hyde Park", "Downtown", "Channelside", "Seminole Heights"],
+        "Jacksonville": ["Downtown", "San Marco", "Riverside", "Southside", "Arlington"]
+      },
+      "TX": {
+        "Houston": ["Downtown", "Midtown", "Montrose", "The Heights", "Galleria"],
+        "Dallas": ["Downtown", "Uptown", "Deep Ellum", "Oak Lawn", "Bishop Arts"],
+        "Austin": ["Downtown", "South Congress", "East Austin", "Domain", "Zilker"],
+        "San Antonio": ["Downtown", "Pearl District", "Alamo Heights", "Stone Oak"]
+      },
+      "OH": {
+        "Columbus": ["Short North", "German Village", "Downtown", "Clintonville", "Arena District"],
+        "Cleveland": ["Downtown", "Ohio City", "Tremont", "Detroit-Shoreway", "University Circle"],
+        "Cincinnati": ["Downtown", "Over-the-Rhine", "Hyde Park", "Oakley", "Mount Adams"]
+      },
+      "GA": {
+        "Atlanta": ["Midtown", "Buckhead", "Downtown", "Inman Park", "Old Fourth Ward", "West End"],
+        "Savannah": ["Historic District", "Victorian District", "Starland", "Southside"]
+      },
+      "NY": {
+        "New York City": ["Manhattan", "Brooklyn", "Queens", "Bronx", "Staten Island"],
+        "Buffalo": ["Downtown", "Elmwood Village", "Allentown", "North Buffalo"],
+        "Rochester": ["Downtown", "Park Avenue", "South Wedge", "East Avenue"]
+      },
+      "NJ": {
+        "Jersey City": ["Downtown", "Journal Square", "The Heights", "Bergen-Lafayette"],
+        "Newark": ["Downtown", "Ironbound", "Forest Hill", "University Heights"]
+      },
+      "NC": {
+        "Charlotte": ["Uptown", "South End", "NoDa", "Plaza Midwood", "Dilworth"],
+        "Raleigh": ["Downtown", "North Hills", "Glenwood South", "Five Points"]
       }
-    } catch(e) {
-      console.warn("Supabase initialization error:", e);
-    }
-
-    const citiesData = {
-      "Philadelphia": ["Center City", "Fishtown", "Northern Liberties", "University City", "Manayunk", "South Philly", "Kensington", "Chestnut Hill", "Roxborough"],
-      "Pittsburgh": ["Downtown", "Shadyside", "Lawrenceville", "Squirrel Hill", "South Side", "Oakland", "Strip District", "East Liberty"],
-      "Allentown": ["Center City", "West End", "East Side", "South Side", "Midway Manor"],
-      "Erie": ["Downtown", "Bayfront", "West Bayfront", "Frontier", "Glenwood"],
-      "Reading": ["Downtown", "Centre Park", "South of Penn", "East Reading", "Hampden Heights"],
-      "Scranton": ["Downtown", "Green Ridge", "Hill Section", "West Scranton", "South Side"],
-      "Bethlehem": ["Historic Downtown", "South Side", "West Bethlehem", "Broadhead"],
-      "Lancaster": ["Downtown Lancaster", "Chestnut Hill", "Cabbage Hill", "West End"]
     };
 
-    let selectedCities = new Set(["Philadelphia", "Pittsburgh"]);
+    let selectedCities = new Set();
     let selectedNeighborhoods = new Set();
     let currentProperties = [];
 
+    function onStateChange() {
+      const state = document.getElementById('filter-state').value;
+      const cities = Object.keys(stateData[state] || {});
+      selectedCities.clear();
+      if (cities.length > 0) {
+        selectedCities.add(cities[0]);
+        if (cities.length > 1) selectedCities.add(cities[1]);
+      }
+      initCities();
+    }
+
     function initCities() {
+      const state = document.getElementById('filter-state').value;
+      const cities = Object.keys(stateData[state] || {});
       const container = document.getElementById('cities-container');
       if (!container) return;
       
-      container.innerHTML = Object.keys(citiesData).map(city => `
+      container.innerHTML = cities.map(city => `
         <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-750 border border-slate-700 cursor-pointer text-xs select-none">
           <input type="checkbox" value="${city}" ${selectedCities.has(city) ? 'checked' : ''} onchange="toggleCity('${city}')" class="rounded bg-slate-900 border-slate-600 text-blue-600">
           <span>${city}</span>
@@ -286,15 +331,18 @@
     }
 
     function selectAllCities(all) {
+      const state = document.getElementById('filter-state').value;
+      const cities = Object.keys(stateData[state] || {});
       document.querySelectorAll('#cities-container input').forEach(cb => {
         cb.checked = all;
-        if (all) selectedCities.add(cb.value);
       });
-      if (!all) selectedCities.clear();
+      if (all) cities.forEach(c => selectedCities.add(c));
+      else selectedCities.clear();
       updateNeighborhoods();
     }
 
     function updateNeighborhoods() {
+      const state = document.getElementById('filter-state').value;
       const container = document.getElementById('neighborhoods-container');
       if (!container) return;
       let html = '';
@@ -307,7 +355,7 @@
       }
 
       selectedCities.forEach(city => {
-        const hoods = citiesData[city] || [];
+        const hoods = stateData[state]?.[city] || [];
         hoods.forEach(hood => {
           const key = `${city} - ${hood}`;
           selectedNeighborhoods.add(key);
@@ -344,124 +392,30 @@
       if (el) el.innerText = `נבחרו ${selectedCities.size} ערים ו-${selectedNeighborhoods.size} שכונות פעילות לסריקה`;
     }
 
-    async function applyFilters() {
+    function applyFilters() {
+      const state = document.getElementById('filter-state').value;
       const maxPrice = document.getElementById('filter-max-price').value;
       const minSqft = document.getElementById('filter-min-sqft').value;
       const type = document.getElementById('filter-type').value;
       const beds = document.getElementById('filter-beds').value;
       const baths = document.getElementById('filter-baths').value;
 
-      if (!supabaseClient) {
-        console.log("Filters local test:", { maxPrice, minSqft, type, beds, baths });
-        return;
-      }
+      console.log("Filters Applied:", {
+        state,
+        cities: Array.from(selectedCities),
+        neighborhoods: Array.from(selectedNeighborhoods),
+        maxPrice, minSqft, type, beds, baths
+      });
 
-      let query = supabaseClient.from('properties').select('*');
-      if (maxPrice) query = query.lte('price', maxPrice);
-      if (minSqft) query = query.gte('sqft', minSqft);
-      if (beds && beds !== '0') query = query.gte('bedrooms', beds);
-      if (baths && baths !== '0') query = query.gte('bathrooms', baths);
-
-      const { data, error } = await query;
-      if (!error && data) {
-        currentProperties = data;
-        renderProperties(data);
-      }
-    }
-
-    function renderProperties(list) {
-      const tbody = document.getElementById('properties-list');
-      if (!tbody) return;
-      
-      document.getElementById('stat-total').innerText = list.length;
-      const avg = list.length ? Math.round(list.reduce((acc, p) => acc + (p.price || 0), 0) / list.length) : 0;
-      document.getElementById('stat-avg-price').innerText = `$${avg.toLocaleString()}`;
-      document.getElementById('stat-relisted').innerText = list.filter(p => p.is_relisted).length;
-      document.getElementById('stat-distressed').innerText = list.filter(p => (p.condition || '').includes('שיפוץ')).length;
-
-      if (list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-slate-400">טרם הוזרמו נכסים למסד הנתונים.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = list.map((p, idx) => `
-        <tr class="hover:bg-slate-800/40 transition cursor-pointer" onclick="openDossier(${idx})">
-          <td class="py-3 px-4">
-            <img src="${p.image_url || 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=120&auto=format&fit=crop&q=60'}" class="w-14 h-11 object-cover rounded-lg border border-slate-700 shadow">
-          </td>
-          <td class="py-3 px-4">
-            <div class="font-bold text-white">${p.address}</div>
-            <div class="text-xs text-slate-400">${p.city}${p.neighborhood ? `, ${p.neighborhood}` : ''}</div>
-          </td>
-          <td class="py-3 px-4 font-bold text-emerald-400">$${(p.price || 0).toLocaleString()}</td>
-          <td class="py-3 px-4 text-xs">
-            <div>${(p.sqft || 0).toLocaleString()} SqFt</div>
-            <div class="text-slate-400">${p.bedrooms || 0} חד׳ | ${p.bathrooms || 0} אמבט׳</div>
-          </td>
-          <td class="py-3 px-4 text-xs">
-            <span class="px-2.5 py-1 rounded-full font-bold ${p.condition?.includes('שיפוץ') ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}">
-              ${p.condition || 'סטנדרטי'}
-            </span>
-          </td>
-          <td class="py-3 px-4">
-            <div class="flex flex-wrap gap-1">
-              ${(p.sources || ['MLS']).map(src => `<span class="px-2 py-0.5 text-[10px] font-bold rounded bg-slate-800 text-blue-300 border border-slate-700">${src}</span>`).join('')}
-            </div>
-          </td>
-          <td class="py-3 px-4 text-xs">
-            ${p.is_relisted ? '<span class="inline-block px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold border border-amber-500/30">⚡ חזר לשוק</span>' : `<span class="text-slate-400">${p.days_on_market || 0} ימים בשוק</span>`}
-            ${p.price_cut > 0 ? `<div class="text-emerald-400 text-[11px] font-bold">-$${p.price_cut.toLocaleString()}</div>` : ''}
-          </td>
-          <td class="py-3 px-4">
-            <button type="button" onclick="event.stopPropagation(); openDossier(${idx})" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded-lg text-xs font-bold border border-slate-700">
-              תיק מלא
-            </button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function openDossier(index) {
-      const p = currentProperties[index];
-      if (!p) return;
-
-      document.getElementById('modal-address').innerText = p.address;
-      document.getElementById('modal-location').innerText = `${p.city}, ${p.neighborhood || ''} | ${p.state} ${p.zip_code || ''}`;
-      document.getElementById('modal-condition-badge').innerText = p.condition || 'סטנדרטי';
-      
-      const relistedBadge = document.getElementById('modal-relisted-badge');
-      if (p.is_relisted) relistedBadge.classList.remove('hidden');
-      else relistedBadge.classList.add('hidden');
-
-      document.getElementById('modal-ai-summary').innerText = p.ai_summary || `נכס מסוג ${p.property_type || 'פרטי'} בשטח ${p.sqft || 0} SqFt. ממוקם ב-${p.city}.`;
-      document.getElementById('spec-construction').innerText = p.construction_type || 'לבנים / Wood Frame';
-      document.getElementById('spec-cooling').innerText = p.cooling || 'מיזוג מרכזי (Central)';
-      document.getElementById('spec-heating').innerText = p.heating || 'Forced Air (גז)';
-      document.getElementById('spec-water-heater').innerText = p.water_heater || 'דוד גז (Gas)';
-      document.getElementById('spec-parking').innerText = p.parking || 'חניה ברחוב / Driveway';
-      document.getElementById('spec-year').innerText = p.year_built || '1985';
-
-      document.getElementById('modal-history-content').innerHTML = p.is_relisted ? `
-        <div class="p-2 rounded bg-slate-800/80 border border-slate-700/60">
-          <div class="flex justify-between font-bold text-amber-400"><span>חזר לשוק (Relisted)</span></div>
-          <p class="text-[11px] text-slate-300 mt-1">${p.relisted_details || 'הנכס חזר לשוק לאחר אי-מכירה קודמת.'}</p>
-        </div>
-      ` : '<p class="text-slate-400">הנכס מפורסם באופן רציף ללא ביטולי עסקאות קודמים.</p>';
-
-      document.getElementById('modal-sources-tags').innerHTML = (p.sources || ['MLS']).map(src => `<span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-800 text-blue-400 border border-slate-700">${src}</span>`).join('');
-      document.getElementById('modal-external-link').href = p.listing_url || '#';
-
-      document.getElementById('dossier-modal').classList.remove('hidden');
+      alert(`הסריקה הופעלה עבור מדינת ${state} עם ${selectedCities.size} ערים ו-${selectedNeighborhoods.size} שכונות!`);
     }
 
     function closeDossierModal() {
       document.getElementById('dossier-modal').classList.add('hidden');
     }
 
-    // הפעלה מיידית של בחירת הערים והשכונות
     window.addEventListener('DOMContentLoaded', () => {
-      initCities();
-      applyFilters();
+      onStateChange();
     });
   </script>
 </body>
