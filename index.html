@@ -16,6 +16,7 @@
     <!-- Header -->
     <header class="bg-[#0f172a] border-b border-slate-800 py-4 px-6 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/30">
                     RE
@@ -39,6 +40,7 @@
                     <span>מערכת מחוברת ופעילה</span>
                 </div>
             </div>
+
         </div>
     </header>
 
@@ -46,6 +48,7 @@
 
         <!-- Controls Section -->
         <section class="bg-[#111c38] border border-slate-700/70 rounded-2xl p-6 shadow-2xl">
+            
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5 pb-3 border-b border-slate-700/50 gap-2">
                 <h2 class="text-sm font-bold text-white flex items-center gap-2">
                     <span>⚙️</span> הגדרות סינון וסריקת שוק
@@ -135,6 +138,7 @@
                     🔄 רענן מאגר נתונים
                 </button>
             </div>
+
         </section>
 
         <!-- Counter Header -->
@@ -175,7 +179,6 @@
 
         async function loadLiveProperties() {
             try {
-                // הוספת Timestamp כדי להכריח את הדפדפן להוריד נתונים חדשים
                 const response = await fetch('properties.json?v=' + Date.now(), { cache: "no-store" });
                 if (response.ok) {
                     const data = await response.json();
@@ -287,14 +290,11 @@
             grid.innerHTML = '';
 
             filtered.forEach(p => {
-                const fullAddressQuery = encodeURIComponent(`${p.address}, ${p.city}, PA Real Estate Realtor Zillow`);
-                const directGoogleSearchUrl = `https://www.google.com/search?q=${fullAddressQuery}`;
-
                 const card = `
                     <div class="bg-[#111c38] border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-500 transition flex flex-col justify-between text-right">
                         <div>
                             <div class="relative h-48 bg-slate-900 overflow-hidden">
-                                <img src="${p.img}" alt="${p.address}" class="w-full h-full object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80';">
+                                <img src="${p.img}" alt="${p.address}" class="w-full h-full object-cover" loading="lazy">
                                 <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-lg border border-slate-700" dir="ltr">
                                     📍 ${p.city}, ${p.neighborhood}
                                 </span>
@@ -336,8 +336,8 @@
                         </div>
 
                         <div class="p-5 pt-0">
-                            <a href="${directGoogleSearchUrl}" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-md shadow-blue-600/30">
-                                אתר נכס זה ישירות ברשת ↗
+                            <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-md shadow-blue-600/30">
+                                צפה בנכס ב-Zillow ↗
                             </a>
                         </div>
                     </div>
