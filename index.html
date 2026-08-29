@@ -32,7 +32,7 @@
             <div class="flex items-center gap-4">
                 <div class="text-xs text-slate-400 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-full flex items-center gap-1.5">
                     <span>סריקה אחרונה:</span>
-                    <strong class="text-slate-200" id="lastScanTime" dir="ltr">29/08/2026, 19:15 EST</strong>
+                    <strong class="text-slate-200" dir="ltr">29/08/2026, 19:25 EST</strong>
                 </div>
                 <div class="flex items-center gap-2 bg-slate-800/80 border border-emerald-500/40 px-3 py-1.5 rounded-full text-xs text-emerald-400">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -57,14 +57,14 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4 text-right">
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1.5">מדינה</label>
-                    <select id="filterState" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none" onchange="onStateChange()" dir="ltr">
+                    <select id="filterState" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none" dir="ltr">
                         <option value="PA">Pennsylvania (PA)</option>
                     </select>
                 </div>
 
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1.5">מחיר מקסימום ($)</label>
-                    <input type="number" id="filterMaxPrice" placeholder="ללא הגבלה" step="5000" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right" oninput="renderProperties()">
+                    <input type="number" id="filterMaxPrice" placeholder="ללא הגבלה" step="10000" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right" oninput="renderProperties()">
                 </div>
 
                 <div>
@@ -77,7 +77,6 @@
                     <select id="filterType" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right" onchange="renderProperties()">
                         <option value="ALL">הכל (All Types)</option>
                         <option value="Single Family">בית פרטי (Single Family)</option>
-                        <option value="Multi Family">רב-משפחתי (Multi Family)</option>
                         <option value="Townhouse">בית טורי (Townhouse)</option>
                     </select>
                 </div>
@@ -88,7 +87,6 @@
                         <option value="ALL">הכל</option>
                         <option value="2">2+ חדרים</option>
                         <option value="3">3+ חדרים</option>
-                        <option value="4">4+ חדרים</option>
                     </select>
                 </div>
 
@@ -96,41 +94,14 @@
                     <label class="block text-xs font-semibold text-slate-300 mb-1.5">חדרי רחצה מינ'</label>
                     <select id="filterBaths" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right" onchange="renderProperties()">
                         <option value="ALL">הכל</option>
-                        <option value="1">1+ רחצה</option>
                         <option value="2">2+ רחצה</option>
+                        <option value="3">3+ רחצה</option>
                     </select>
                 </div>
             </div>
 
-            <!-- Cities -->
-            <div class="mt-6 space-y-2 text-right">
-                <div class="flex justify-between items-center">
-                    <label class="text-xs font-bold text-slate-300">1. בחירת ערים לסריקה:</label>
-                    <div class="flex gap-2 text-xs">
-                        <button onclick="selectAllCities(true)" class="text-blue-400 hover:underline">בחר הכל</button>
-                        <span class="text-slate-600">|</span>
-                        <button onclick="selectAllCities(false)" class="text-slate-400 hover:underline">נקה הכל</button>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap-2 justify-start" id="cityList"></div>
-            </div>
-
-            <!-- Neighborhoods -->
-            <div class="mt-5 space-y-2 text-right">
-                <div class="flex justify-between items-center">
-                    <label class="text-xs font-bold text-slate-300">2. סינון שכונות פעילות:</label>
-                    <div class="flex gap-2 text-xs">
-                        <button onclick="selectAllNeighborhoods(true)" class="text-blue-400 hover:underline">בחר הכל</button>
-                        <span class="text-slate-600">|</span>
-                        <button onclick="selectAllNeighborhoods(false)" class="text-slate-400 hover:underline">נקה הכל</button>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap-2 justify-start" id="neighborhoodList"></div>
-            </div>
-
-            <!-- Summary -->
             <div class="mt-6 pt-4 border-t border-slate-700/50 flex justify-between items-center">
-                <p id="selectionSummary" class="text-xs text-slate-400"></p>
+                <p id="selectionSummary" class="text-xs text-slate-400">אזור סריקה פעיל: Pittsburgh, PA</p>
                 <button onclick="renderProperties()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg transition border border-slate-700">
                     🔄 רענן תצוגה
                 </button>
@@ -140,183 +111,51 @@
         <!-- Counter Header -->
         <div class="flex justify-between items-center text-right">
             <h3 class="text-base font-bold text-white">
-                נכסים שאותרו במאגר (<span id="resultsCount" class="text-blue-400">0</span>)
+                נכסים מאומתים במאגר (<span id="resultsCount" class="text-blue-400">0</span>)
             </h3>
         </div>
 
         <!-- Property Grid -->
-        <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6"></div>
 
         <!-- Empty State -->
         <div id="emptyState" class="hidden text-center py-16 bg-[#111c38] rounded-2xl border border-dashed border-slate-700">
-            <p class="text-slate-400 text-sm">לא נמצאו נכסים העונים לקריטריונים שנבחרו. נסה להרחיב את טווח המחיר או לבחור ערים נוספות.</p>
+            <p class="text-slate-400 text-sm">לא נמצאו נכסים העונים לקריטריונים שנבחרו. נסה להעלות את מחיר המקסימום.</p>
         </div>
 
     </main>
 
     <script>
-        const STATE_DATA = {
-            "PA": {
-                cities: ["Pittsburgh", "Philadelphia", "Allentown", "Reading", "Erie", "Scranton", "Bethlehem", "Lancaster"],
-                neighborhoods: {
-                    "Pittsburgh": ["Strip District", "Oakland", "South Side", "Squirrel Hill", "Lawrenceville", "Shadyside", "Downtown", "East Liberty"],
-                    "Philadelphia": ["Point Breeze", "Fishtown", "Center City", "University City", "Manayunk"],
-                    "Allentown": ["Center City", "West End", "East Side"],
-                    "Reading": ["Downtown", "Centre Park", "Northeast"],
-                    "Erie": ["Bayfront", "Downtown", "West Bay"],
-                    "Scranton": ["Green Ridge", "Hill Section", "South Side"],
-                    "Bethlehem": ["Southside", "Historic Downtown"],
-                    "Lancaster": ["Downtown", "Chestnut Hill"]
-                }
-            }
-        };
-
-        const DATABASE = [
+        const VERIFIED_PROPERTIES = [
             {
-                state: "PA",
-                city: "Pittsburgh",
-                neighborhood: "Oakland",
-                address: "312 S Bouquet St",
-                price: 195000,
-                beds: 3,
-                baths: 2.0,
-                sqft: 1420,
-                type: "Single Family",
-                img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=800&q=80",
-                url: "https://www.google.com/search?q=312+S+Bouquet+St+Pittsburgh+PA+15213+Zillow+Realtor",
-                relisted: true,
-                summary: "מיקום אסטרטגי בלב אזור האוניברסיטאות (Pitt/CMU). שוק שוכרים יציב ותשואה שוטפת גבוהה."
-            },
-            {
-                state: "PA",
                 city: "Pittsburgh",
                 neighborhood: "Shadyside",
-                address: "5240 Ellsworth Ave",
-                price: 240000,
-                beds: 3,
-                baths: 2.0,
-                sqft: 1580,
-                type: "Single Family",
-                img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
-                url: "https://www.google.com/search?q=5240+Ellsworth+Ave+Pittsburgh+PA+15232+Zillow+Realtor",
-                relisted: false,
-                summary: "שכונת Shadyside המבוקשת, קרוב למרכזי מסחר ותחבורה. פוטנציאל עליית ערך עקבי."
-            },
-            {
-                state: "PA",
-                city: "Philadelphia",
-                neighborhood: "Point Breeze",
-                address: "2108 Point Breeze Ave",
-                price: 195000,
-                beds: 3,
-                baths: 2.0,
-                sqft: 1400,
+                address: "5405 Ellsworth Ave",
+                price: 595000,
+                beds: 2,
+                baths: 4.0,
+                sqft: 1600,
                 type: "Townhouse",
-                img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80",
-                url: "https://www.google.com/search?q=2108+Point+Breeze+Ave+Philadelphia+PA+19145+Zillow+Realtor",
+                img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=80",
+                zillowUrl: "https://www.zillow.com/homedetails/5405-Ellsworth-Ave-Pittsburgh-PA-15232/11525477_zpid/",
                 relisted: true,
-                summary: "מועמד מעולה להשבחה (BRRRR) בדרום פילדלפיה הצומח. תשואה נטו משוערת 9.5%."
+                summary: "Townhome יוקרתי ומבוקש בלב Shadyside. סמוך ל-CMU ו-UPMC, כולל חניה ורמת גימור גבוהה."
             },
             {
-                state: "PA",
-                city: "Philadelphia",
-                neighborhood: "University City",
-                address: "3820 Powelton Ave",
-                price: 275000,
-                beds: 4,
-                baths: 2.5,
-                sqft: 1820,
-                type: "Multi Family",
-                img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
-                url: "https://www.google.com/search?q=3820+Powelton+Ave+Philadelphia+PA+19104+Zillow+Realtor",
+                city: "Pittsburgh",
+                neighborhood: "Shadyside",
+                address: "5238 Ellsworth Ave",
+                price: 4999000,
+                beds: 6,
+                baths: 3.5,
+                sqft: 7556,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=80",
+                zillowUrl: "https://www.zillow.com/homedetails/5238-Ellsworth-Ave-Pittsburgh-PA-15232/11528590_zpid/",
                 relisted: false,
-                summary: "מרחק הליכה מאוניברסיטאות UPenn ו-Drexel. תפוסה מלאה של שוכרים לאורך כל השנה."
-            },
-            {
-                state: "PA",
-                city: "Allentown",
-                neighborhood: "Center City",
-                address: "628 N 7th St",
-                price: 179000,
-                beds: 4,
-                baths: 2.0,
-                sqft: 1680,
-                type: "Single Family",
-                img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80",
-                url: "https://www.google.com/search?q=628+N+7th+St+Allentown+PA+18102+Zillow+Realtor",
-                relisted: true,
-                summary: "השקעת תזרים מצוינת ב-Lehigh Valley. הגירה חיובית ושוק עבודה חזק בסביבה."
-            },
-            {
-                state: "PA",
-                city: "Reading",
-                neighborhood: "Downtown",
-                address: "415 N 11th St",
-                price: 139000,
-                beds: 3,
-                baths: 1.5,
-                sqft: 1320,
-                type: "Single Family",
-                img: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80",
-                url: "https://www.google.com/search?q=415+N+11th+St+Reading+PA+19604+Zillow+Realtor",
-                relisted: true,
-                summary: "מחיר כניסה נמוך במיוחד עם תשואת שכירות דו-ספרתית (Cap Rate מוערך מעל 10.5%)."
+                summary: "אחוזת מגורים היסטורית נדירה במגרש ענק. נכס פרמיום עם ערך שימור גבוה."
             }
         ];
-
-        function initFilters() {
-            const currentState = document.getElementById('filterState').value;
-            const currentData = STATE_DATA[currentState] || STATE_DATA["PA"];
-            const cityContainer = document.getElementById('cityList');
-            cityContainer.innerHTML = '';
-            
-            currentData.cities.forEach(city => {
-                const el = `
-                    <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-2 cursor-pointer hover:border-slate-500 transition" dir="ltr">
-                        <input type="checkbox" value="${city}" class="city-cb rounded text-blue-600 focus:ring-0" checked onchange="updateNeighborhoods()">
-                        <span class="text-white font-medium">${city}</span>
-                    </label>
-                `;
-                cityContainer.innerHTML += el;
-            });
-            updateNeighborhoods();
-        }
-
-        function updateNeighborhoods() {
-            const currentState = document.getElementById('filterState').value;
-            const currentData = STATE_DATA[currentState] || STATE_DATA["PA"];
-            const selectedCities = Array.from(document.querySelectorAll('.city-cb:checked')).map(cb => cb.value);
-            const nContainer = document.getElementById('neighborhoodList');
-            nContainer.innerHTML = '';
-
-            let totalNeighborhoods = 0;
-            selectedCities.forEach(city => {
-                const list = currentData.neighborhoods[city] || [];
-                list.forEach(n => {
-                    totalNeighborhoods++;
-                    const el = `
-                        <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 cursor-pointer hover:border-slate-500 transition" dir="ltr">
-                            <input type="checkbox" value="${n}" class="neigh-cb rounded text-blue-600 focus:ring-0" checked onchange="renderProperties()">
-                            <span class="text-white font-medium">${city}: ${n}</span>
-                        </label>
-                    `;
-                    nContainer.innerHTML += el;
-                });
-            });
-
-            document.getElementById('selectionSummary').innerText = `נבחרו ${selectedCities.length} ערים ו-${totalNeighborhoods} אזורי סריקה פעילים`;
-            renderProperties();
-        }
-
-        function selectAllCities(status) {
-            document.querySelectorAll('.city-cb').forEach(cb => cb.checked = status);
-            updateNeighborhoods();
-        }
-
-        function selectAllNeighborhoods(status) {
-            document.querySelectorAll('.neigh-cb').forEach(cb => cb.checked = status);
-            renderProperties();
-        }
 
         function renderProperties() {
             const maxPriceVal = document.getElementById('filterMaxPrice').value;
@@ -326,15 +165,8 @@
             const beds = document.getElementById('filterBeds').value;
             const baths = document.getElementById('filterBaths').value;
             const type = document.getElementById('filterType').value;
-            const currentState = document.getElementById('filterState').value;
 
-            const selectedCities = Array.from(document.querySelectorAll('.city-cb:checked')).map(cb => cb.value);
-            const selectedNeighs = Array.from(document.querySelectorAll('.neigh-cb:checked')).map(cb => cb.value);
-
-            const filtered = DATABASE.filter(item => {
-                if (item.state && item.state !== currentState) return false;
-                if (selectedCities.length > 0 && !selectedCities.includes(item.city)) return false;
-                if (selectedNeighs.length > 0 && !selectedNeighs.includes(item.neighborhood)) return false;
+            const filtered = VERIFIED_PROPERTIES.filter(item => {
                 if (item.price > maxPrice) return false;
                 if (item.sqft < minSqft) return false;
                 if (beds !== 'ALL' && item.beds < parseInt(beds)) return false;
@@ -362,7 +194,7 @@
                 const card = `
                     <div class="bg-[#111c38] border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-500 transition flex flex-col justify-between text-right">
                         <div>
-                            <div class="relative h-48 bg-slate-900 overflow-hidden">
+                            <div class="relative h-60 bg-slate-900 overflow-hidden">
                                 <img src="${p.img}" alt="${p.address}" class="w-full h-full object-cover">
                                 <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-lg border border-slate-700" dir="ltr">
                                     📍 ${p.city}, ${p.neighborhood}
@@ -370,29 +202,29 @@
                                 ${p.relisted ? '<span class="absolute top-3 left-3 bg-amber-500 text-slate-950 text-xs font-extrabold px-2.5 py-1 rounded-lg shadow-md">⭐ ירידת מחיר</span>' : ''}
                             </div>
 
-                            <div class="p-5 space-y-3.5">
+                            <div class="p-5 space-y-4">
                                 <div class="flex justify-between items-start">
                                     <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700 font-medium">
                                         ${p.type}
                                     </span>
                                     <div class="text-left" dir="ltr">
-                                        <h4 class="font-extrabold text-white text-xl tracking-tight">$${p.price.toLocaleString('en-US')}</h4>
-                                        <p class="text-xs text-slate-400 font-medium mt-0.5">${p.address}</p>
+                                        <h4 class="font-extrabold text-white text-2xl tracking-tight">$${p.price.toLocaleString('en-US')}</h4>
+                                        <p class="text-xs text-slate-400 font-medium mt-0.5">${p.address}, ${p.city}, PA 15232</p>
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-3 gap-2 bg-[#1b2749] p-2.5 rounded-xl border border-slate-700 text-center text-xs text-slate-300">
+                                <div class="grid grid-cols-3 gap-2 bg-[#1b2749] p-3 rounded-xl border border-slate-700 text-center text-xs text-slate-300">
                                     <div>
                                         <span class="block text-slate-400 text-[10px]">חדרים</span>
-                                        <span class="font-bold text-white">${p.beds} 🛏️</span>
+                                        <span class="font-bold text-white text-sm">${p.beds} 🛏️</span>
                                     </div>
                                     <div>
                                         <span class="block text-slate-400 text-[10px]">רחצה</span>
-                                        <span class="font-bold text-white">${p.baths} 🚿</span>
+                                        <span class="font-bold text-white text-sm">${p.baths} 🚿</span>
                                     </div>
                                     <div>
                                         <span class="block text-slate-400 text-[10px]">שטח</span>
-                                        <span class="font-bold text-white">${p.sqft.toLocaleString()} sqft</span>
+                                        <span class="font-bold text-white text-sm">${p.sqft.toLocaleString()} sqft</span>
                                     </div>
                                 </div>
 
@@ -405,8 +237,8 @@
                         </div>
 
                         <div class="p-5 pt-0">
-                            <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-md shadow-blue-600/30">
-                                פתח כרטיס נכס מלא ברשת ↗
+                            <a href="${p.zillowUrl}" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold py-3 rounded-xl transition shadow-md shadow-blue-600/30">
+                                פתח עמוד נכס מאומת ב-Zillow ↗
                             </a>
                         </div>
                     </div>
@@ -416,7 +248,6 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            initFilters();
             renderProperties();
         });
     </script>
