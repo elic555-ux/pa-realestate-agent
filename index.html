@@ -102,6 +102,8 @@
     <script>
         const SUPABASE_URL = 'https://rroamddaivercqdaathp.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyb2FtZGRhaXZlcmNxZGFhdGhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxOTU3ODAsImV4cCI6MjA4Nzc3MTc4MH0.g7kU2W27t7p4eL3w1sZJ-Bfqf9t7xJ9p4Xk2L-Bfqf9';
+        
+        // אתחול לקוח Supabase
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         async function loadProperties() {
@@ -133,7 +135,14 @@
 
                 loading.classList.add('hidden');
 
-                if (error || !data || data.length === 0) {
+                if (error) {
+                    console.error('Supabase query error:', error);
+                    empty.classList.remove('hidden');
+                    countEl.innerText = '0';
+                    return;
+                }
+
+                if (!data || data.length === 0) {
                     empty.classList.remove('hidden');
                     countEl.innerText = '0';
                     return;
@@ -145,7 +154,7 @@
                 data.forEach(item => {
                     const priceFormatted = Number(item.price).toLocaleString('en-US');
                     const imgUrl = item.image_url || 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800';
-                    const targetLink = item.external_url || `https://www.zillow.com/homes/${encodeURIComponent(item.address + ', ' + item.city + ', PA')}_rb/`;
+                    const targetLink = item.external_url || `https://www.google.com/search?q=${encodeURIComponent(item.address + ' ' + item.city + ' PA real estate')}`;
 
                     const card = `
                         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition flex flex-col justify-between">
@@ -165,7 +174,7 @@
                                             <p class="text-xs text-slate-500 font-medium">${item.address}</p>
                                         </div>
                                         <span class="text-xs bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200 font-medium">
-                                            ${item.property_type || 'בית פרטי'}
+                                            ${item.property_type || 'נכס'}
                                         </span>
                                     </div>
 
@@ -207,7 +216,7 @@
             }
         }
 
-        // טעינה ראשונית בעליית הדף
+        // הפעלה בעליית הדף
         window.addEventListener('DOMContentLoaded', loadProperties);
     </script>
 </body>
