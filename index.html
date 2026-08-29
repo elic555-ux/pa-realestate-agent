@@ -32,7 +32,7 @@
             <div class="flex items-center gap-4">
                 <div class="text-xs text-slate-400 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-full flex items-center gap-1.5">
                     <span>סריקה אחרונה:</span>
-                    <strong class="text-slate-200" dir="ltr">29/08/2026, 19:25 EST</strong>
+                    <strong class="text-slate-200" dir="ltr">29/08/2026, 19:35 EST</strong>
                 </div>
                 <div class="flex items-center gap-2 bg-slate-800/80 border border-emerald-500/40 px-3 py-1.5 rounded-full text-xs text-emerald-400">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -136,7 +136,8 @@
                 baths: 4.0,
                 sqft: 1600,
                 type: "Townhouse",
-                img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=80",
+                img: "https://photos.zillowstatic.com/fp/fa021cb8b77a7f654b9d0347895bcdd0-p_e.jpg",
+                fallbackImg: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1000&q=80",
                 zillowUrl: "https://www.zillow.com/homedetails/5405-Ellsworth-Ave-Pittsburgh-PA-15232/11525477_zpid/",
                 relisted: true,
                 summary: "Townhome יוקרתי ומבוקש בלב Shadyside. סמוך ל-CMU ו-UPMC, כולל חניה ורמת גימור גבוהה."
@@ -150,7 +151,8 @@
                 baths: 3.5,
                 sqft: 7556,
                 type: "Single Family",
-                img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=80",
+                img: "https://photos.zillowstatic.com/fp/200742f9e4ebce4e26210214a1a5b4f6-p_e.jpg",
+                fallbackImg: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80",
                 zillowUrl: "https://www.zillow.com/homedetails/5238-Ellsworth-Ave-Pittsburgh-PA-15232/11528590_zpid/",
                 relisted: false,
                 summary: "אחוזת מגורים היסטורית נדירה במגרש ענק. נכס פרמיום עם ערך שימור גבוה."
@@ -195,7 +197,7 @@
                     <div class="bg-[#111c38] border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-500 transition flex flex-col justify-between text-right">
                         <div>
                             <div class="relative h-60 bg-slate-900 overflow-hidden">
-                                <img src="${p.img}" alt="${p.address}" class="w-full h-full object-cover">
+                                <img src="${p.img}" alt="${p.address}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='${p.fallbackImg}';">
                                 <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-lg border border-slate-700" dir="ltr">
                                     📍 ${p.city}, ${p.neighborhood}
                                 </span>
