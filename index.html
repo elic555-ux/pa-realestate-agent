@@ -9,96 +9,135 @@
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Assistant', sans-serif; }
-    /* עיצוב גלילה מותאם */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen">
 
+  <!-- Header -->
   <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-500/25">PA</div>
         <div>
           <h1 class="text-xl font-bold tracking-wide">PA Real Estate Agent</h1>
-          <p class="text-xs text-slate-400">מודיעין נדל״ן ואיתור עסקאות</p>
+          <p class="text-xs text-slate-400">מודיעין נדל״ן ואיתור הזדמנויות</p>
         </div>
       </div>
       <div class="flex items-center gap-4">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          מערכת מחוברת
+          סוכן פעיל
         </span>
       </div>
     </div>
   </header>
 
+  <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-6 py-8">
 
+    <!-- Search Controls -->
     <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-8 shadow-xl">
       <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
         <h2 class="text-lg font-bold flex items-center gap-2">
-          <span>⚙️</span> הגדרות חיפוש וסריקת שוק
+          <span>⚙️</span> הגדרות סינון וסריקה
         </h2>
-        <span class="text-xs text-slate-400">בחר פרמטרים להצגת נכסים או להפעלת סוכן</span>
+        <span class="text-xs text-slate-400">כל סוגי העסקאות (פרטי, בנק, כינוס, עיזבון ומתווכים) מוצגים אוטומטית</span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+      <!-- שורת סינון ראשונה: מחיר ומבנה -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-5">
+        <!-- מדינה -->
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">מדינה / State</label>
-          <select id="filter-state" onchange="updateCitiesList()" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
+          <select id="filter-state" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
             <option value="PA" selected>Pennsylvania (PA)</option>
-            <option value="NJ">New Jersey (NJ)</option>
-            <option value="FL">Florida (FL)</option>
           </select>
         </div>
 
-        <div>
-          <label class="block text-xs font-semibold text-slate-400 mb-1.5">מחיר מינימום ($)</label>
-          <input type="number" id="filter-min-price" placeholder="ללא הגבלה" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 text-left" dir="ltr">
-        </div>
-
+        <!-- מחיר מקסימום בלבד -->
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">מחיר מקסימום ($)</label>
           <input type="number" id="filter-max-price" placeholder="ללא הגבלה" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 text-left" dir="ltr">
         </div>
 
+        <!-- סוג נכס -->
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">סוג נכס</label>
           <select id="filter-type" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
             <option value="ALL">הכל (All Types)</option>
-            <option value="SINGLE_FAMILY">Single Family Home</option>
+            <option value="SINGLE_FAMILY">Single Family</option>
             <option value="MULTI_FAMILY">Multi-Family</option>
-            <option value="CONDO">Condo / Townhouse</option>
-            <option value="COMMERCIAL">מסחרי (Commercial)</option>
+            <option value="CONDO">Townhouse / Condo</option>
+            <option value="COMMERCIAL">מסחרי</option>
+          </select>
+        </div>
+
+        <!-- חדרי שינה -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5">חדרי שינה (מינימום)</label>
+          <select id="filter-beds" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
+            <option value="0">הכל</option>
+            <option value="1">1+</option>
+            <option value="2">2+</option>
+            <option value="3">3+</option>
+            <option value="4">4+</option>
+          </select>
+        </div>
+
+        <!-- חדרי רחצה -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5">חדרי רחצה (מינימום)</label>
+          <select id="filter-baths" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
+            <option value="0">הכל</option>
+            <option value="1">1+</option>
+            <option value="2">2+</option>
+            <option value="3">3+</option>
           </select>
         </div>
       </div>
 
-      <div class="mb-4">
+      <!-- בחירת ערים -->
+      <div class="mb-5">
         <div class="flex items-center justify-between mb-2">
-          <label class="text-xs font-semibold text-slate-400">ערים לסריקה בפנסילבניה (ניתן לבחור כמה ביחד):</label>
-          <div class="flex gap-2">
-            <button onclick="selectAllCities(true)" class="text-xs text-blue-400 hover:underline">בחר הכל</button>
+          <label class="text-xs font-semibold text-slate-400">1. בחר ערים לסריקה (ניתן לבחור כמה ביחד):</label>
+          <div class="flex gap-2 text-xs">
+            <button onclick="selectAllCities(true)" class="text-blue-400 hover:underline">בחר הכל</button>
             <span class="text-slate-600">|</span>
-            <button onclick="selectAllCities(false)" class="text-xs text-slate-400 hover:underline">נקה בחירה</button>
+            <button onclick="selectAllCities(false)" class="text-slate-400 hover:underline">נקה הכל</button>
           </div>
         </div>
-        <div id="cities-container" class="flex flex-wrap gap-2 p-3 bg-slate-800/60 rounded-xl border border-slate-700/60 max-h-36 overflow-y-auto">
-          </div>
+        <div id="cities-container" class="flex flex-wrap gap-2 p-3 bg-slate-800/60 rounded-xl border border-slate-700/60 max-h-32 overflow-y-auto">
+          <!-- רשימת ערים -->
+        </div>
       </div>
 
-      <div class="flex items-center justify-between pt-2">
-        <div class="text-xs text-slate-400" id="selected-cities-count">נבחרו 0 ערים</div>
-        <div class="flex gap-3">
-          <button onclick="applyFilters()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-600/30 transition flex items-center gap-2">
-            <span>🔍 סנן תוצאות</span>
-          </button>
+      <!-- בחירת שכונות לפי ערים שנבחרו -->
+      <div class="mb-5">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs font-semibold text-slate-400">2. סינון שכונות ואזורים (סמן שכונות רצויות כדי להימנע מאזורים בעייתיים):</label>
+          <div class="flex gap-2 text-xs">
+            <button onclick="selectAllNeighborhoods(true)" class="text-blue-400 hover:underline">בחר הכל</button>
+            <span class="text-slate-600">|</span>
+            <button onclick="selectAllNeighborhoods(false)" class="text-slate-400 hover:underline">נקה הכל</button>
+          </div>
         </div>
+        <div id="neighborhoods-container" class="flex flex-wrap gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-700/40 min-h-[50px] max-h-36 overflow-y-auto">
+          <span class="text-xs text-slate-500 my-auto">בחר ערים למעלה כדי להציג את רשימת השכונות שלהן</span>
+        </div>
+      </div>
+
+      <!-- כפתור הפעלה -->
+      <div class="flex items-center justify-between pt-2">
+        <div class="text-xs text-slate-400" id="selection-summary">נבחרו 0 ערים ו-0 שכונות</div>
+        <button onclick="applyFilters()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-600/30 transition flex items-center gap-2">
+          <span>🔍 החל סינון והצג נכסים</span>
+        </button>
       </div>
     </section>
 
+    <!-- Quick Stats -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
       <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5">
         <div class="text-slate-400 text-sm font-medium">נכסים שנמצאו</div>
@@ -109,35 +148,37 @@
         <div class="text-3xl font-bold mt-2 text-blue-400" id="stat-avg-price">$0</div>
       </div>
       <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5">
-        <div class="text-slate-400 text-sm font-medium">הזדמנויות חמות (מתחת למחיר)</div>
-        <div class="text-3xl font-bold mt-2 text-emerald-400" id="stat-deals">0</div>
+        <div class="text-slate-400 text-sm font-medium">הורדות מחיר (Price Cuts)</div>
+        <div class="text-3xl font-bold mt-2 text-emerald-400" id="stat-price-cuts">0</div>
       </div>
       <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5">
-        <div class="text-slate-400 text-sm font-medium">סטטוס סוכן</div>
-        <div class="text-3xl font-bold mt-2 text-purple-400">מוכן</div>
+        <div class="text-slate-400 text-sm font-medium">כינוס / עיקול / עיזבון</div>
+        <div class="text-3xl font-bold mt-2 text-amber-400" id="stat-distressed">0</div>
       </div>
     </div>
 
+    <!-- Results Table -->
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
       <div class="flex items-center justify-between mb-6">
-        <h3 class="text-lg font-bold">תוצאות נכסים</h3>
+        <h3 class="text-lg font-bold">תוצאות סריקה ורשימת נכסים</h3>
       </div>
 
       <div class="overflow-x-auto">
         <table class="w-full text-right border-collapse">
           <thead>
-            <tr class="border-b border-slate-800 text-slate-400 text-sm">
+            <tr class="border-b border-slate-800 text-slate-400 text-xs">
               <th class="py-3 px-4">כתובת</th>
-              <th class="py-3 px-4">עיר ומדינה</th>
+              <th class="py-3 px-4">עיר ושכונה</th>
               <th class="py-3 px-4">מחיר מבוקש</th>
-              <th class="py-3 px-4">חדרים / שטח</th>
-              <th class="py-3 px-4">סוג נכס</th>
-              <th class="py-3 px-4">הזדמנות</th>
+              <th class="py-3 px-4">מבנה (חד׳/אמבט׳/שטח)</th>
+              <th class="py-3 px-4">מקור / סוג מוכר</th>
+              <th class="py-3 px-4">ימים בשוק</th>
+              <th class="py-3 px-4">סטטוס והנחות</th>
             </tr>
           </thead>
-          <tbody id="properties-list" class="divide-y divide-slate-800/60 text-sm">
+          <tbody id="properties-list" class="divide-y border-slate-800/60 text-sm">
             <tr>
-              <td colspan="6" class="py-8 text-center text-slate-400">אנא בחר ערים ולחץ על "סנן תוצאות"</td>
+              <td colspan="7" class="py-8 text-center text-slate-400">בחר פרמטרים ולחץ על "החל סינון" להצגת תוצאות</td>
             </tr>
           </tbody>
         </table>
@@ -146,33 +187,29 @@
   </main>
 
   <script>
-    // רשימת ערים לפי מדינה
-    const stateCities = {
-      PA: [
-        "Philadelphia", "Pittsburgh", "Allentown", "Erie", "Reading", 
-        "Scranton", "Bethlehem", "Lancaster", "Harrisburg", "York", 
-        "Wilkes-Barre", "Altoona", "State College", "Norristown", "Chester"
-      ],
-      NJ: ["Newark", "Jersey City", "Paterson", "Elizabeth", "Trenton", "Camden"],
-      FL: ["Miami", "Orlando", "Tampa", "Jacksonville", "Fort Lauderdale"]
+    const citiesData = {
+      "Philadelphia": ["Center City", "Fishtown", "Northern Liberties", "University City", "Manayunk", "South Philly", "Kensington", "Chestnut Hill", "Roxborough"],
+      "Pittsburgh": ["Downtown", "Shadyside", "Lawrenceville", "Squirrel Hill", "South Side", "Oakland", "Strip District", "East Liberty"],
+      "Allentown": ["Center City", "West End", "East Side", "South Side", "Midway Manor"],
+      "Erie": ["Downtown", "Bayfront", "West Bayfront", "Frontier", "Glenwood"],
+      "Reading": ["Downtown", "Centre Park", "South of Penn", "East Reading", "Hampden Heights"],
+      "Scranton": ["Downtown", "Green Ridge", "Hill Section", "West Scranton", "South Side"],
+      "Bethlehem": ["Historic Downtown", "South Side", "West Bethlehem", "Broadhead"],
+      "Lancaster": ["Downtown Lancaster", "Chestnut Hill", "Cabbage Hill", "West End"]
     };
 
-    let selectedCities = new Set(["Philadelphia", "Pittsburgh", "Allentown"]);
+    let selectedCities = new Set(["Philadelphia", "Pittsburgh"]);
+    let selectedNeighborhoods = new Set();
 
-    function updateCitiesList() {
-      const state = document.getElementById('filter-state').value;
+    function initCities() {
       const container = document.getElementById('cities-container');
-      const cities = stateCities[state] || [];
-      selectedCities.clear();
-
-      container.innerHTML = cities.map(city => `
-        <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700/80 border border-slate-700 cursor-pointer text-xs select-none transition">
-          <input type="checkbox" value="${city}" onchange="toggleCity('${city}')" class="rounded bg-slate-900 border-slate-600 text-blue-600 focus:ring-0">
+      container.innerHTML = Object.keys(citiesData).map(city => `
+        <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-750 border border-slate-700 cursor-pointer text-xs select-none">
+          <input type="checkbox" value="${city}" ${selectedCities.has(city) ? 'checked' : ''} onchange="toggleCity('${city}')" class="rounded bg-slate-900 border-slate-600 text-blue-600">
           <span>${city}</span>
         </label>
       `).join('');
-
-      updateCountText();
+      updateNeighborhoods();
     }
 
     function toggleCity(city) {
@@ -181,46 +218,85 @@
       } else {
         selectedCities.add(city);
       }
-      updateCountText();
+      updateNeighborhoods();
     }
 
-    function selectAllCities(selectAll) {
-      const checkboxes = document.querySelectorAll('#cities-container input[type="checkbox"]');
-      checkboxes.forEach(cb => {
-        cb.checked = selectAll;
-        if (selectAll) selectedCities.add(cb.value);
+    function selectAllCities(all) {
+      document.querySelectorAll('#cities-container input').forEach(cb => {
+        cb.checked = all;
+        if (all) selectedCities.add(cb.value);
       });
-      if (!selectAll) selectedCities.clear();
-      updateCountText();
+      if (!all) selectedCities.clear();
+      updateNeighborhoods();
     }
 
-    function updateCountText() {
-      document.getElementById('selected-cities-count').innerText = `נבחרו ${selectedCities.size} ערים לסריקה`;
+    function updateNeighborhoods() {
+      const container = document.getElementById('neighborhoods-container');
+      let html = '';
+      selectedNeighborhoods.clear();
+
+      if (selectedCities.size === 0) {
+        container.innerHTML = '<span class="text-xs text-slate-500 my-auto">בחר ערים למעלה כדי להציג את רשימת השכונות שלהן</span>';
+        updateSummary();
+        return;
+      }
+
+      selectedCities.forEach(city => {
+        const hoods = citiesData[city] || [];
+        hoods.forEach(hood => {
+          const key = `${city} - ${hood}`;
+          selectedNeighborhoods.add(key);
+          html += `
+            <label class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800/80 border border-slate-700 text-xs cursor-pointer">
+              <input type="checkbox" value="${key}" checked onchange="toggleNeighborhood('${key}')" class="rounded bg-slate-900 border-slate-600 text-emerald-500 text-xs">
+              <span class="text-slate-300"><span class="text-slate-500 text-[10px]">${city}:</span> ${hood}</span>
+            </label>
+          `;
+        });
+      });
+
+      container.innerHTML = html;
+      updateSummary();
+    }
+
+    function toggleNeighborhood(key) {
+      if (selectedNeighborhoods.has(key)) {
+        selectedNeighborhoods.delete(key);
+      } else {
+        selectedNeighborhoods.add(key);
+      }
+      updateSummary();
+    }
+
+    function selectAllNeighborhoods(all) {
+      document.querySelectorAll('#neighborhoods-container input').forEach(cb => {
+        cb.checked = all;
+        if (all) selectedNeighborhoods.add(cb.value);
+      });
+      if (!all) selectedNeighborhoods.clear();
+      updateSummary();
+    }
+
+    function updateSummary() {
+      document.getElementById('selection-summary').innerText = `נבחרו ${selectedCities.size} ערים ו-${selectedNeighborhoods.size} שכונות פעילות לסריקה`;
     }
 
     function applyFilters() {
-      const minPrice = document.getElementById('filter-min-price').value;
       const maxPrice = document.getElementById('filter-max-price').value;
       const type = document.getElementById('filter-type').value;
-      const cities = Array.from(selectedCities);
+      const beds = document.getElementById('filter-beds').value;
+      const baths = document.getElementById('filter-baths').value;
 
-      console.log("Applying filters:", { cities, minPrice, maxPrice, type });
-      alert(`הסינון הופעל עבור ${cities.length} ערים בפנסילבניה!`);
+      console.log("Applying search:", {
+        cities: Array.from(selectedCities),
+        neighborhoods: Array.from(selectedNeighborhoods),
+        maxPrice, type, beds, baths
+      });
+
+      alert(`סריקה הופעלה עבור ${selectedCities.size} ערים ו-${selectedNeighborhoods.size} שכונות!`);
     }
 
-    // אתחול רשימת הערים בטעינה
-    updateCitiesList();
-    // בחירת ערים לדוגמה כברירת מחדל
-    setTimeout(() => {
-      const defaultPicks = ["Philadelphia", "Pittsburgh", "Allentown", "Lancaster"];
-      document.querySelectorAll('#cities-container input[type="checkbox"]').forEach(cb => {
-        if (defaultPicks.includes(cb.value)) {
-          cb.checked = true;
-          selectedCities.add(cb.value);
-        }
-      });
-      updateCountText();
-    }, 50);
+    initCities();
   </script>
 </body>
 </html>
