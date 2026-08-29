@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PA Real Estate Intelligence Agent</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Assistant', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-950/70 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-500/20">PA</div>
+        <div>
+          <h1 class="text-xl font-bold tracking-wide">PA Real Estate Agent</h1>
+          <p class="text-xs text-slate-400">מודיעין נדל״ן בע״מ - פנסילבניה</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Supabase Connected
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-8">
+    <!-- Top Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 backdrop-blur">
+        <div class="text-slate-400 text-sm font-medium">נכסים במעקב</div>
+        <div class="text-3xl font-bold mt-2 text-white" id="stat-total">-</div>
+      </div>
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 backdrop-blur">
+        <div class="text-slate-400 text-sm font-medium">מחיר ממוצע</div>
+        <div class="text-3xl font-bold mt-2 text-blue-400" id="stat-avg-price">-</div>
+      </div>
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 backdrop-blur">
+        <div class="text-slate-400 text-sm font-medium">הזדמנויות חמות</div>
+        <div class="text-3xl font-bold mt-2 text-emerald-400" id="stat-deals">-</div>
+      </div>
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 backdrop-blur">
+        <div class="text-slate-400 text-sm font-medium">סריקה אחרונה</div>
+        <div class="text-3xl font-bold mt-2 text-purple-400" id="stat-last-run">עכשיו</div>
+      </div>
+    </div>
+
+    <!-- Properties Table Container -->
+    <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-6 backdrop-blur shadow-xl">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-lg font-bold">רשימת נכסים אחרונה</h2>
+        <button onclick="loadProperties()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-xl text-sm font-semibold transition flex items-center gap-2">
+          <span>רענן נתונים</span>
+        </button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-right border-collapse">
+          <thead>
+            <tr class="border-b border-slate-700 text-slate-400 text-sm">
+              <th class="py-3 px-4">כתובת</th>
+              <th class="py-3 px-4">עיר</th>
+              <th class="py-3 px-4">מחיר</th>
+              <th class="py-3 px-4">חדרים</th>
+              <th class="py-3 px-4">סטטוס</th>
+            </tr>
+          </thead>
+          <tbody id="properties-list" class="divide-y divide-slate-700/50 text-sm">
+            <tr>
+              <td colspan="5" class="py-8 text-center text-slate-400">טוען נכסים מ-Supabase...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const SUPABASE_URL = 'https://rroamddaivercqdaathp.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_2ZGQdBoF6Kx-kslqbP77fQ_8qVL-placeholder'; // נעדכן למפתח המדויק
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function loadProperties() {
+      const tbody = document.getElementById('properties-list');
+      try {
+        const { data, error } = await supabaseClient.from('properties').select('*').limit(20);
+        if (error || !data || data.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-400">אין נתונים זמינים כרגע או שטבלת properties טרם מולאה.</td></tr>`;
+          document.getElementById('stat-total').innerText = '0';
+          document.getElementById('stat-avg-price').innerText = '$0';
+          document.getElementById('stat-deals').innerText = '0';
+          return;
+        }
+
+        document.getElementById('stat-total').innerText = data.length;
+        tbody.innerHTML = data.map(item => `
+          <tr class="hover:bg-slate-750/50 transition">
+            <td class="py-3 px-4 font-semibold text-white">${item.address || 'לא צוין'}</td>
+            <td class="py-3 px-4 text-slate-300">${item.city || 'PA'}</td>
+            <td class="py-3 px-4 font-bold text-emerald-400">$${(item.price || 0).toLocaleString()}</td>
+            <td class="py-3 px-4 text-slate-300">${item.bedrooms || '-'} חד׳</td>
+            <td class="py-3 px-4"><span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">${item.status || 'Active'}</span></td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-400">המערכת מוכנה לסנכרון.</td></tr>`;
+      }
+    }
+
+    loadProperties();
+  </script>
+</body>
+</html>
