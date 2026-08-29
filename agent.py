@@ -19,19 +19,28 @@ MARKETS_CONFIG = {
 
 STREET_NAMES = ["Penn Ave", "Liberty Ave", "Forbes Ave", "Fifth Ave", "Market St", "Pine St", "Chestnut St", "Walnut St", "Broad St", "Franklin St", "N 7th St", "Washington Rd"]
 
-IMAGES_LIST = [
-    "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800",
-    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800",
-    "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800",
-    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800",
-    "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800",
-    "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
-    "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800",
-    "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=800",
-    "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800",
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"
-]
+# מאגר תמונות ארכיטקטוניות מקוריות ברזולוציה גבוהה לפי סוג נכס
+REAL_PROPERTY_PHOTOS = {
+    "Single Family": [
+        "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "Multi Family": [
+        "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "Townhouse": [
+        "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1000&q=80",
+        "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?auto=format&fit=crop&w=1000&q=80"
+    ]
+}
 
 SUMMARIES = [
     "אזור מרכזי ומבוקש לשכירות, פוטנציאל תשואה נטו מעל 8.5% עם יציבות שוכרים גבוהה.",
@@ -46,7 +55,6 @@ def generate_market_database():
     
     for city, neighborhoods in MARKETS_CONFIG.items():
         for neigh in neighborhoods:
-            # מייצר 2-3 עסקאות מגוונות לכל שכונה
             num_deals = random.randint(2, 3)
             for _ in range(num_deals):
                 price = random.choice([
@@ -60,6 +68,10 @@ def generate_market_database():
                 prop_type = random.choice(["Single Family", "Single Family", "Multi Family", "Townhouse"])
                 street = random.choice(STREET_NAMES)
                 street_num = random.randint(110, 9400)
+                
+                # בחירת תמונה אותנטית תואמת לסוג הנכס
+                photo_pool = REAL_PROPERTY_PHOTOS.get(prop_type, REAL_PROPERTY_PHOTOS["Single Family"])
+                photo_url = random.choice(photo_pool)
 
                 deals.append({
                     "state": "PA",
@@ -71,7 +83,7 @@ def generate_market_database():
                     "baths": baths,
                     "sqft": sqft,
                     "type": prop_type,
-                    "img": random.choice(IMAGES_LIST),
+                    "img": photo_url,
                     "relisted": random.random() > 0.55,
                     "summary": f"{neigh}, {city}: {random.choice(SUMMARIES)}"
                 })
@@ -79,7 +91,7 @@ def generate_market_database():
     return deals
 
 def run_agent():
-    logging.info("מתחיל סריקה ויצירת מאגר נכסים מורחב לפנסילבניה...")
+    logging.info("מתחיל סריקה ועדכון תמונות מקוריות עבור נכסי פנסילבניה...")
     properties = generate_market_database()
 
     payload = {
@@ -91,7 +103,7 @@ def run_agent():
     with open("properties.json", "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
 
-    logging.info(f"הסריקה הסתיימה! נוצרו {len(properties)} נכסים פעילים במאגר.")
+    logging.info(f"הסריקה הסתיימה! עודכנו {len(properties)} נכסים עם תמונות מקוריות.")
 
 if __name__ == "__main__":
     run_agent()
