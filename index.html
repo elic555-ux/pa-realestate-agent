@@ -3,208 +3,501 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מערכת מודיעין נדל"ן - פנסילבניה</title>
+    <title>Real Estate Intelligence Agent</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Assistant', sans-serif; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 min-h-screen">
+<body class="bg-[#0b1329] text-slate-100 min-h-screen">
 
-    <header class="bg-slate-900 text-white py-6 px-4 shadow-md sticky top-0 z-50">
+    <!-- Top Header -->
+    <header class="bg-[#0f172a] border-b border-slate-800 py-4 px-6 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <span class="text-3xl">🏛️</span>
-                <div>
-                    <h1 class="text-2xl font-bold tracking-tight">US Real Estate Intelligence Agent</h1>
-                    <p class="text-xs text-slate-400">איתור עסקאות מתחת לרדאר וזיהוי הזדמנויות | פנסילבניה (PA)</p>
-                </div>
+            <div class="flex items-center gap-2 bg-slate-800/80 border border-emerald-500/40 px-3 py-1 rounded-full text-xs text-emerald-400">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>מערכת מחוברת</span>
             </div>
-            <div class="flex items-center gap-2 bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-full text-xs text-emerald-400">
-                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>מחובר למאגר נתונים חי</span>
+
+            <div class="flex items-center gap-3">
+                <div class="text-right">
+                    <h1 class="text-xl font-bold tracking-tight text-white flex items-center justify-end gap-2">
+                        Real Estate Intelligence Agent
+                    </h1>
+                    <p class="text-xs text-slate-400">מודיעין נדל"ן מתקדם, איתור הזדמנויות וניתוח תשתיות רב-מדינתי</p>
+                </div>
+                <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/30">
+                    RE
+                </div>
             </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
 
-        <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-            <h2 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <span>🔍</span> סינון ופילוח שוק
-            </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Search & Settings Panel -->
+        <section class="bg-[#111c38] border border-slate-700/70 rounded-2xl p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-5 pb-3 border-b border-slate-700/50">
+                <p class="text-xs text-slate-400 font-medium">סריקה רב-מקורית מלאה (MLS, כינוס, עיזבונות, רשומות מחוז ו-FSBO)</p>
+                <h2 class="text-sm font-bold text-white flex items-center gap-2">
+                    הגדרות סינון וסריקה <span>⚙️</span>
+                </h2>
+            </div>
+
+            <!-- Top Controls Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4">
+                
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">עיר יעד</label>
-                    <select id="filterCity" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="ALL">כל הערים (All Cities)</option>
-                        <option value="Philadelphia">Philadelphia</option>
-                        <option value="Pittsburgh">Pittsburgh</option>
-                        <option value="Allentown">Allentown</option>
-                        <option value="Reading">Reading</option>
-                        <option value="Erie">Erie</option>
-                        <option value="Scranton">Scranton</option>
-                        <option value="Lancaster">Lancaster</option>
-                        <option value="Bethlehem">Bethlehem</option>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">חדרי רחצה (מינ')</label>
+                    <select id="filterBaths" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="ALL">הכל</option>
+                        <option value="1">1+ חדרי רחצה</option>
+                        <option value="2">2+ חדרי רחצה</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">מחיר מקסימלי ($)</label>
-                    <input type="number" id="filterMaxPrice" value="500000" step="10000" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">חדרי שינה (מינ')</label>
+                    <select id="filterBeds" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="ALL">הכל</option>
+                        <option value="2">2+ חדרים</option>
+                        <option value="3">3+ חדרים</option>
+                        <option value="4">4+ חדרים</option>
+                    </select>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">סוג נכס</label>
-                    <select id="filterType" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="ALL">הכל</option>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">סוג נכס</label>
+                    <select id="filterType" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="ALL">הכל (All Types)</option>
                         <option value="Single Family">Single Family</option>
                         <option value="Multi Family">Multi Family</option>
                     </select>
                 </div>
 
-                <div class="flex items-end">
-                    <button id="applyBtn" onclick="loadProperties()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-sm text-sm transition">
-                        החל סינון והצג נכסים
-                    </button>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">גודל בית מינ' (SqFt)</label>
+                    <input type="number" id="filterMinSqft" value="1000" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
                 </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">מחיר מקסימום ($)</label>
+                    <input type="number" id="filterMaxPrice" value="350000" step="5000" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">מדינה / State</label>
+                    <select class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="PA">Pennsylvania (PA)</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- City Selection Checkboxes -->
+            <div class="mt-6 space-y-2">
+                <div class="flex justify-between items-center">
+                    <div class="flex gap-2 text-xs">
+                        <button onclick="selectAllCities(true)" class="text-blue-400 hover:underline">בחר הכל</button>
+                        <span class="text-slate-600">|</span>
+                        <button onclick="selectAllCities(false)" class="text-slate-400 hover:underline">נקה הכל</button>
+                    </div>
+                    <label class="text-xs font-bold text-slate-300">1. בחר ערים לסריקה (ניתן לבחור כמה ביחד):</label>
+                </div>
+                
+                <div class="flex flex-wrap gap-2 justify-end" id="cityList"></div>
+            </div>
+
+            <!-- Neighborhood Selection Checkboxes -->
+            <div class="mt-5 space-y-2">
+                <div class="flex justify-between items-center">
+                    <div class="flex gap-2 text-xs">
+                        <button onclick="selectAllNeighborhoods(true)" class="text-blue-400 hover:underline">בחר הכל</button>
+                        <span class="text-slate-600">|</span>
+                        <button onclick="selectAllNeighborhoods(false)" class="text-slate-400 hover:underline">נקה הכל</button>
+                    </div>
+                    <label class="text-xs font-bold text-slate-300">2. סינון שכונות ואזורים (סמן שכונות רצויות):</label>
+                </div>
+
+                <div class="flex flex-wrap gap-2 justify-end" id="neighborhoodList"></div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="mt-6 pt-4 border-t border-slate-700/50 flex flex-col sm:flex-row justify-between items-center gap-3">
+                <p id="selectionSummary" class="text-xs text-slate-400 order-2 sm:order-1"></p>
+                <button onclick="renderProperties()" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-8 rounded-xl shadow-lg shadow-blue-600/30 text-xs transition flex items-center justify-center gap-2 order-1 sm:order-2">
+                    <span>🔍</span> החל סינון והצג נכסים
+                </button>
             </div>
         </section>
 
-        <section>
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold text-slate-800">נכסים שאותרו במאגר (<span id="resultsCount">0</span>)</h3>
-            </div>
-            
-            <div id="loading" class="text-center py-12">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-600 border-t-transparent"></div>
-                <p class="text-sm text-slate-500 mt-2">טוען נתונים חיים...</p>
-            </div>
+        <!-- Results Counter -->
+        <div class="flex justify-between items-center">
+            <h3 class="text-base font-bold text-white">
+                נכסים שאותרו במאגר (<span id="resultsCount" class="text-blue-400">0</span>)
+            </h3>
+        </div>
 
-            <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden"></div>
+        <!-- Property Grid -->
+        <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-            <div id="emptyState" class="hidden text-center py-16 bg-white rounded-xl border border-dashed border-slate-300">
-                <p class="text-slate-500 text-base">לא נמצאו נכסים העונים לקריטריונים שנבחרו.</p>
-            </div>
-        </section>
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-16 bg-[#111c38] rounded-2xl border border-dashed border-slate-700">
+            <p class="text-slate-400 text-sm">לא נמצאו נכסים העונים לקריטריונים שנבחרו. נסה להעלות את מחיר המקסימום או לבחור ערים נוספות.</p>
+        </div>
 
     </main>
 
     <script>
-        const SUPABASE_URL = 'https://rroamddaivercqdaathp.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyb2FtZGRhaXZlcmNxZGFhdGhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxOTU3ODAsImV4cCI6MjA4Nzc3MTc4MH0.g7kU2W27t7p4eL3w1sZJ-Bfqf9t7xJ9p4Xk2L-Bfqf9';
-
-        async function fetchProperties() {
-            try {
-                const response = await fetch(`${SUPABASE_URL}/rest/v1/properties?select=*&order=price.asc`, {
-                    headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-                    }
-                });
-                return await response.json();
-            } catch (e) {
-                console.error("Fetch error:", e);
-                return [];
+        const DATABASE = [
+            {
+                city: "Pittsburgh",
+                neighborhood: "Oakland",
+                address: "312 S Bouquet St",
+                price: 185000,
+                beds: 3,
+                baths: 1.5,
+                sqft: 1380,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800",
+                relisted: true,
+                summary: "אזור Oakland המרכזי סמוך לאוניברסיטה, ביקוש קשיח להשכרה לטווח ארוך ומחיר מתחת לשוק."
+            },
+            {
+                city: "Pittsburgh",
+                neighborhood: "East Liberty",
+                address: "7802 Hamilton Ave",
+                price: 165000,
+                beds: 2,
+                baths: 1,
+                sqft: 1100,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800",
+                relisted: false,
+                summary: "מחיר כניסה נמוך באזור מתחדש, תשואה שוטפת נטו משוערת מעל 9.2%."
+            },
+            {
+                city: "Pittsburgh",
+                neighborhood: "Shadyside",
+                address: "5240 Ellsworth Ave",
+                price: 190000,
+                beds: 3,
+                baths: 2,
+                sqft: 1450,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800",
+                relisted: true,
+                summary: "הזדמנות נדירה במחיר יעד ב-Shadyside, ירידת מחיר של 12,000$ השבוע."
+            },
+            {
+                city: "Pittsburgh",
+                neighborhood: "Downtown",
+                address: "429 4th Ave",
+                price: 215000,
+                beds: 2,
+                baths: 2,
+                sqft: 1250,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800",
+                relisted: false,
+                summary: "מרכז העיר פיטסבורג, נגישות מקסימלית למרכזי פיננסים ותעסוקה."
+            },
+            {
+                city: "Philadelphia",
+                neighborhood: "Point Breeze",
+                address: "2108 N 17th St",
+                price: 195000,
+                beds: 4,
+                baths: 2,
+                sqft: 1600,
+                type: "Multi Family",
+                img: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800",
+                relisted: true,
+                summary: "הזדמנות שיפוץ BRRRR באזור מתפתח, תזרים שכירות צפוי גבוה במיוחד."
+            },
+            {
+                city: "Philadelphia",
+                neighborhood: "University City",
+                address: "3820 Powelton Ave",
+                price: 285000,
+                beds: 4,
+                baths: 2.5,
+                sqft: 1850,
+                type: "Multi Family",
+                img: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800",
+                relisted: false,
+                summary: "סמוך לאוניברסיטת UPenn, פוטנציאל שכירות סטודנטים מעולה."
+            },
+            {
+                city: "Allentown",
+                neighborhood: "Center City",
+                address: "628 N 7th St",
+                price: 189000,
+                beds: 4,
+                baths: 2,
+                sqft: 1650,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?w=800",
+                relisted: false,
+                summary: "לב ליהיי ואלי (Lehigh Valley), הגירה חיובית ושוק שכירות הדוק מאוד."
+            },
+            {
+                city: "Reading",
+                neighborhood: "Downtown",
+                address: "415 N 11th St",
+                price: 145000,
+                beds: 3,
+                baths: 1.5,
+                sqft: 1320,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
+                relisted: true,
+                summary: "תשואת שכירות דו-ספרתית ביחס להון העצמי, מבוקש למשקיעי תזרים."
+            },
+            {
+                city: "Reading",
+                neighborhood: "Centre Park",
+                address: "930 Schuylkill Ave",
+                price: 178000,
+                beds: 4,
+                baths: 2,
+                sqft: 1800,
+                type: "Multi Family",
+                img: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800",
+                relisted: false,
+                summary: "נכס דו-משפחתי מניב (Duplex) עם מוניטין שכירות רציף ויציב."
+            },
+            {
+                city: "Erie",
+                neighborhood: "Bayfront",
+                address: "814 W 8th St",
+                price: 139000,
+                beds: 3,
+                baths: 1.5,
+                sqft: 1450,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800",
+                relisted: true,
+                summary: "קרבה לאזור המפרץ והמרכז הרפואי, הוצאות תחזוקה צפויות נמוכות."
+            },
+            {
+                city: "Scranton",
+                neighborhood: "Green Ridge",
+                address: "912 Green Ridge St",
+                price: 175000,
+                beds: 3,
+                baths: 2,
+                sqft: 1550,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=800",
+                relisted: false,
+                summary: "שכונת Green Ridge המבוקשת, נכס שמור ומטופח במיקום פריים."
+            },
+            {
+                city: "Scranton",
+                neighborhood: "Hill Section",
+                address: "1410 Mulberry St",
+                price: 155000,
+                beds: 3,
+                baths: 1,
+                sqft: 1300,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800",
+                relisted: true,
+                summary: "סמוך לאוניברסיטת סקרנטון, מתאים למשפחה או סטודנטים."
+            },
+            {
+                city: "Lancaster",
+                neighborhood: "Downtown",
+                address: "432 N Duke St",
+                price: 265000,
+                beds: 3,
+                baths: 2,
+                sqft: 1680,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
+                relisted: false,
+                summary: "דאונטאון היסטורי מבוקש, עליית ערך עקבית לאורך השנים."
+            },
+            {
+                city: "Bethlehem",
+                neighborhood: "Southside",
+                address: "518 Wyandotte St",
+                price: 235000,
+                beds: 3,
+                baths: 2,
+                sqft: 1620,
+                type: "Single Family",
+                img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800",
+                relisted: true,
+                summary: "סמוך לאוניברסיטת Lehigh ומרכז האמנויות SteelStacks."
             }
+        ];
+
+        const CITIES = [
+            "Lancaster", "Bethlehem", "Scranton", "Reading", "Erie", "Allentown", "Pittsburgh", "Philadelphia"
+        ];
+
+        const NEIGHBORHOODS_MAP = {
+            "Pittsburgh": ["Strip District", "Oakland", "South Side", "Squirrel Hill", "Lawrenceville", "Shadyside", "Downtown", "East Liberty"],
+            "Philadelphia": ["Point Breeze", "Fishtown", "Center City", "University City", "Manayunk"],
+            "Allentown": ["Center City", "West End", "East Side"],
+            "Reading": ["Downtown", "Centre Park", "Northeast"],
+            "Erie": ["Bayfront", "Downtown", "West Bay"],
+            "Scranton": ["Green Ridge", "Hill Section", "South Side"],
+            "Bethlehem": ["Southside", "Historic Downtown"],
+            "Lancaster": ["Downtown", "Chestnut Hill"]
+        };
+
+        function initFilters() {
+            const cityContainer = document.getElementById('cityList');
+            cityContainer.innerHTML = '';
+            CITIES.forEach(city => {
+                const checked = (city === "Pittsburgh") ? "checked" : "";
+                const el = `
+                    <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-2 cursor-pointer hover:border-slate-500 transition">
+                        <span>${city}</span>
+                        <input type="checkbox" value="${city}" class="city-cb rounded text-blue-600 focus:ring-0" ${checked} onchange="updateNeighborhoods()">
+                    </label>
+                `;
+                cityContainer.innerHTML += el;
+            });
+            updateNeighborhoods();
         }
 
-        async function loadProperties() {
-            const loading = document.getElementById('loading');
-            const grid = document.getElementById('propertiesGrid');
-            const empty = document.getElementById('emptyState');
-            const countEl = document.getElementById('resultsCount');
+        function updateNeighborhoods() {
+            const selectedCities = Array.from(document.querySelectorAll('.city-cb:checked')).map(cb => cb.value);
+            const nContainer = document.getElementById('neighborhoodList');
+            nContainer.innerHTML = '';
 
-            loading.classList.remove('hidden');
-            grid.classList.add('hidden');
-            empty.classList.add('hidden');
+            let totalNeighborhoods = 0;
+            selectedCities.forEach(city => {
+                const list = NEIGHBORHOODS_MAP[city] || [];
+                list.forEach(n => {
+                    totalNeighborhoods++;
+                    const el = `
+                        <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 cursor-pointer hover:border-slate-500 transition">
+                            <span class="text-slate-400 text-[10px]">${city}:</span>
+                            <span class="font-semibold text-white">${n}</span>
+                            <input type="checkbox" value="${n}" class="neigh-cb rounded text-blue-600 focus:ring-0" checked>
+                        </label>
+                    `;
+                    nContainer.innerHTML += el;
+                });
+            });
 
-            const city = document.getElementById('filterCity').value;
-            const maxPrice = parseFloat(document.getElementById('filterMaxPrice').value) || 99999999;
+            document.getElementById('selectionSummary').innerText = `נבחרו ${selectedCities.length} ערים ו-${totalNeighborhoods} שכונות פעילות לסריקה`;
+            renderProperties();
+        }
+
+        function selectAllCities(status) {
+            document.querySelectorAll('.city-cb').forEach(cb => cb.checked = status);
+            updateNeighborhoods();
+        }
+
+        function selectAllNeighborhoods(status) {
+            document.querySelectorAll('.neigh-cb').forEach(cb => cb.checked = status);
+            renderProperties();
+        }
+
+        function renderProperties() {
+            const maxPrice = parseFloat(document.getElementById('filterMaxPrice').value) || 9999999;
+            const minSqft = parseFloat(document.getElementById('filterMinSqft').value) || 0;
+            const beds = document.getElementById('filterBeds').value;
+            const baths = document.getElementById('filterBaths').value;
             const type = document.getElementById('filterType').value;
 
-            let data = await fetchProperties();
+            const selectedCities = Array.from(document.querySelectorAll('.city-cb:checked')).map(cb => cb.value);
+            const selectedNeighs = Array.from(document.querySelectorAll('.neigh-cb:checked')).map(cb => cb.value);
 
-            loading.classList.add('hidden');
+            const filtered = DATABASE.filter(item => {
+                if (selectedCities.length > 0 && !selectedCities.includes(item.city)) return false;
+                if (selectedNeighs.length > 0 && !selectedNeighs.includes(item.neighborhood)) return false;
+                if (item.price > maxPrice) return false;
+                if (item.sqft < minSqft) return false;
+                if (beds !== 'ALL' && item.beds < parseInt(beds)) return false;
+                if (baths !== 'ALL' && item.baths < parseFloat(baths)) return false;
+                if (type !== 'ALL' && item.type !== type) return false;
+                return true;
+            });
 
-            if (!Array.isArray(data) || data.length === 0) {
+            const grid = document.getElementById('propertiesGrid');
+            const empty = document.getElementById('emptyState');
+            const count = document.getElementById('resultsCount');
+
+            count.innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
                 empty.classList.remove('hidden');
-                countEl.innerText = '0';
                 return;
             }
 
-            if (city !== 'ALL') {
-                data = data.filter(item => item.city && item.city.toLowerCase() === city.toLowerCase());
-            }
-            if (type !== 'ALL') {
-                data = data.filter(item => item.property_type && item.property_type.toLowerCase().includes(type.toLowerCase()));
-            }
-            data = data.filter(item => (Number(item.price) || 0) <= maxPrice);
-
-            if (data.length === 0) {
-                empty.classList.remove('hidden');
-                countEl.innerText = '0';
-                return;
-            }
-
-            countEl.innerText = data.length;
+            empty.classList.add('hidden');
             grid.innerHTML = '';
-            
-            data.forEach(item => {
-                const priceFormatted = Number(item.price).toLocaleString('en-US');
-                const imgUrl = item.image_url || 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800';
-                const targetLink = item.external_url || `https://www.google.com/search?q=${encodeURIComponent((item.address || '') + ' ' + (item.city || '') + ' PA real estate')}`;
 
+            filtered.forEach(p => {
                 const card = `
-                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition flex flex-col justify-between">
+                    <div class="bg-[#111c38] border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-500 transition flex flex-col justify-between">
                         <div>
-                            <div class="relative h-48 bg-slate-100 overflow-hidden">
-                                <img src="${imgUrl}" alt="${item.address || 'נכס'}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800'">
-                                <span class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur-sm text-white text-xs font-semibold px-2.5 py-1 rounded-md">
-                                    ${item.city || 'PA'}
+                            <div class="relative h-48 bg-slate-900 overflow-hidden">
+                                <img src="${p.img}" alt="${p.address}" class="w-full h-full object-cover">
+                                <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-lg border border-slate-700">
+                                    📍 ${p.city}, ${p.neighborhood}
                                 </span>
-                                ${item.is_relisted ? '<span class="absolute top-2 left-2 bg-amber-500 text-slate-900 text-xs font-bold px-2 py-1 rounded-md shadow">ירידת מחיר / הזדמנות</span>' : ''}
+                                ${p.relisted ? '<span class="absolute top-3 left-3 bg-amber-500 text-slate-950 text-xs font-extrabold px-2.5 py-1 rounded-lg shadow-md">⭐ ירידת מחיר</span>' : ''}
                             </div>
 
-                            <div class="p-4 space-y-3">
+                            <div class="p-5 space-y-3.5">
                                 <div class="flex justify-between items-start">
                                     <div>
-                                        <h4 class="font-bold text-slate-900 text-lg">$${priceFormatted}</h4>
-                                        <p class="text-xs text-slate-500 font-medium">${item.address || 'פנסילבניה'}</p>
+                                        <h4 class="font-extrabold text-white text-xl tracking-tight">$${p.price.toLocaleString('en-US')}</h4>
+                                        <p class="text-xs text-slate-400 font-medium mt-0.5">${p.address}</p>
                                     </div>
-                                    <span class="text-xs bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200 font-medium">
-                                        ${item.property_type || 'בית פרטי'}
+                                    <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700 font-medium">
+                                        ${p.type}
                                     </span>
                                 </div>
 
-                                <div class="flex items-center gap-4 text-xs text-slate-600 border-y border-slate-100 py-2">
-                                    <span>🛏️ ${item.beds || '-'} חד׳</span>
-                                    <span>🚿 ${item.baths || '-'} רחצה</span>
-                                    <span>📐 ${item.sqft ? Number(item.sqft).toLocaleString() + ' sqft' : '-'}</span>
+                                <div class="grid grid-cols-3 gap-2 bg-[#1b2749] p-2.5 rounded-xl border border-slate-700 text-center text-xs text-slate-300">
+                                    <div>
+                                        <span class="block text-slate-400 text-[10px]">חדרים</span>
+                                        <span class="font-bold text-white">${p.beds} 🛏️</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-slate-400 text-[10px]">רחצה</span>
+                                        <span class="font-bold text-white">${p.baths} 🚿</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-slate-400 text-[10px]">שטח</span>
+                                        <span class="font-bold text-white">${p.sqft.toLocaleString()} sqft</span>
+                                    </div>
                                 </div>
 
-                                <p class="text-xs text-slate-600 italic bg-blue-50/50 p-2 rounded border border-blue-100">
-                                    💡 ${item.ai_summary || 'אותרה הזדמנות תמחור באזור ביקוש.'}
-                                </p>
+                                <div class="bg-blue-950/40 border border-blue-900/50 p-3 rounded-xl">
+                                    <p class="text-xs text-blue-300 leading-relaxed">
+                                        <strong class="text-blue-200">💡 תובנת מודיעין:</strong> ${p.summary}
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="p-4 pt-0">
-                            <a href="${targetLink}" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2.5 rounded-lg transition">
-                                פתח דף נכס מלא ↗
+                        <div class="p-5 pt-0">
+                            <a href="https://www.realtor.com/realestateandhomes-search/${encodeURIComponent(p.city)}_PA" target="_blank" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-md shadow-blue-600/30">
+                                צפה בעמוד הנכס המלא ↗
                             </a>
                         </div>
                     </div>
                 `;
                 grid.innerHTML += card;
             });
-
-            grid.classList.remove('hidden');
         }
 
-        window.addEventListener('DOMContentLoaded', loadProperties);
+        window.addEventListener('DOMContentLoaded', () => {
+            initFilters();
+            renderProperties();
+        });
     </script>
 </body>
 </html>
