@@ -1,13 +1,15 @@
 name: Run Real Estate Intelligence Agent
 
 on:
-  schedule:
-    - cron: '0 */6 * * *'
   workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * *'  # ריצה יומית ב-13:00 שעון ישראל (10:00 UTC)
 
 jobs:
   run-agent:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -18,13 +20,15 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: |
-          pip install requests supabase
+        run: pip install requests
 
       - name: Run Real Estate Intelligence Agent
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: python agent.py
+
+      - name: Commit and push updated data
         run: |
-          python agent.py
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add properties.json
+          git commit -m "Automated Data Update [skip ci]" || exit 0
+          git push
