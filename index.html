@@ -77,10 +77,9 @@
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">סוג נכס</label>
           <select id="filter-type" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
             <option value="ALL">הכל (All Types)</option>
-            <option value="SINGLE_FAMILY">Single Family</option>
-            <option value="MULTI_FAMILY">Multi-Family</option>
-            <option value="CONDO">Townhouse / Condo</option>
-            <option value="COMMERCIAL">מסחרי</option>
+            <option value="Single Family">Single Family</option>
+            <option value="Multi-Family">Multi-Family</option>
+            <option value="Condo">Townhouse / Condo</option>
           </select>
         </div>
 
@@ -135,7 +134,7 @@
       <!-- כפתור הפעלה -->
       <div class="flex items-center justify-between pt-2">
         <div class="text-xs text-slate-400" id="selection-summary">נבחרו 0 ערים ו-0 שכונות</div>
-        <button type="button" onclick="applyFilters()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-600/30 transition flex items-center gap-2">
+        <button type="button" onclick="fetchProperties()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-600/30 transition flex items-center gap-2">
           <span>🔍 החל סינון והצג נכסים</span>
         </button>
       </div>
@@ -186,7 +185,7 @@
           </thead>
           <tbody id="properties-list" class="divide-y border-slate-800/60 text-sm">
             <tr>
-              <td colspan="8" class="py-8 text-center text-slate-400">בחר פרמטרים ולחץ על "החל סינון" להצגת תוצאות</td>
+              <td colspan="8" class="py-8 text-center text-slate-400">טוען נתונים ממסד הנתונים...</td>
             </tr>
           </tbody>
         </table>
@@ -247,9 +246,13 @@
   </div>
 
   <script>
+    const SUPABASE_URL = "https://rroamddaivercqdaathp.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_2ZGQdBoF6Kx-kS1qbP77fQ_8qVL-8VR";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
     const stateData = {
       "PA": {
-        "Philadelphia": ["Center City", "Fishtown", "Northern Liberties", "University City", "Manayunk", "South Philly", "Kensington", "Chestnut Hill", "Roxborough"],
+        "Philadelphia": ["Center City", "Fishtown", "Northern Liberties", "University City", "Manayunk", "South Philly", "North Philly", "Kensington", "Chestnut Hill", "Roxborough"],
         "Pittsburgh": ["Downtown", "Shadyside", "Lawrenceville", "Squirrel Hill", "South Side", "Oakland", "Strip District", "East Liberty"],
         "Allentown": ["Center City", "West End", "East Side", "South Side", "Midway Manor"],
         "Erie": ["Downtown", "Bayfront", "West Bayfront", "Frontier", "Glenwood"],
@@ -302,11 +305,9 @@
       const state = document.getElementById('filter-state').value;
       const cities = Object.keys(stateData[state] || {});
       selectedCities.clear();
-      if (cities.length > 0) {
-        selectedCities.add(cities[0]);
-        if (cities.length > 1) selectedCities.add(cities[1]);
-      }
+      cities.forEach(c => selectedCities.add(c));
       initCities();
+      fetchProperties();
     }
 
     function initCities() {
@@ -392,7 +393,7 @@
       if (el) el.innerText = `נבחרו ${selectedCities.size} ערים ו-${selectedNeighborhoods.size} שכונות פעילות לסריקה`;
     }
 
-    function applyFilters() {
+    async function fetchProperties() {
       const state = document.getElementById('filter-state').value;
       const maxPrice = document.getElementById('filter-max-price').value;
       const minSqft = document.getElementById('filter-min-sqft').value;
@@ -400,14 +401,112 @@
       const beds = document.getElementById('filter-beds').value;
       const baths = document.getElementById('filter-baths').value;
 
-      console.log("Filters Applied:", {
-        state,
-        cities: Array.from(selectedCities),
-        neighborhoods: Array.from(selectedNeighborhoods),
-        maxPrice, minSqft, type, beds, baths
-      });
+      let query = supabaseClient.from('properties').select('*').eq('state', state);
 
-      alert(`הסריקה הופעלה עבור מדינת ${state} עם ${selectedCities.size} ערים ו-${selectedNeighborhoods.size} שכונות!`);
+      if (maxPrice) query = query.lte('price', Number(maxPrice));
+      if (minSqft) query = query.gte('sqft', Number(minSqft));
+      if (beds && beds !== '0') query = query.gte('bedrooms', Number(beds));
+      if (baths && baths !== '0') query = query.gte('bathrooms', Number(baths));
+      if (type && type !== 'ALL') query = query.eq('property_type', type);
+
+      if (selectedCities.size > 0) {
+        query = query.in('city', Array.from(selectedCities));
+      }
+
+      const { data, error } = await query;
+
+      if (error) {
+        console.error('Error fetching properties:', error);
+        return;
+      }
+
+      currentProperties = data || [];
+      renderProperties(currentProperties);
+    }
+
+    function renderProperties(list) {
+      const tbody = document.getElementById('properties-list');
+      if (!tbody) return;
+      
+      document.getElementById('stat-total').innerText = list.length;
+      const avg = list.length ? Math.round(list.reduce((acc, p) => acc + (p.price || 0), 0) / list.length) : 0;
+      document.getElementById('stat-avg-price').innerText = `$${avg.toLocaleString()}`;
+      document.getElementById('stat-relisted').innerText = list.filter(p => p.is_relisted).length;
+      document.getElementById('stat-distressed').innerText = list.filter(p => (p.condition || '').includes('שיפוץ')).length;
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-slate-400">לא נמצאו נכסים תואמים להגדרות הסינון שנבחרו.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map((p, idx) => `
+        <tr class="hover:bg-slate-800/40 transition cursor-pointer" onclick="openDossier(${idx})">
+          <td class="py-3 px-4">
+            <img src="${p.image_url || 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=120&auto=format&fit=crop&q=60'}" class="w-14 h-11 object-cover rounded-lg border border-slate-700 shadow">
+          </td>
+          <td class="py-3 px-4">
+            <div class="font-bold text-white">${p.address}</div>
+            <div class="text-xs text-slate-400">${p.city}${p.neighborhood ? `, ${p.neighborhood}` : ''}</div>
+          </td>
+          <td class="py-3 px-4 font-bold text-emerald-400">$${(p.price || 0).toLocaleString()}</td>
+          <td class="py-3 px-4 text-xs">
+            <div>${(p.sqft || 0).toLocaleString()} SqFt</div>
+            <div class="text-slate-400">${p.bedrooms || 0} חד׳ | ${p.bathrooms || 0} אמבט׳</div>
+          </td>
+          <td class="py-3 px-4 text-xs">
+            <span class="px-2.5 py-1 rounded-full font-bold ${p.condition?.includes('שיפוץ') ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}">
+              ${p.condition || 'סטנדרטי'}
+            </span>
+          </td>
+          <td class="py-3 px-4">
+            <div class="flex flex-wrap gap-1">
+              ${(p.sources || ['MLS']).map(src => `<span class="px-2 py-0.5 text-[10px] font-bold rounded bg-slate-800 text-blue-300 border border-slate-700">${src}</span>`).join('')}
+            </div>
+          </td>
+          <td class="py-3 px-4 text-xs">
+            ${p.is_relisted ? '<span class="inline-block px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold border border-amber-500/30">⚡ חזר לשוק</span>' : `<span class="text-slate-400">${p.days_on_market || 0} ימים בשוק</span>`}
+            ${p.price_cut > 0 ? `<div class="text-emerald-400 text-[11px] font-bold">-$${p.price_cut.toLocaleString()}</div>` : ''}
+          </td>
+          <td class="py-3 px-4">
+            <button type="button" onclick="event.stopPropagation(); openDossier(${idx})" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded-lg text-xs font-bold border border-slate-700">
+              תיק מלא
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openDossier(index) {
+      const p = currentProperties[index];
+      if (!p) return;
+
+      document.getElementById('modal-address').innerText = p.address;
+      document.getElementById('modal-location').innerText = `${p.city}, ${p.neighborhood || ''} | ${p.state} ${p.zip_code || ''}`;
+      document.getElementById('modal-condition-badge').innerText = p.condition || 'סטנדרטי';
+      
+      const relistedBadge = document.getElementById('modal-relisted-badge');
+      if (p.is_relisted) relistedBadge.classList.remove('hidden');
+      else relistedBadge.classList.add('hidden');
+
+      document.getElementById('modal-ai-summary').innerText = p.ai_summary || `נכס מסוג ${p.property_type || 'פרטי'} בשטח ${p.sqft || 0} SqFt. ממוקם ב-${p.city}.`;
+      document.getElementById('spec-construction').innerText = p.construction_type || 'לבנים / Wood Frame';
+      document.getElementById('spec-cooling').innerText = p.cooling || 'מיזוק מרכזי (Central)';
+      document.getElementById('spec-heating').innerText = p.heating || 'Forced Air (גז)';
+      document.getElementById('spec-water-heater').innerText = p.water_heater || 'דוד גז (Gas)';
+      document.getElementById('spec-parking').innerText = p.parking || 'חניה ברחוב / Driveway';
+      document.getElementById('spec-year').innerText = p.year_built || '1985';
+
+      document.getElementById('modal-history-content').innerHTML = p.is_relisted ? `
+        <div class="p-2 rounded bg-slate-800/80 border border-slate-700/60">
+          <div class="flex justify-between font-bold text-amber-400"><span>חזר לשוק (Relisted)</span></div>
+          <p class="text-[11px] text-slate-300 mt-1">${p.relisted_details || 'הנכס חזר לשוק לאחר אי-מכירה קודמת.'}</p>
+        </div>
+      ` : '<p class="text-slate-400">הנכס מפורסם באופן רציף ללא ביטולי עסקאות קודמים.</p>';
+
+      document.getElementById('modal-sources-tags').innerHTML = (p.sources || ['MLS']).map(src => `<span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-slate-800 text-blue-400 border border-slate-700">${src}</span>`).join('');
+      document.getElementById('modal-external-link').href = p.listing_url || '#';
+
+      document.getElementById('dossier-modal').classList.remove('hidden');
     }
 
     function closeDossierModal() {
@@ -415,7 +514,11 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      onStateChange();
+      const state = document.getElementById('filter-state').value;
+      const cities = Object.keys(stateData[state] || {});
+      cities.forEach(c => selectedCities.add(c));
+      initCities();
+      fetchProperties();
     });
   </script>
 </body>
