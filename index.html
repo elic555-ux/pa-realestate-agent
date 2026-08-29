@@ -22,13 +22,13 @@
         <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-500/25">PA</div>
         <div>
           <h1 class="text-xl font-bold tracking-wide">PA Real Estate Intelligence Agent</h1>
-          <p class="text-xs text-slate-400">איתור נכסים במצוקה, עיזבונות, מכרזים והזדמנויות מתחת למחיר השוק</p>
+          <p class="text-xs text-slate-400">איתור עסקאות נדל״ן, כינוס, עיקולים, עיזבונות ורשומות מחוז</p>
         </div>
       </div>
       <div class="flex items-center gap-4">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          סוכן מודיעין מוכן
+          סריקה רב-מקורית פעילה
         </span>
       </div>
     </div>
@@ -41,44 +41,44 @@
     <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-8 shadow-xl">
       <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
         <h2 class="text-lg font-bold flex items-center gap-2">
-          <span>⚙️</span> הגדרות חיפוש ומקורות מודיעין
+          <span>⚙️</span> הגדרות חיפוש וסריקה
         </h2>
-        <span class="text-xs text-slate-400">הגדר גודל, מחיר, מיקומים וערוצי סריקה</span>
+        <span class="text-xs text-slate-400">הסריקה מתבצעת אוטומטית בכל מקורות המידע (שוק חופשי, כינוס, עיזבונות ורשומות ציבוריות)</span>
       </div>
 
-      <!-- שורת סינון ראשונה: מחיר, גודל ומבנה -->
+      <!-- שורת סינון: מדינה, מחיר, גודל ומאפיינים -->
       <div class="grid grid-cols-1 md:grid-cols-6 gap-3 mb-5">
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">מדינה / State</label>
-          <select id="filter-state" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
+          <select id="filter-state" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
             <option value="PA" selected>Pennsylvania (PA)</option>
           </select>
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">מחיר מקסימום ($)</label>
-          <input type="number" id="filter-max-price" placeholder="ללא הגבלה" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500 text-left" dir="ltr">
+          <input type="number" id="filter-max-price" placeholder="ללא הגבלה" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 text-left" dir="ltr">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">גודל בית מינ׳ (SqFt)</label>
-          <input type="number" id="filter-min-sqft" placeholder="למשל 1,200" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500 text-left" dir="ltr">
+          <input type="number" id="filter-min-sqft" placeholder="למשל 1,200" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 text-left" dir="ltr">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">סוג נכס</label>
-          <select id="filter-type" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+          <select id="filter-type" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
             <option value="ALL">הכל (All)</option>
             <option value="SINGLE_FAMILY">Single Family</option>
             <option value="MULTI_FAMILY">Multi-Family</option>
-            <option value="CONDO">Townhouse/Condo</option>
+            <option value="CONDO">Townhouse / Condo</option>
             <option value="COMMERCIAL">מסחרי</option>
           </select>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-400 mb-1.5">חדרי שינה</label>
-          <select id="filter-beds" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5">חדרי שינה (מינ׳)</label>
+          <select id="filter-beds" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
             <option value="0">הכל</option>
             <option value="1">1+</option>
             <option value="2">2+</option>
@@ -88,8 +88,8 @@
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-400 mb-1.5">חדרי רחצה</label>
-          <select id="filter-baths" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5">חדרי רחצה (מינ׳)</label>
+          <select id="filter-baths" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
             <option value="0">הכל</option>
             <option value="1">1+</option>
             <option value="2">2+</option>
@@ -98,52 +98,10 @@
         </div>
       </div>
 
-      <!-- בחירת מקורות מידע וערוצי סריקה -->
-      <div class="mb-5 p-3.5 bg-slate-800/40 rounded-xl border border-slate-700/60">
-        <label class="block text-xs font-bold text-slate-300 mb-2">מקורות מידע וערוצי מודיעין לסריקה:</label>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
-          <!-- ערוץ 1 -->
-          <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
-            <div class="font-bold text-blue-400 mb-1.5 flex items-center justify-between">
-              <span>🏠 שוק פתוח & FSBO</span>
-              <input type="checkbox" id="src-market" checked class="rounded bg-slate-900 border-slate-600 text-blue-600">
-            </div>
-            <p class="text-[11px] text-slate-400">MLS / IDX, Zillow, Realtor, Redfin, מוכרים פרטיים (FSBO), אתרי מתווכים מקומיים</p>
-          </div>
-
-          <!-- ערוץ 2 -->
-          <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
-            <div class="font-bold text-amber-400 mb-1.5 flex items-center justify-between">
-              <span>⚠️ נכסים במצוקה (Distressed)</span>
-              <input type="checkbox" id="src-distressed" checked class="rounded bg-slate-900 border-slate-600 text-amber-500">
-            </div>
-            <p class="text-[11px] text-slate-400">Pre-foreclosure, Foreclosure, בנקים (REO), מכרזי שריף (Sheriff Sale), Auction</p>
-          </div>
-
-          <!-- ערוץ 3 -->
-          <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
-            <div class="font-bold text-purple-400 mb-1.5 flex items-center justify-between">
-              <span>📜 עיזבונות (Probate & Estate)</span>
-              <input type="checkbox" id="src-probate" checked class="rounded bg-slate-900 border-slate-600 text-purple-500">
-            </div>
-            <p class="text-[11px] text-slate-400">הודעות פטירה, מכירות מנהל עיזבון (Executor Sale), תיקי ירושה וצוואות</p>
-          </div>
-
-          <!-- ערוץ 4 -->
-          <div class="p-2.5 rounded-lg bg-slate-800/80 border border-slate-700">
-            <div class="font-bold text-rose-400 mb-1.5 flex items-center justify-between">
-              <span>🏛️ רשומות מחוז ומשפט</span>
-              <input type="checkbox" id="src-public" checked class="rounded bg-slate-900 border-slate-600 text-rose-500">
-            </div>
-            <p class="text-[11px] text-slate-400">עיקולי מס (Tax Delinquent / Tax Liens), רישומי שעבודים (Deeds/Liens), Court Records</p>
-          </div>
-        </div>
-      </div>
-
       <!-- בחירת ערים -->
       <div class="mb-4">
         <div class="flex items-center justify-between mb-2">
-          <label class="text-xs font-semibold text-slate-400">1. בחר ערים לסריקה:</label>
+          <label class="text-xs font-semibold text-slate-400">1. בחר ערים לסריקה (ניתן לבחור כמה ביחד):</label>
           <div class="flex gap-2 text-xs">
             <button onclick="selectAllCities(true)" class="text-blue-400 hover:underline">בחר הכל</button>
             <span class="text-slate-600">|</span>
@@ -156,7 +114,7 @@
       <!-- בחירת שכונות -->
       <div class="mb-5">
         <div class="flex items-center justify-between mb-2">
-          <label class="text-xs font-semibold text-slate-400">2. סינון שכונות ואזורים:</label>
+          <label class="text-xs font-semibold text-slate-400">2. סינון שכונות ואזורים (סמן שכונות רצויות):</label>
           <div class="flex gap-2 text-xs">
             <button onclick="selectAllNeighborhoods(true)" class="text-blue-400 hover:underline">בחר הכל</button>
             <span class="text-slate-600">|</span>
@@ -164,15 +122,15 @@
           </div>
         </div>
         <div id="neighborhoods-container" class="flex flex-wrap gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-700/40 min-h-[50px] max-h-36 overflow-y-auto">
-          <span class="text-xs text-slate-500 my-auto">בחר ערים למעלה כדי להציג שכונות</span>
+          <span class="text-xs text-slate-500 my-auto">בחר ערים למעלה כדי להציג את רשימת השכונות</span>
         </div>
       </div>
 
-      <!-- כפתור החל סינון -->
+      <!-- כפתור הפעלה -->
       <div class="flex items-center justify-between pt-2">
         <div class="text-xs text-slate-400" id="selection-summary">נבחרו 0 ערים ו-0 שכונות</div>
         <button onclick="applyFilters()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-600/30 transition flex items-center gap-2">
-          <span>🔍 החל הגדרות והצג מודיעין</span>
+          <span>🔍 החל סינון והצג נכסים</span>
         </button>
       </div>
     </section>
@@ -188,11 +146,11 @@
         <div class="text-3xl font-bold mt-2 text-blue-400" id="stat-avg-price">$0</div>
       </div>
       <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5">
-        <div class="text-slate-400 text-sm font-medium">הזדמנויות מצוקה / כינוס</div>
+        <div class="text-slate-400 text-sm font-medium">כינוס / עיקול / שריף</div>
         <div class="text-3xl font-bold mt-2 text-amber-400" id="stat-distressed">0</div>
       </div>
       <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5">
-        <div class="text-slate-400 text-sm font-medium">עיזבונות ורשומות מחוז</div>
+        <div class="text-slate-400 text-sm font-medium">הורדות מחיר / עיזבונות</div>
         <div class="text-3xl font-bold mt-2 text-purple-400" id="stat-probate">0</div>
       </div>
     </div>
@@ -210,15 +168,15 @@
               <th class="py-3 px-4">כתובת</th>
               <th class="py-3 px-4">עיר ושכונה</th>
               <th class="py-3 px-4">מחיר מבוקש / חוב</th>
-              <th class="py-3 px-4">גודל (SqFt) & חדרים</th>
+              <th class="py-3 px-4">גודל (SqFt) & מבנה</th>
               <th class="py-3 px-4">סוג הזדמנות</th>
-              <th class="py-3 px-4">מקור מידע</th>
+              <th class="py-3 px-4">מקורות שנמצאו (Cross-Source)</th>
               <th class="py-3 px-4">ימים בשוק / סטטוס</th>
             </tr>
           </thead>
           <tbody id="properties-list" class="divide-y border-slate-800/60 text-sm">
             <tr>
-              <td colspan="7" class="py-8 text-center text-slate-400">בחר פרמטרים ומקורות להצגת נכסים</td>
+              <td colspan="7" class="py-8 text-center text-slate-400">בחר פרמטרים ולחץ על "החל סינון" להצגת תוצאות</td>
             </tr>
           </tbody>
         </table>
@@ -276,7 +234,7 @@
       selectedNeighborhoods.clear();
 
       if (selectedCities.size === 0) {
-        container.innerHTML = '<span class="text-xs text-slate-500 my-auto">בחר ערים למעלה כדי להציג שכונות</span>';
+        container.innerHTML = '<span class="text-xs text-slate-500 my-auto">בחר ערים למעלה כדי להציג את רשימת השכונות</span>';
         updateSummary();
         return;
       }
@@ -328,20 +286,13 @@
       const beds = document.getElementById('filter-beds').value;
       const baths = document.getElementById('filter-baths').value;
 
-      const sources = {
-        market: document.getElementById('src-market').checked,
-        distressed: document.getElementById('src-distressed').checked,
-        probate: document.getElementById('src-probate').checked,
-        public: document.getElementById('src-public').checked
-      };
-
       console.log("Filters Applied:", {
         cities: Array.from(selectedCities),
         neighborhoods: Array.from(selectedNeighborhoods),
-        maxPrice, minSqft, type, beds, baths, sources
+        maxPrice, minSqft, type, beds, baths
       });
 
-      alert(`הגדרות עודכנו! נסרוק ${selectedCities.size} ערים לפי מקורות המידע שנבחרו.`);
+      alert(`הגדרות נשמרו! סריקה רב-מקורית מופעלת עבור ${selectedCities.size} ערים.`);
     }
 
     initCities();
