@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PA Real Estate Intelligence Agent</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Assistant', sans-serif; }
@@ -15,6 +15,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen">
 
+  <!-- Header -->
   <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -27,22 +28,25 @@
       <div class="flex items-center gap-4">
         <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          מחובר למסד הנתונים
+          מערכת מחוברת
         </span>
       </div>
     </div>
   </header>
 
+  <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-6 py-8">
 
+    <!-- Search Controls -->
     <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-8 shadow-xl">
       <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
         <h2 class="text-lg font-bold flex items-center gap-2">
           <span>⚙️</span> הגדרות סינון וסריקה
         </h2>
-        <span class="text-xs text-slate-400">סריקה רב-מקורית מלאה (MLS, כינוס, עיזבונות, רשומות מחוז ו-FSBO)</span>
+        <span class="text-xs text-slate-400">הסריקה כוללת את כל המקורות: שוק חופשי, כינוס, עיזבונות, רשומות מחוז ו-FSBO</span>
       </div>
 
+      <!-- שורת סינון ראשית -->
       <div class="grid grid-cols-1 md:grid-cols-6 gap-3 mb-5">
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">מדינה / State</label>
@@ -62,12 +66,13 @@
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-400 mb-1.5">מצב נכס</label>
-          <select id="filter-condition" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
-            <option value="ALL">הכל (כולל לשיפוץ)</option>
-            <option value="REHAB">דורש שיפוץ (Fixer / As-Is)</option>
-            <option value="RENOVATED">משופץ / במצב טוב</option>
-            <option value="NEW">בנייה חדשה</option>
+          <label class="block text-xs font-semibold text-slate-400 mb-1.5">סוג נכס</label>
+          <select id="filter-type" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
+            <option value="ALL">הכל (All Types)</option>
+            <option value="SINGLE_FAMILY">Single Family</option>
+            <option value="MULTI_FAMILY">Multi-Family</option>
+            <option value="CONDO">Townhouse / Condo</option>
+            <option value="COMMERCIAL">מסחרי</option>
           </select>
         </div>
 
@@ -93,40 +98,42 @@
         </div>
       </div>
 
+      <!-- בחירת ערים -->
       <div class="mb-4">
         <div class="flex items-center justify-between mb-2">
-          <label class="text-xs font-semibold text-slate-400">1. בחר ערים לסריקה:</label>
+          <label class="text-xs font-semibold text-slate-400">1. בחר ערים לסריקה (ניתן לבחור כמה ביחד):</label>
           <div class="flex gap-2 text-xs">
-            <button onclick="selectAllCities(true)" class="text-blue-400 hover:underline">בחר הכל</button>
+            <button type="button" onclick="selectAllCities(true)" class="text-blue-400 hover:underline">בחר הכל</button>
             <span class="text-slate-600">|</span>
-            <button onclick="selectAllCities(false)" class="text-slate-400 hover:underline">נקה הכל</button>
+            <button type="button" onclick="selectAllCities(false)" class="text-slate-400 hover:underline">נקה הכל</button>
           </div>
         </div>
         <div id="cities-container" class="flex flex-wrap gap-2 p-3 bg-slate-800/60 rounded-xl border border-slate-700/60 max-h-32 overflow-y-auto"></div>
       </div>
 
+      <!-- בחירת שכונות -->
       <div class="mb-5">
         <div class="flex items-center justify-between mb-2">
-          <label class="text-xs font-semibold text-slate-400">2. סינון שכונות ואזורים:</label>
+          <label class="text-xs font-semibold text-slate-400">2. סינון שכונות ואזורים (סמן שכונות רצויות):</label>
           <div class="flex gap-2 text-xs">
-            <button onclick="selectAllNeighborhoods(true)" class="text-blue-400 hover:underline">בחר הכל</button>
+            <button type="button" onclick="selectAllNeighborhoods(true)" class="text-blue-400 hover:underline">בחר הכל</button>
             <span class="text-slate-600">|</span>
-            <button onclick="selectAllNeighborhoods(false)" class="text-slate-400 hover:underline">נקה הכל</button>
+            <button type="button" onclick="selectAllNeighborhoods(false)" class="text-slate-400 hover:underline">נקה הכל</button>
           </div>
         </div>
-        <div id="neighborhoods-container" class="flex flex-wrap gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-700/40 min-h-[50px] max-h-36 overflow-y-auto">
-          <span class="text-xs text-slate-500 my-auto">בחר ערים למעלה כדי להציג את רשימת השכונות</span>
-        </div>
+        <div id="neighborhoods-container" class="flex flex-wrap gap-2 p-3 bg-slate-800/40 rounded-xl border border-slate-700/40 min-h-[50px] max-h-36 overflow-y-auto"></div>
       </div>
 
+      <!-- כפתור הפעלה -->
       <div class="flex items-center justify-between pt-2">
         <div class="text-xs text-slate-400" id="selection-summary">נבחרו 0 ערים ו-0 שכונות</div>
-        <button onclick="fetchProperties()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-600/30 transition flex items-center gap-2">
-          <span>🔍 החל סינון ורענן נכסים</span>
+        <button type="button" onclick="applyFilters()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-600/30 transition flex items-center gap-2">
+          <span>🔍 החל סינון והצג נכסים</span>
         </button>
       </div>
     </section>
 
+    <!-- Quick Stats -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
       <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5">
         <div class="text-slate-400 text-sm font-medium">נכסים באיתור</div>
@@ -146,6 +153,7 @@
       </div>
     </div>
 
+    <!-- Results Table -->
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
       <div class="flex items-center justify-between mb-6">
         <div>
@@ -170,7 +178,7 @@
           </thead>
           <tbody id="properties-list" class="divide-y border-slate-800/60 text-sm">
             <tr>
-              <td colspan="8" class="py-8 text-center text-slate-400">טוען נתונים ממסד הנתונים...</td>
+              <td colspan="8" class="py-8 text-center text-slate-400">בחר פרמטרים ולחץ על "החל סינון" להצגת תוצאות</td>
             </tr>
           </tbody>
         </table>
@@ -178,6 +186,7 @@
     </div>
   </main>
 
+  <!-- Dossier Modal -->
   <div id="dossier-modal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm" onclick="closeDossierModal()">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl relative" onclick="event.stopPropagation()">
       
@@ -190,7 +199,7 @@
           <h2 id="modal-address" class="text-xl font-bold text-white">כתובת הנכס</h2>
           <p id="modal-location" class="text-xs text-slate-400">עיר, שכונה, מיקוד</p>
         </div>
-        <button onclick="closeDossierModal()" class="text-slate-400 hover:text-white text-xl font-bold bg-slate-800 hover:bg-slate-700 w-9 h-9 rounded-xl flex items-center justify-center">✕</button>
+        <button type="button" onclick="closeDossierModal()" class="text-slate-400 hover:text-white text-xl font-bold bg-slate-800 hover:bg-slate-700 w-9 h-9 rounded-xl flex items-center justify-center">✕</button>
       </div>
 
       <div class="bg-gradient-to-r from-blue-950/40 to-slate-800/40 border border-blue-500/30 rounded-xl p-4 mb-6">
@@ -201,13 +210,12 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        
         <div class="bg-slate-800/40 border border-slate-800 rounded-xl p-4">
           <h4 class="text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider">🛠️ מפרט מערכות ומבנה</h4>
           <div class="space-y-2 text-xs">
             <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">סוג הבנייה:</span><span id="spec-construction" class="font-semibold text-white">-</span></div>
-            <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">מערכת מיזוג (Cooling):</span><span id="spec-cooling" class="font-semibold text-white">-</span></div>
-            <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">מערכת חימום (Heating):</span><span id="spec-heating" class="font-semibold text-white">-</span></div>
+            <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">מיזוג (Cooling):</span><span id="spec-cooling" class="font-semibold text-white">-</span></div>
+            <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">חימום (Heating):</span><span id="spec-heating" class="font-semibold text-white">-</span></div>
             <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">דוד ומים חמים:</span><span id="spec-water-heater" class="font-semibold text-white">-</span></div>
             <div class="flex justify-between py-1 border-b border-slate-800/60"><span class="text-slate-400">חניה:</span><span id="spec-parking" class="font-semibold text-white">-</span></div>
             <div class="flex justify-between py-1"><span class="text-slate-400">שנת בנייה:</span><span id="spec-year" class="font-semibold text-white">-</span></div>
@@ -231,10 +239,17 @@
   </div>
 
   <script>
-    // הגדרת חיבור Supabase
     const SUPABASE_URL = "https://rroamddaivercqdaathp.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_2ZGQdBoF6Kx-kS1qbP77fQ_8qVL-8VR";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    let supabaseClient = null;
+
+    try {
+      if (window.supabase) {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      }
+    } catch(e) {
+      console.warn("Supabase initialization error:", e);
+    }
 
     const citiesData = {
       "Philadelphia": ["Center City", "Fishtown", "Northern Liberties", "University City", "Manayunk", "South Philly", "Kensington", "Chestnut Hill", "Roxborough"],
@@ -253,6 +268,8 @@
 
     function initCities() {
       const container = document.getElementById('cities-container');
+      if (!container) return;
+      
       container.innerHTML = Object.keys(citiesData).map(city => `
         <label class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-750 border border-slate-700 cursor-pointer text-xs select-none">
           <input type="checkbox" value="${city}" ${selectedCities.has(city) ? 'checked' : ''} onchange="toggleCity('${city}')" class="rounded bg-slate-900 border-slate-600 text-blue-600">
@@ -279,6 +296,7 @@
 
     function updateNeighborhoods() {
       const container = document.getElementById('neighborhoods-container');
+      if (!container) return;
       let html = '';
       selectedNeighborhoods.clear();
 
@@ -322,51 +340,47 @@
     }
 
     function updateSummary() {
-      document.getElementById('selection-summary').innerText = `נבחרו ${selectedCities.size} ערים ו-${selectedNeighborhoods.size} שכונות פעילות לסריקה`;
+      const el = document.getElementById('selection-summary');
+      if (el) el.innerText = `נבחרו ${selectedCities.size} ערים ו-${selectedNeighborhoods.size} שכונות פעילות לסריקה`;
     }
 
-    async function fetchProperties() {
+    async function applyFilters() {
       const maxPrice = document.getElementById('filter-max-price').value;
       const minSqft = document.getElementById('filter-min-sqft').value;
-      const condition = document.getElementById('filter-condition').value;
+      const type = document.getElementById('filter-type').value;
       const beds = document.getElementById('filter-beds').value;
       const baths = document.getElementById('filter-baths').value;
 
-      let query = supabase.from('properties').select('*');
+      if (!supabaseClient) {
+        console.log("Filters local test:", { maxPrice, minSqft, type, beds, baths });
+        return;
+      }
 
+      let query = supabaseClient.from('properties').select('*');
       if (maxPrice) query = query.lte('price', maxPrice);
       if (minSqft) query = query.gte('sqft', minSqft);
       if (beds && beds !== '0') query = query.gte('bedrooms', beds);
       if (baths && baths !== '0') query = query.gte('bathrooms', baths);
-      if (condition && condition !== 'ALL') {
-        if (condition === 'REHAB') query = query.ilike('condition', '%שיפוץ%');
-        if (condition === 'RENOVATED') query = query.ilike('condition', '%משופץ%');
-        if (condition === 'NEW') query = query.ilike('condition', '%חדש%');
-      }
 
       const { data, error } = await query;
-
-      if (error) {
-        console.error('Error fetching properties:', error);
-        return;
+      if (!error && data) {
+        currentProperties = data;
+        renderProperties(data);
       }
-
-      currentProperties = data || [];
-      renderProperties(currentProperties);
     }
 
     function renderProperties(list) {
       const tbody = document.getElementById('properties-list');
+      if (!tbody) return;
       
-      // עדכון סטטיסטיקות
       document.getElementById('stat-total').innerText = list.length;
       const avg = list.length ? Math.round(list.reduce((acc, p) => acc + (p.price || 0), 0) / list.length) : 0;
       document.getElementById('stat-avg-price').innerText = `$${avg.toLocaleString()}`;
       document.getElementById('stat-relisted').innerText = list.filter(p => p.is_relisted).length;
-      document.getElementById('stat-distressed').innerText = list.filter(p => (p.condition || '').includes('שיפוץ') || (p.sources || []).some(s => s.includes('Sheriff') || s.includes('Court'))).length;
+      document.getElementById('stat-distressed').innerText = list.filter(p => (p.condition || '').includes('שיפוץ')).length;
 
       if (list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-slate-400">טרם הוזרמו נכסים למסד הנתונים עבור פרמטרים אלו.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-slate-400">טרם הוזרמו נכסים למסד הנתונים.</td></tr>`;
         return;
       }
 
@@ -399,7 +413,7 @@
             ${p.price_cut > 0 ? `<div class="text-emerald-400 text-[11px] font-bold">-$${p.price_cut.toLocaleString()}</div>` : ''}
           </td>
           <td class="py-3 px-4">
-            <button onclick="event.stopPropagation(); openDossier(${idx})" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded-lg text-xs font-bold border border-slate-700">
+            <button type="button" onclick="event.stopPropagation(); openDossier(${idx})" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-blue-400 rounded-lg text-xs font-bold border border-slate-700">
               תיק מלא
             </button>
           </td>
@@ -416,14 +430,10 @@
       document.getElementById('modal-condition-badge').innerText = p.condition || 'סטנדרטי';
       
       const relistedBadge = document.getElementById('modal-relisted-badge');
-      if (p.is_relisted) {
-        relistedBadge.classList.remove('hidden');
-      } else {
-        relistedBadge.classList.add('hidden');
-      }
+      if (p.is_relisted) relistedBadge.classList.remove('hidden');
+      else relistedBadge.classList.add('hidden');
 
-      document.getElementById('modal-ai-summary').innerText = p.ai_summary || `נכס מסוג ${p.property_type || 'פרטי'} בשטח ${p.sqft || 0} SqFt. ממוקם ב-${p.city}. אותרו ${(p.sources || []).length} מקורות מידע עבור נכס זה.`;
-
+      document.getElementById('modal-ai-summary').innerText = p.ai_summary || `נכס מסוג ${p.property_type || 'פרטי'} בשטח ${p.sqft || 0} SqFt. ממוקם ב-${p.city}.`;
       document.getElementById('spec-construction').innerText = p.construction_type || 'לבנים / Wood Frame';
       document.getElementById('spec-cooling').innerText = p.cooling || 'מיזוג מרכזי (Central)';
       document.getElementById('spec-heating').innerText = p.heating || 'Forced Air (גז)';
@@ -433,8 +443,8 @@
 
       document.getElementById('modal-history-content').innerHTML = p.is_relisted ? `
         <div class="p-2 rounded bg-slate-800/80 border border-slate-700/60">
-          <div class="flex justify-between font-bold text-amber-400"><span>חזר לשוק (Relisted)</span><span>לפני זמן קצר</span></div>
-          <p class="text-[11px] text-slate-300 mt-1">${p.relisted_details || 'הנכס ירד מחוזה קודם או פורסם מחדש לאחר אי-מכירה.'}</p>
+          <div class="flex justify-between font-bold text-amber-400"><span>חזר לשוק (Relisted)</span></div>
+          <p class="text-[11px] text-slate-300 mt-1">${p.relisted_details || 'הנכס חזר לשוק לאחר אי-מכירה קודמת.'}</p>
         </div>
       ` : '<p class="text-slate-400">הנכס מפורסם באופן רציף ללא ביטולי עסקאות קודמים.</p>';
 
@@ -448,9 +458,11 @@
       document.getElementById('dossier-modal').classList.add('hidden');
     }
 
-    // אתחול ראשוני
-    initCities();
-    fetchProperties();
+    // הפעלה מיידית של בחירת הערים והשכונות
+    window.addEventListener('DOMContentLoaded', () => {
+      initCities();
+      applyFilters();
+    });
   </script>
 </body>
 </html>
