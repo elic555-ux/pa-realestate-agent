@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="ltr">
+<html lang="he" dir="rtl" class="notranslate" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
     <title>Real Estate Intelligence Agent</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -21,8 +22,9 @@
                     RE
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight text-white">
-                        סוכן מודיעין נדל"ן (Real Estate Intelligence Agent)
+                    <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                        <span>סוכן מודיעין נדל"ן</span>
+                        <span class="text-sm font-normal text-slate-400" dir="ltr">(Real Estate Intelligence Agent)</span>
                     </h1>
                     <p class="text-xs text-slate-400">איתור עסקאות מתחת לרדאר וניתוח השקעות מתקדם</p>
                 </div>
@@ -30,8 +32,8 @@
 
             <div class="flex items-center gap-4">
                 <div class="text-xs text-slate-400 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-full flex items-center gap-1.5">
-                    <span>🕒 סריקה אחרונה:</span>
-                    <strong class="text-slate-200" id="lastScanTime">29/08/2026, 13:00 (EST)</strong>
+                    <span>סריקה אחרונה:</span>
+                    <strong class="text-slate-200" id="lastScanTime" dir="ltr">29/08/2026, 13:00 EST</strong>
                 </div>
                 <div class="flex items-center gap-2 bg-slate-800/80 border border-emerald-500/40 px-3 py-1.5 rounded-full text-xs text-emerald-400">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -51,15 +53,15 @@
                 <h2 class="text-sm font-bold text-white flex items-center gap-2">
                     <span>⚙️</span> הגדרות סינון וסריקת שוק
                 </h2>
-                <p class="text-xs text-slate-400 font-medium">סריקה רב-מקורית מלאה (MLS, כינוס נכסים, עיזבונות, רישומי מחוז ו-FSBO)</p>
+                <p class="text-xs text-slate-400 font-medium">סריקה רב-מקורית מלאה (MLS, כינוס נכסים, עיזבונות ו-FSBO)</p>
             </div>
 
             <!-- Filter Controls -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4 text-left">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4 text-right">
                 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">מדינה (State)</label>
-                    <select id="filterState" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none" onchange="onStateChange()">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">מדינה</label>
+                    <select id="filterState" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none" onchange="onStateChange()" dir="ltr">
                         <option value="PA">Pennsylvania (PA)</option>
                         <option value="FL">Florida (FL)</option>
                         <option value="OH">Ohio (OH)</option>
@@ -69,17 +71,17 @@
 
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1.5">מחיר מקסימום ($)</label>
-                    <input type="number" id="filterMaxPrice" placeholder="לדוגמה: 250000" step="5000" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                    <input type="number" id="filterMaxPrice" placeholder="לדוגמה: 250000" step="5000" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right">
                 </div>
 
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1.5">שטח בית מינ' (SqFt)</label>
-                    <input type="number" id="filterMinSqft" placeholder="לדוגמה: 1200" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                    <input type="number" id="filterMinSqft" placeholder="לדוגמה: 1200" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">סוג נכס (Property Type)</label>
-                    <select id="filterType" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">סוג נכס</label>
+                    <select id="filterType" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right">
                         <option value="ALL">הכל (All Types)</option>
                         <option value="Single Family">בית פרטי (Single Family)</option>
                         <option value="Multi Family">רב-משפחתי (Multi Family)</option>
@@ -87,9 +89,9 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">חדרי שינה מינ' (Bedrooms)</label>
-                    <select id="filterBeds" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="ALL">הכל (All Beds)</option>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">חדרי שינה מינ'</label>
+                    <select id="filterBeds" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right">
+                        <option value="ALL">הכל</option>
                         <option value="2">2+ חדרים</option>
                         <option value="3">3+ חדרים</option>
                         <option value="4">4+ חדרים</option>
@@ -97,9 +99,9 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">חדרי רחצה מינ' (Bathrooms)</label>
-                    <select id="filterBaths" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="ALL">הכל (All Baths)</option>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">חדרי רחצה מינ'</label>
+                    <select id="filterBaths" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right">
+                        <option value="ALL">הכל</option>
                         <option value="1">1+ רחצה</option>
                         <option value="2">2+ רחצה</option>
                     </select>
@@ -108,20 +110,20 @@
             </div>
 
             <!-- Cities -->
-            <div class="mt-6 space-y-2 text-left">
+            <div class="mt-6 space-y-2 text-right">
                 <div class="flex justify-between items-center">
-                    <label class="text-xs font-bold text-slate-300">1. בחר ערים לסריקה (ניתן לבחור כמה במקביל):</label>
+                    <label class="text-xs font-bold text-slate-300">1. בחירת ערים לסריקה (ניתן לבחור כמה במקביל):</label>
                     <div class="flex gap-2 text-xs">
                         <button onclick="selectAllCities(true)" class="text-blue-400 hover:underline">בחר הכל</button>
                         <span class="text-slate-600">|</span>
                         <button onclick="selectAllCities(false)" class="text-slate-400 hover:underline">נקה הכל</button>
                     </div>
                 </div>
-                <div class="flex flex-wrap gap-2" id="cityList"></div>
+                <div class="flex flex-wrap gap-2 justify-start" id="cityList"></div>
             </div>
 
             <!-- Neighborhoods -->
-            <div class="mt-5 space-y-2 text-left">
+            <div class="mt-5 space-y-2 text-right">
                 <div class="flex justify-between items-center">
                     <label class="text-xs font-bold text-slate-300">2. סינון שכונות ואזורים מבוקשים:</label>
                     <div class="flex gap-2 text-xs">
@@ -130,7 +132,7 @@
                         <button onclick="selectAllNeighborhoods(false)" class="text-slate-400 hover:underline">נקה הכל</button>
                     </div>
                 </div>
-                <div class="flex flex-wrap gap-2" id="neighborhoodList"></div>
+                <div class="flex flex-wrap gap-2 justify-start" id="neighborhoodList"></div>
             </div>
 
             <!-- Actions & Scanning Status -->
@@ -146,7 +148,7 @@
             <div id="scanningIndicator" class="hidden mt-4 bg-slate-900/90 border border-blue-500/40 rounded-xl p-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <span class="text-2xl animate-spin">⏳</span>
-                    <div>
+                    <div class="text-right">
                         <p class="text-xs font-bold text-white">מבצע סריקה רב-מקורית חיה בזמן אמת...</p>
                         <p class="text-[10px] text-slate-400">מאמת נתונים מול מקורות MLS, עיזבונות, כינוסים ורשומות מחוז</p>
                     </div>
@@ -160,7 +162,7 @@
         </section>
 
         <!-- Counter Header -->
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center text-right">
             <h3 class="text-base font-bold text-white">
                 נכסים שאותרו במאגר (<span id="resultsCount" class="text-blue-400">0</span>)
             </h3>
@@ -171,7 +173,7 @@
 
         <!-- Empty State -->
         <div id="emptyState" class="hidden text-center py-16 bg-[#111c38] rounded-2xl border border-dashed border-slate-700">
-            <p class="text-slate-400 text-sm">לא נמצאו נכסים העונים לקריטריונים שנבחרו. נסה להעלות את מחיר המקסימום או לבחור ערים נוספות.</p>
+            <p class="text-slate-400 text-sm">לא נמצאו נכסים העונים לקריטריונים שנבחרו. נסה לשנות את מחיר המקסימום או לבחור ערים נוספות.</p>
         </div>
 
     </main>
@@ -356,7 +358,7 @@
                 baths: 1.5,
                 sqft: 1450,
                 type: "Single Family",
-                img: "https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800",
+                img: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800",
                 relisted: true,
                 summary: "סמוך למרכז הרפואי ואזור המפרץ המתחדש. הוצאות תחזוקה צפויות נמוכות."
             },
@@ -432,7 +434,7 @@
             currentData.cities.forEach(city => {
                 const checked = (city === "Pittsburgh" || currentData.cities.length <= 3) ? "checked" : "";
                 const el = `
-                    <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-2 cursor-pointer hover:border-slate-500 transition">
+                    <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-2 cursor-pointer hover:border-slate-500 transition" dir="ltr">
                         <input type="checkbox" value="${city}" class="city-cb rounded text-blue-600 focus:ring-0" ${checked} onchange="updateNeighborhoods()">
                         <span class="text-white font-medium">${city}</span>
                     </label>
@@ -455,7 +457,7 @@
                 list.forEach(n => {
                     totalNeighborhoods++;
                     const el = `
-                        <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 cursor-pointer hover:border-slate-500 transition">
+                        <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 cursor-pointer hover:border-slate-500 transition" dir="ltr">
                             <input type="checkbox" value="${n}" class="neigh-cb rounded text-blue-600 focus:ring-0" checked>
                             <span class="text-white font-medium">${city}: ${n}</span>
                         </label>
@@ -497,7 +499,7 @@
                 btn.disabled = false;
 
                 const now = new Date();
-                document.getElementById('lastScanTime').innerText = now.toLocaleDateString('he-IL') + ', ' + now.toLocaleTimeString('he-IL', {hour: '2-digit', minute: '2-digit'}) + ' (EST)';
+                document.getElementById('lastScanTime').innerText = now.toLocaleDateString('he-IL') + ', ' + now.toLocaleTimeString('he-IL', {hour: '2-digit', minute: '2-digit'}) + ' EST';
             }, 800);
         }
 
@@ -544,25 +546,25 @@
 
             filtered.forEach(p => {
                 const card = `
-                    <div class="bg-[#111c38] border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-500 transition flex flex-col justify-between text-left">
+                    <div class="bg-[#111c38] border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-500 transition flex flex-col justify-between text-right">
                         <div>
                             <div class="relative h-48 bg-slate-900 overflow-hidden">
                                 <img src="${p.img}" alt="${p.address}" class="w-full h-full object-cover">
-                                <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-lg border border-slate-700">
+                                <span class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-lg border border-slate-700" dir="ltr">
                                     📍 ${p.city}, ${p.neighborhood}
                                 </span>
-                                ${p.relisted ? '<span class="absolute top-3 right-3 bg-amber-500 text-slate-950 text-xs font-extrabold px-2.5 py-1 rounded-lg shadow-md">⭐ ירידת מחיר</span>' : ''}
+                                ${p.relisted ? '<span class="absolute top-3 left-3 bg-amber-500 text-slate-950 text-xs font-extrabold px-2.5 py-1 rounded-lg shadow-md">⭐ ירידת מחיר</span>' : ''}
                             </div>
 
                             <div class="p-5 space-y-3.5">
                                 <div class="flex justify-between items-start">
-                                    <div>
-                                        <h4 class="font-extrabold text-white text-xl tracking-tight">$${p.price.toLocaleString('en-US')}</h4>
-                                        <p class="text-xs text-slate-400 font-medium mt-0.5">${p.address}</p>
-                                    </div>
                                     <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700 font-medium">
                                         ${p.type}
                                     </span>
+                                    <div class="text-left" dir="ltr">
+                                        <h4 class="font-extrabold text-white text-xl tracking-tight">$${p.price.toLocaleString('en-US')}</h4>
+                                        <p class="text-xs text-slate-400 font-medium mt-0.5">${p.address}</p>
+                                    </div>
                                 </div>
 
                                 <div class="grid grid-cols-3 gap-2 bg-[#1b2749] p-2.5 rounded-xl border border-slate-700 text-center text-xs text-slate-300">
@@ -580,7 +582,7 @@
                                     </div>
                                 </div>
 
-                                <div class="bg-blue-950/40 border border-blue-900/50 p-3 rounded-xl">
+                                <div class="bg-blue-950/40 border border-blue-900/50 p-3 rounded-xl text-right">
                                     <p class="text-xs text-blue-300 leading-relaxed">
                                         <strong class="text-blue-200">💡 תובנת מודיעין:</strong> ${p.summary}
                                     </p>
