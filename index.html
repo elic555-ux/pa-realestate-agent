@@ -12,53 +12,70 @@
 </head>
 <body class="bg-[#0b1329] text-slate-100 min-h-screen">
 
-    <!-- Top Header -->
+    <!-- Header -->
     <header class="bg-[#0f172a] border-b border-slate-800 py-4 px-6 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-2 bg-slate-800/80 border border-emerald-500/40 px-3 py-1 rounded-full text-xs text-emerald-400">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>מערכת מחוברת</span>
-            </div>
-
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/30">
+                    RE
+                </div>
                 <div class="text-right">
-                    <h1 class="text-xl font-bold tracking-tight text-white flex items-center justify-end gap-2">
+                    <h1 class="text-xl font-bold tracking-tight text-white">
                         Real Estate Intelligence Agent
                     </h1>
                     <p class="text-xs text-slate-400">מודיעין נדל"ן מתקדם, איתור הזדמנויות וניתוח תשתיות רב-מדינתי</p>
                 </div>
-                <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/30">
-                    RE
-                </div>
+            </div>
+
+            <div class="flex items-center gap-2 bg-slate-800/80 border border-emerald-500/40 px-3 py-1.5 rounded-full text-xs text-emerald-400">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>מערכת מחוברת</span>
             </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
 
-        <!-- Search & Settings Panel -->
+        <!-- Controls Section -->
         <section class="bg-[#111c38] border border-slate-700/70 rounded-2xl p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-5 pb-3 border-b border-slate-700/50">
-                <p class="text-xs text-slate-400 font-medium">סריקה רב-מקורית מלאה (MLS, כינוס, עיזבונות, רשומות מחוז ו-FSBO)</p>
                 <h2 class="text-sm font-bold text-white flex items-center gap-2">
-                    הגדרות סינון וסריקה <span>⚙️</span>
+                    <span>⚙️</span> הגדרות סינון וסריקה
                 </h2>
+                <p class="text-xs text-slate-400 font-medium">סריקה רב-מקורית מלאה (MLS, כינוס, עיזבונות, רשומות מחוז ו-FSBO)</p>
             </div>
 
-            <!-- Top Controls Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4">
+            <!-- Filter Controls -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4 text-right">
                 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">חדרי רחצה (מינ')</label>
-                    <select id="filterBaths" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="ALL">הכל</option>
-                        <option value="1">1+ חדרי רחצה</option>
-                        <option value="2">2+ חדרי רחצה</option>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">מדינה / State</label>
+                    <select class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="PA">Pennsylvania (PA)</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">חדרי שינה (מינ')</label>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">מחיר מקסימום ($)</label>
+                    <input type="number" id="filterMaxPrice" value="350000" step="5000" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">גודל בית מינ' (SqFt)</label>
+                    <input type="number" id="filterMinSqft" value="1000" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">סוג נכס</label>
+                    <select id="filterType" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="ALL">הכל (All Types)</option>
+                        <option value="Single Family">Single Family</option>
+                        <option value="Multi Family">Multi Family</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">חדרי שינה (מינ')</label>
                     <select id="filterBeds" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
                         <option value="ALL">הכל</option>
                         <option value="2">2+ חדרים</option>
@@ -68,83 +85,66 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">סוג נכס</label>
-                    <select id="filterType" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="ALL">הכל (All Types)</option>
-                        <option value="Single Family">Single Family</option>
-                        <option value="Multi Family">Multi Family</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">גודל בית מינ' (SqFt)</label>
-                    <input type="number" id="filterMinSqft" value="1000" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">מחיר מקסימום ($)</label>
-                    <input type="number" id="filterMaxPrice" value="350000" step="5000" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5 text-right">מדינה / State</label>
-                    <select class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="PA">Pennsylvania (PA)</option>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">חדרי רחצה (מינ')</label>
+                    <select id="filterBaths" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="ALL">הכל</option>
+                        <option value="1">1+ חדרי רחצה</option>
+                        <option value="2">2+ חדרי רחצה</option>
                     </select>
                 </div>
 
             </div>
 
-            <!-- City Selection Checkboxes -->
+            <!-- Cities -->
             <div class="mt-6 space-y-2">
                 <div class="flex justify-between items-center">
+                    <label class="text-xs font-bold text-slate-300">1. בחר ערים לסריקה (ניתן לבחור כמה ביחד):</label>
                     <div class="flex gap-2 text-xs">
                         <button onclick="selectAllCities(true)" class="text-blue-400 hover:underline">בחר הכל</button>
                         <span class="text-slate-600">|</span>
                         <button onclick="selectAllCities(false)" class="text-slate-400 hover:underline">נקה הכל</button>
                     </div>
-                    <label class="text-xs font-bold text-slate-300">1. בחר ערים לסריקה (ניתן לבחור כמה ביחד):</label>
                 </div>
                 
-                <div class="flex flex-wrap gap-2 justify-end" id="cityList"></div>
+                <div class="flex flex-wrap gap-2 justify-start" id="cityList"></div>
             </div>
 
-            <!-- Neighborhood Selection Checkboxes -->
+            <!-- Neighborhoods -->
             <div class="mt-5 space-y-2">
                 <div class="flex justify-between items-center">
+                    <label class="text-xs font-bold text-slate-300">2. סינון שכונות ואזורים (סמן שכונות רצויות):</label>
                     <div class="flex gap-2 text-xs">
                         <button onclick="selectAllNeighborhoods(true)" class="text-blue-400 hover:underline">בחר הכל</button>
                         <span class="text-slate-600">|</span>
                         <button onclick="selectAllNeighborhoods(false)" class="text-slate-400 hover:underline">נקה הכל</button>
                     </div>
-                    <label class="text-xs font-bold text-slate-300">2. סינון שכונות ואזורים (סמן שכונות רצויות):</label>
                 </div>
 
-                <div class="flex flex-wrap gap-2 justify-end" id="neighborhoodList"></div>
+                <div class="flex flex-wrap gap-2 justify-start" id="neighborhoodList"></div>
             </div>
 
-            <!-- Action Button -->
+            <!-- Bottom Actions -->
             <div class="mt-6 pt-4 border-t border-slate-700/50 flex flex-col sm:flex-row justify-between items-center gap-3">
-                <p id="selectionSummary" class="text-xs text-slate-400 order-2 sm:order-1"></p>
-                <button onclick="renderProperties()" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-8 rounded-xl shadow-lg shadow-blue-600/30 text-xs transition flex items-center justify-center gap-2 order-1 sm:order-2">
+                <button onclick="renderProperties()" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-8 rounded-xl shadow-lg shadow-blue-600/30 text-xs transition flex items-center justify-center gap-2">
                     <span>🔍</span> החל סינון והצג נכסים
                 </button>
+                <p id="selectionSummary" class="text-xs text-slate-400"></p>
             </div>
         </section>
 
-        <!-- Results Counter -->
-        <div class="flex justify-between items-center">
+        <!-- Counter Header -->
+        <div class="flex justify-start items-center">
             <h3 class="text-base font-bold text-white">
                 נכסים שאותרו במאגר (<span id="resultsCount" class="text-blue-400">0</span>)
             </h3>
         </div>
 
-        <!-- Property Grid -->
+        <!-- Cards Grid -->
         <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
         <!-- Empty State -->
         <div id="emptyState" class="hidden text-center py-16 bg-[#111c38] rounded-2xl border border-dashed border-slate-700">
-            <p class="text-slate-400 text-sm">לא נמצאו נכסים העונים לקריטריונים שנבחרו. נסה להעלות את מחיר המקסימום או לבחור ערים נוספות.</p>
+            <p class="text-slate-400 text-sm">לא נמצאו נכסים העונים לקריטריונים שנבחרו.</p>
         </div>
 
     </main>
@@ -336,7 +336,7 @@
         ];
 
         const CITIES = [
-            "Lancaster", "Bethlehem", "Scranton", "Reading", "Erie", "Allentown", "Pittsburgh", "Philadelphia"
+            "Pittsburgh", "Philadelphia", "Allentown", "Reading", "Erie", "Scranton", "Bethlehem", "Lancaster"
         ];
 
         const NEIGHBORHOODS_MAP = {
@@ -356,9 +356,9 @@
             CITIES.forEach(city => {
                 const checked = (city === "Pittsburgh") ? "checked" : "";
                 const el = `
-                    <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-2 cursor-pointer hover:border-slate-500 transition">
-                        <span>${city}</span>
+                    <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-2 cursor-pointer hover:border-slate-500 transition" dir="ltr">
                         <input type="checkbox" value="${city}" class="city-cb rounded text-blue-600 focus:ring-0" ${checked} onchange="updateNeighborhoods()">
+                        <span class="text-white">${city}</span>
                     </label>
                 `;
                 cityContainer.innerHTML += el;
@@ -377,10 +377,9 @@
                 list.forEach(n => {
                     totalNeighborhoods++;
                     const el = `
-                        <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 cursor-pointer hover:border-slate-500 transition">
-                            <span class="text-slate-400 text-[10px]">${city}:</span>
-                            <span class="font-semibold text-white">${n}</span>
+                        <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 cursor-pointer hover:border-slate-500 transition" dir="ltr">
                             <input type="checkbox" value="${n}" class="neigh-cb rounded text-blue-600 focus:ring-0" checked>
+                            <span class="text-white font-semibold">${city}: ${n}</span>
                         </label>
                     `;
                     nContainer.innerHTML += el;
@@ -439,7 +438,7 @@
 
             filtered.forEach(p => {
                 const card = `
-                    <div class="bg-[#111c38] border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-500 transition flex flex-col justify-between">
+                    <div class="bg-[#111c38] border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-500 transition flex flex-col justify-between text-right">
                         <div>
                             <div class="relative h-48 bg-slate-900 overflow-hidden">
                                 <img src="${p.img}" alt="${p.address}" class="w-full h-full object-cover">
@@ -452,8 +451,8 @@
                             <div class="p-5 space-y-3.5">
                                 <div class="flex justify-between items-start">
                                     <div>
-                                        <h4 class="font-extrabold text-white text-xl tracking-tight">$${p.price.toLocaleString('en-US')}</h4>
-                                        <p class="text-xs text-slate-400 font-medium mt-0.5">${p.address}</p>
+                                        <h4 class="font-extrabold text-white text-xl tracking-tight" dir="ltr">$${p.price.toLocaleString('en-US')}</h4>
+                                        <p class="text-xs text-slate-400 font-medium mt-0.5" dir="ltr">${p.address}</p>
                                     </div>
                                     <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700 font-medium">
                                         ${p.type}
@@ -475,7 +474,7 @@
                                     </div>
                                 </div>
 
-                                <div class="bg-blue-950/40 border border-blue-900/50 p-3 rounded-xl">
+                                <div class="bg-blue-950/40 border border-blue-900/50 p-3 rounded-xl text-right">
                                     <p class="text-xs text-blue-300 leading-relaxed">
                                         <strong class="text-blue-200">💡 תובנת מודיעין:</strong> ${p.summary}
                                     </p>
