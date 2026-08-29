@@ -2,7 +2,6 @@ import os
 import random
 import requests
 
-# חיבור ל-Supabase דרך REST API ישיר
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://rroamddaivercqdaathp.supabase.co")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", os.environ.get("SUPABASE_ANON_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyb2FtZGRhaXZlcmNxZGFhdGhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxOTU3ODAsImV4cCI6MjA4Nzc3MTc4MH0.g7kU2W27t7p4eL3w1sZJ-Bfqf9t7xJ9p4Xk2L-Bfqf9"))
 
@@ -82,7 +81,7 @@ def run_agent():
         "apikey": SUPABASE_KEY,
         "Authorization": f"Bearer {SUPABASE_KEY}",
         "Content-Type": "application/json",
-        "Prefer": "resolution=merge-duplicates"
+        "Prefer": "return=minimal"
     }
 
     records_to_insert = []
@@ -110,7 +109,6 @@ def run_agent():
             }
             records_to_insert.append(record)
 
-    # שמירה ב-Supabase בבת אחת
     url = f"{SUPABASE_URL}/rest/v1/properties"
     res = requests.post(url, headers=headers, json=records_to_insert)
     
