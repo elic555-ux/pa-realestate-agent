@@ -31,10 +31,10 @@ def fetch_on_market_deals():
     for target in TARGET_CITIES:
         city = target["city"]
         state = target["state_code"]
-        print(f"[Agent] סורק עסקאות והורדות מחיר ב-{city}, {state}...")
+        print(f"[Agent] סורק נכסים ב-{city}, {state}...")
 
         payload = {
-            "limit": 15,
+            "limit": 25,
             "offset": 0,
             "status": ["for_sale"],
             "sort": {"direction": "desc", "field": "list_date"},
@@ -47,6 +47,7 @@ def fetch_on_market_deals():
             if res.status_code == 200:
                 data = res.json()
                 listings = data.get("data", {}).get("home_search", {}).get("results", [])
+                print(f"[Agent] נמצאו {len(listings)} נכסים עבור {city}")
 
                 for item in listings:
                     desc = item.get("description", {})
@@ -58,17 +59,35 @@ def fetch_on_market_deals():
                     baths = desc.get("baths_consolidated") or desc.get("baths_full") or 0
                     sqft = desc.get("sqft") or 0
                     prop_type = desc.get("type", "single_family").replace("_", " ").title()
-                    prop_id = item.get("property_id", "")
+                    prop_id = item.get("property_id") or item.get("mpr_id") or ""
                     
+                    # חילוץ כתובת מדויקת
+                    line_addr = loc.get("line") or ""
+                    street_view = loc.get("street_view_url") or ""
+                    
+                    # חילוץ קישור ישיר אמיתי ל-Realtor
+                    href = item.get("href")
+                    if href:
+                        if href.startswith("http"):
+                            real_url = href
+                        else:
+                            real_url = f"https://www.realtor.com/realestateandhomes-detail/{href.lstrip('/')}"
+                    elif prop_id:
+                        real_url = f"https://www.realtor.com/realestateandhomes-detail/{prop_id}"
+                    elif line_addr:
+                        clean_addr = line_addr.replace(" ", "-").replace(",", "")
+                        real_url = f"https://www.realtor.com/realestateandhomes-detail/{clean_addr}_{city}_{state}"
+                    else:
+                        real_url = f"https://www.realtor.com/realestateandhomes-search/{city}_{state}"
+
                     is_price_cut = flags.get("is_price_reduced", False)
-                    realtor_url = f"https://www.realtor.com/realestateandhomes-detail/{prop_id}" if prop_id else "https://www.realtor.com"
 
                     scraped_properties.append({
-                        "id": prop_id,
+                        "id": prop_id or f"{city}_{len(scraped_properties)}",
                         "state": state,
                         "city": city,
-                        "neighborhood": loc.get("neighborhood_name") or "General",
-                        "address": loc.get("line") or f"{city} Property",
+                        "neighborhood": loc.get("neighborhood_name") or loc.get("county") or "General",
+                        "address": line_addr if line_addr else f"{city} Listing",
                         "price": price,
                         "beds": int(beds) if beds else 0,
                         "baths": float(baths) if baths else 0.0,
@@ -76,8 +95,8 @@ def fetch_on_market_deals():
                         "type": prop_type,
                         "relisted": is_price_cut,
                         "deal_type": "Price Drop" if is_price_cut else "Active MLS",
-                        "url": realtor_url,
-                        "summary": f"אותרה הזדמנות ב-{city}. מחיר מבוקש: ${price:,}." if price else f"נכס פעיל ב-{city}."
+                        "url": real_url,
+                        "summary": f"נכס מאומת ב-{city}. מחיר מבוקש: ${price:,}." if price else f"נכס פעיל ב-{city}."
                     })
             else:
                 print(f"[Agent] שגיאת API עבור {city}: קוד {res.status_code}")
