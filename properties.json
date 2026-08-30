@@ -1,36 +1,30 @@
-{
-  "last_updated": "30/08/2026, 10:05 EST",
-  "total_properties": 2,
-  "properties": [
-    {
-      "state": "PA",
-      "city": "Pittsburgh",
-      "neighborhood": "Oakland",
-      "address": "312 S Bouquet St",
-      "price": 195000,
-      "beds": 3,
-      "baths": 2.0,
-      "sqft": 1420,
-      "type": "Single Family",
-      "img": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80",
-      "url": "https://www.zillow.com/homes/312-S-Bouquet-St-Pittsburgh,-PA-15213_rb/",
-      "relisted": true,
-      "summary": "נכס אותנטי ב-Oakland פיטסבורג. סמוך לאוניברסיטאות CMU ו-Pitt, פוטנציאל שכירות מעולה."
-    },
-    {
-      "state": "PA",
-      "city": "Philadelphia",
-      "neighborhood": "Point Breeze",
-      "address": "2108 Point Breeze Ave",
-      "price": 195000,
-      "beds": 3,
-      "baths": 2.0,
-      "sqft": 1400,
-      "type": "Townhouse",
-      "img": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80",
-      "url": "https://www.zillow.com/homes/2108-Point-Breeze-Ave-Philadelphia,-PA-19145_rb/",
-      "relisted": false,
-      "summary": "נכס בדרום פילדלפיה, אזור בצמיחה עם ביקוש גבוה למגורים ושכירות."
-    }
-  ]
-}
+[
+  {
+    "city": "Pittsburgh",
+    "neighborhood": "Shadyside",
+    "address": "5405 Ellsworth Ave",
+    "state": "PA",
+    "price": 595000,
+    "beds": 2,
+    "baths": 4.0,
+    "sqft": 1600,
+    "type": "Townhouse",
+    "url": "https://www.zillow.com/homedetails/5405-Ellsworth-Ave-Pittsburgh-PA-15232/11525477_zpid/",
+    "summary": "Townhome יוקרתי ומבוקש בלב Shadyside סמוך ל-CMU ו-UPMC.",
+    "relisted": true
+  },
+  {
+    "city": "Pittsburgh",
+    "neighborhood": "Oakland",
+    "address": "312 S Bouquet St",
+    "state": "PA",
+    "price": 185000,
+    "beds": 3,
+    "baths": 1.5,
+    "sqft": 1380,
+    "type": "Single Family",
+    "url": "https://www.zillow.com/homes/312-S-Bouquet-St-Pittsburgh-PA_rb/",
+    "summary": "מיקום מרכזי בלב אזור האוניברסיטאות. שוק שכירות סטודנטים קשיח.",
+    "relisted": false
+  }
+]
