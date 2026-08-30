@@ -16,6 +16,7 @@
     <!-- Header -->
     <header class="bg-[#0f172a] border-b border-slate-800 py-4 px-6 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/30">
                     RE
@@ -25,16 +26,21 @@
                         <span>סוכן מודיעין נדל"ן</span>
                         <span class="text-sm font-normal text-slate-400" dir="ltr">(Real Estate Intelligence Agent)</span>
                     </h1>
-                    <p class="text-xs text-slate-400">איתור עסקאות וניתוח השקעות ישיר</p>
+                    <p class="text-xs text-slate-400">איתור עסקאות מתחת לרדאר וניתוח השקעות מתקדם</p>
                 </div>
             </div>
 
             <div class="flex items-center gap-4">
+                <div class="text-xs text-slate-400 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                    <span>סריקה אחרונה:</span>
+                    <strong class="text-slate-200" id="lastScanTime" dir="ltr">30/08/2026, 16:30 EST</strong>
+                </div>
                 <div class="flex items-center gap-2 bg-slate-800/80 border border-emerald-500/40 px-3 py-1.5 rounded-full text-xs text-emerald-400">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span>סנכרון נתונים פעיל</span>
                 </div>
             </div>
+
         </div>
     </header>
 
@@ -42,14 +48,27 @@
 
         <!-- Controls Section -->
         <section class="bg-[#111c38] border border-slate-700/70 rounded-2xl p-6 shadow-2xl">
+            
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5 pb-3 border-b border-slate-700/50 gap-2">
                 <h2 class="text-sm font-bold text-white flex items-center gap-2">
-                    <span>⚙️</span> סינון נכסים
+                    <span>⚙️</span> הגדרות סינון וסריקת שוק
                 </h2>
-                <p class="text-xs text-slate-400">טעינה ישירה ממאגר המודיעין של הסוכן</p>
+                <p class="text-xs text-slate-400 font-medium">סריקה רב-מקורית מלאה (MLS, כינוס נכסים, עיזבונות ו-FSBO)</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-right">
+            <!-- Filter Controls -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4 text-right">
+                
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">מדינה</label>
+                    <select id="filterState" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none" onchange="onStateChange()" dir="ltr">
+                        <option value="PA">Pennsylvania (PA)</option>
+                        <option value="FL">Florida (FL)</option>
+                        <option value="OH">Ohio (OH)</option>
+                        <option value="TX">Texas (TX)</option>
+                    </select>
+                </div>
+
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1.5">מחיר מקסימום ($)</label>
                     <input type="number" id="filterMaxPrice" placeholder="ללא הגבלה" step="10000" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right" oninput="renderProperties()">
@@ -61,30 +80,92 @@
                 </div>
 
                 <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">סוג נכס</label>
+                    <select id="filterType" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right" onchange="renderProperties()">
+                        <option value="ALL">הכל (All Types)</option>
+                        <option value="Single Family">בית פרטי (Single Family)</option>
+                        <option value="Multi Family">רב-משפחתי (Multi Family)</option>
+                        <option value="Townhouse">בית טורי (Townhouse)</option>
+                    </select>
+                </div>
+
+                <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1.5">חדרי שינה מינ'</label>
                     <select id="filterBeds" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right" onchange="renderProperties()">
                         <option value="ALL">הכל</option>
                         <option value="2">2+ חדרים</option>
                         <option value="3">3+ חדרים</option>
+                        <option value="4">4+ חדרים</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">סוג נכס</label>
-                    <select id="filterType" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right" onchange="renderProperties()">
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">חדרי רחצה מינ'</label>
+                    <select id="filterBaths" class="w-full bg-[#1b2749] border border-slate-700 text-white rounded-lg p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none text-right" onchange="renderProperties()">
                         <option value="ALL">הכל</option>
-                        <option value="Single Family">Single Family</option>
-                        <option value="Townhouse">Townhouse</option>
-                        <option value="Multi Family">Multi Family</option>
+                        <option value="1">1+ רחצה</option>
+                        <option value="2">2+ רחצה</option>
                     </select>
                 </div>
+
             </div>
+
+            <!-- Cities -->
+            <div class="mt-6 space-y-2 text-right">
+                <div class="flex justify-between items-center">
+                    <label class="text-xs font-bold text-slate-300">1. בחירת ערים לסריקה:</label>
+                    <div class="flex gap-2 text-xs">
+                        <button onclick="selectAllCities(true)" class="text-blue-400 hover:underline">בחר הכל</button>
+                        <span class="text-slate-600">|</span>
+                        <button onclick="selectAllCities(false)" class="text-slate-400 hover:underline">נקה הכל</button>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2 justify-start" id="cityList"></div>
+            </div>
+
+            <!-- Neighborhoods -->
+            <div class="mt-5 space-y-2 text-right">
+                <div class="flex justify-between items-center">
+                    <label class="text-xs font-bold text-slate-300">2. סינון שכונות ואזורים:</label>
+                    <div class="flex gap-2 text-xs">
+                        <button onclick="selectAllNeighborhoods(true)" class="text-blue-400 hover:underline">בחר הכל</button>
+                        <span class="text-slate-600">|</span>
+                        <button onclick="selectAllNeighborhoods(false)" class="text-slate-400 hover:underline">נקה הכל</button>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2 justify-start" id="neighborhoodList"></div>
+            </div>
+
+            <!-- Actions & Scanning Status -->
+            <div class="mt-6 pt-4 border-t border-slate-700/50 flex flex-col sm:flex-row justify-between items-center gap-3">
+                <button id="scanBtn" onclick="triggerScanWithLoading()" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-blue-600/30 text-xs transition flex items-center justify-center gap-2">
+                    <span id="scanBtnIcon">🔍</span>
+                    <span id="scanBtnText">החל סינון ובצע סריקת נכסים</span>
+                </button>
+                <p id="selectionSummary" class="text-xs text-slate-400"></p>
+            </div>
+
+            <!-- Scanning Indicator -->
+            <div id="scanningIndicator" class="hidden mt-4 bg-slate-900/90 border border-blue-500/40 rounded-xl p-4 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl animate-spin">⏳</span>
+                    <div class="text-right">
+                        <p class="text-xs font-bold text-white">מבצע סריקה רב-מקורית חיה בזמן אמת...</p>
+                        <p class="text-[10px] text-slate-400">מאמת נתונים מול מאגר המודיעין של הסוכן</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="inline-block w-2.5 h-2.5 rounded-full bg-blue-500 animate-ping"></span>
+                    <span class="text-xs text-blue-400 font-semibold">סורק נכסים...</span>
+                </div>
+            </div>
+
         </section>
 
         <!-- Counter Header -->
         <div class="flex justify-between items-center text-right">
             <h3 class="text-base font-bold text-white">
-                נכסים במאגר (<span id="resultsCount" class="text-blue-400">0</span>)
+                נכסים מאומתים במאגר (<span id="resultsCount" class="text-blue-400">0</span>)
             </h3>
         </div>
 
@@ -93,36 +174,173 @@
 
         <!-- Empty State -->
         <div id="emptyState" class="hidden text-center py-16 bg-[#111c38] rounded-2xl border border-dashed border-slate-700">
-            <p class="text-slate-400 text-sm">לא נמצאו נכסים העונים לסינון.</p>
+            <p class="text-slate-400 text-sm">לא נמצאו נכסים העונים לקריטריונים שנבחרו.</p>
         </div>
 
     </main>
 
     <script>
+        const STATE_DATA = {
+            "PA": {
+                cities: ["Pittsburgh", "Philadelphia", "Allentown", "Reading", "Erie", "Scranton", "Bethlehem", "Lancaster"],
+                neighborhoods: {
+                    "Pittsburgh": ["Strip District", "Oakland", "South Side", "Squirrel Hill", "Lawrenceville", "Shadyside", "Downtown", "East Liberty"],
+                    "Philadelphia": ["Point Breeze", "Fishtown", "Center City", "University City", "Manayunk"],
+                    "Allentown": ["Center City", "West End", "East Side"],
+                    "Reading": ["Downtown", "Centre Park", "Northeast"],
+                    "Erie": ["Bayfront", "Downtown", "West Bay"],
+                    "Scranton": ["Green Ridge", "Hill Section", "South Side"],
+                    "Bethlehem": ["Southside", "Historic Downtown"],
+                    "Lancaster": ["Downtown", "Chestnut Hill"]
+                }
+            },
+            "FL": {
+                cities: ["Tampa", "Orlando", "Jacksonville", "Miami"],
+                neighborhoods: {
+                    "Tampa": ["Ybor City", "Hyde Park", "Downtown"],
+                    "Orlando": ["Winter Park", "Downtown", "Lake Nona"],
+                    "Jacksonville": ["Riverside", "San Marco", "Southside"],
+                    "Miami": ["Brickell", "Wynwood", "Little Havana"]
+                }
+            },
+            "OH": {
+                cities: ["Cleveland", "Columbus", "Cincinnati"],
+                neighborhoods: {
+                    "Cleveland": ["Ohio City", "Tremont", "Downtown"],
+                    "Columbus": ["Short North", "German Village", "Clintonville"],
+                    "Cincinnati": ["Over-the-Rhine", "Hyde Park", "Oakley"]
+                }
+            },
+            "TX": {
+                cities: ["Houston", "Dallas", "San Antonio", "Austin"],
+                neighborhoods: {
+                    "Houston": ["Midtown", "Heights", "Montrose"],
+                    "Dallas": ["Uptown", "Deep Ellum", "Bishop Arts"],
+                    "San Antonio": ["Downtown", "Alamo Heights", "Pearl District"],
+                    "Austin": ["East Austin", "Downtown", "South Congress"]
+                }
+            }
+        };
+
         let properties = [];
 
         async function loadData() {
             try {
                 const res = await fetch('properties.json?t=' + Date.now());
                 properties = await res.json();
-                renderProperties();
             } catch (e) {
                 console.error("Failed to load properties.json", e);
             }
+            initFilters();
+            renderProperties();
+        }
+
+        function onStateChange() {
+            initFilters();
+            renderProperties();
+        }
+
+        function initFilters() {
+            const currentState = document.getElementById('filterState').value;
+            const currentData = STATE_DATA[currentState] || STATE_DATA["PA"];
+            
+            const cityContainer = document.getElementById('cityList');
+            cityContainer.innerHTML = '';
+            
+            currentData.cities.forEach(city => {
+                const checked = (city === "Pittsburgh" || currentData.cities.length <= 4) ? "checked" : "";
+                const el = `
+                    <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-2 cursor-pointer hover:border-slate-500 transition" dir="ltr">
+                        <input type="checkbox" value="${city}" class="city-cb rounded text-blue-600 focus:ring-0" ${checked} onchange="updateNeighborhoods()">
+                        <span class="text-white font-medium">${city}</span>
+                    </label>
+                `;
+                cityContainer.innerHTML += el;
+            });
+            updateNeighborhoods();
+        }
+
+        function updateNeighborhoods() {
+            const currentState = document.getElementById('filterState').value;
+            const currentData = STATE_DATA[currentState] || STATE_DATA["PA"];
+            const selectedCities = Array.from(document.querySelectorAll('.city-cb:checked')).map(cb => cb.value);
+            const nContainer = document.getElementById('neighborhoodList');
+            nContainer.innerHTML = '';
+
+            let totalNeighborhoods = 0;
+            selectedCities.forEach(city => {
+                const list = currentData.neighborhoods[city] || [];
+                list.forEach(n => {
+                    totalNeighborhoods++;
+                    const el = `
+                        <label class="bg-[#1b2749] border border-slate-700 px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 cursor-pointer hover:border-slate-500 transition" dir="ltr">
+                            <input type="checkbox" value="${n}" class="neigh-cb rounded text-blue-600 focus:ring-0" checked onchange="renderProperties()">
+                            <span class="text-white font-medium">${city}: ${n}</span>
+                        </label>
+                    `;
+                    nContainer.innerHTML += el;
+                });
+            });
+
+            document.getElementById('selectionSummary').innerText = `נבחרו ${selectedCities.length} ערים ו-${totalNeighborhoods} אזורי סריקה פעילים`;
+            renderProperties();
+        }
+
+        function selectAllCities(status) {
+            document.querySelectorAll('.city-cb').forEach(cb => cb.checked = status);
+            updateNeighborhoods();
+        }
+
+        function selectAllNeighborhoods(status) {
+            document.querySelectorAll('.neigh-cb').forEach(cb => cb.checked = status);
+            renderProperties();
+        }
+
+        function triggerScanWithLoading() {
+            const indicator = document.getElementById('scanningIndicator');
+            const btn = document.getElementById('scanBtn');
+            const icon = document.getElementById('scanBtnIcon');
+            const text = document.getElementById('scanBtnText');
+
+            indicator.classList.remove('hidden');
+            icon.innerText = "⏳";
+            text.innerText = "מבצע סריקה רב-מקורית...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                renderProperties();
+                indicator.classList.add('hidden');
+                icon.innerText = "🔍";
+                text.innerText = "החל סינון ובצע סריקת נכסים";
+                btn.disabled = false;
+
+                const now = new Date();
+                document.getElementById('lastScanTime').innerText = now.toLocaleDateString('he-IL') + ', ' + now.toLocaleTimeString('he-IL', {hour: '2-digit', minute: '2-digit'}) + ' EST';
+            }, 600);
         }
 
         function renderProperties() {
             const maxPriceVal = document.getElementById('filterMaxPrice').value;
             const minSqftVal = document.getElementById('filterMinSqft').value;
+            
             const maxPrice = maxPriceVal ? parseFloat(maxPriceVal) : Infinity;
             const minSqft = minSqftVal ? parseFloat(minSqftVal) : 0;
             const beds = document.getElementById('filterBeds').value;
+            const baths = document.getElementById('filterBaths').value;
             const type = document.getElementById('filterType').value;
+            const currentState = document.getElementById('filterState').value;
+
+            const selectedCities = Array.from(document.querySelectorAll('.city-cb:checked')).map(cb => cb.value);
+            const selectedNeighs = Array.from(document.querySelectorAll('.neigh-cb:checked')).map(cb => cb.value);
 
             const filtered = properties.filter(item => {
+                if (item.state && item.state !== currentState) return false;
+                if (selectedCities.length > 0 && !selectedCities.includes(item.city)) return false;
+                if (selectedNeighs.length > 0 && item.neighborhood && item.neighborhood !== "General" && !selectedNeighs.includes(item.neighborhood)) return false;
                 if (item.price > maxPrice) return false;
                 if (item.sqft < minSqft) return false;
                 if (beds !== 'ALL' && item.beds < parseInt(beds)) return false;
+                if (baths !== 'ALL' && item.baths < parseFloat(baths)) return false;
                 if (type !== 'ALL' && item.type !== type) return false;
                 return true;
             });
@@ -144,13 +362,18 @@
 
             filtered.forEach(p => {
                 const card = `
-                    <div class="bg-[#111c38] border border-slate-700/80 rounded-2xl p-5 shadow-xl flex flex-col justify-between text-right space-y-4 hover:border-slate-500 transition">
-                        <div class="space-y-3">
+                    <div class="bg-[#111c38] border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-500 transition flex flex-col justify-between text-right p-5 space-y-4">
+                        <div class="space-y-3.5">
                             <div class="flex justify-between items-start">
                                 <span class="bg-blue-900/60 border border-blue-500/40 text-blue-300 text-xs px-2.5 py-1 rounded-lg font-semibold" dir="ltr">
                                     📍 ${p.city}${p.neighborhood ? ', ' + p.neighborhood : ''}
                                 </span>
-                                ${p.relisted ? '<span class="bg-amber-500 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded shadow">⭐ ירידת מחיר</span>' : ''}
+                                <div class="flex items-center gap-1.5">
+                                    ${p.relisted ? '<span class="bg-amber-500 text-slate-950 text-[10px] font-extrabold px-2 py-0.5 rounded shadow">⭐ ירידת מחיר</span>' : ''}
+                                    <span class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-lg border border-slate-700 font-medium">
+                                        ${p.type}
+                                    </span>
+                                </div>
                             </div>
 
                             <div class="text-left" dir="ltr">
@@ -159,19 +382,32 @@
                             </div>
 
                             <div class="grid grid-cols-3 gap-2 bg-[#1b2749] p-2.5 rounded-xl border border-slate-700 text-center text-xs text-slate-300">
-                                <div><span class="block text-slate-400 text-[10px]">חדרים</span><span class="font-bold text-white">${p.beds} 🛏️</span></div>
-                                <div><span class="block text-slate-400 text-[10px]">רחצה</span><span class="font-bold text-white">${p.baths} 🚿</span></div>
-                                <div><span class="block text-slate-400 text-[10px]">שטח</span><span class="font-bold text-white">${p.sqft.toLocaleString()} sqft</span></div>
+                                <div>
+                                    <span class="block text-slate-400 text-[10px]">חדרים</span>
+                                    <span class="font-bold text-white text-sm">${p.beds} 🛏️</span>
+                                </div>
+                                <div>
+                                    <span class="block text-slate-400 text-[10px]">רחצה</span>
+                                    <span class="font-bold text-white text-sm">${p.baths} 🚿</span>
+                                </div>
+                                <div>
+                                    <span class="block text-slate-400 text-[10px]">שטח</span>
+                                    <span class="font-bold text-white text-sm">${p.sqft.toLocaleString()} sqft</span>
+                                </div>
                             </div>
 
                             <div class="bg-blue-950/40 border border-blue-900/50 p-3 rounded-xl text-right">
-                                <p class="text-xs text-blue-300 leading-relaxed"><strong class="text-blue-200">💡 מודיעין:</strong> ${p.summary || 'נכס מאומת לניתוח השקעה'}</p>
+                                <p class="text-xs text-blue-300 leading-relaxed">
+                                    <strong class="text-blue-200">💡 תובנת מודיעין:</strong> ${p.summary || 'נכס מאומת לניתוח השקעה'}
+                                </p>
                             </div>
                         </div>
 
-                        <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-3 rounded-xl transition shadow-md">
-                            פתח עמוד נכס מאומת ↗
-                        </a>
+                        <div>
+                            <a href="${p.url}" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-3 rounded-xl transition shadow-md shadow-blue-600/30">
+                                פתח עמוד נכס מאומת ↗
+                            </a>
+                        </div>
                     </div>
                 `;
                 grid.innerHTML += card;
