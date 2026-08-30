@@ -2,20 +2,6 @@
   {
     "state": "PA",
     "city": "Pittsburgh",
-    "neighborhood": "Shadyside",
-    "address": "5405 Ellsworth Ave",
-    "price": 595000,
-    "beds": 2,
-    "baths": 4.0,
-    "sqft": 1600,
-    "type": "Townhouse",
-    "relisted": true,
-    "url": "https://www.zillow.com/homedetails/5405-Ellsworth-Ave-Pittsburgh-PA-15232/11525477_zpid/",
-    "summary": "Townhome מבוקש בלב Shadyside סמוך ל-CMU ומרכזים רפואיים."
-  },
-  {
-    "state": "PA",
-    "city": "Pittsburgh",
     "neighborhood": "Oakland",
     "address": "312 S Bouquet St",
     "price": 185000,
@@ -25,7 +11,35 @@
     "type": "Single Family",
     "relisted": false,
     "url": "https://www.zillow.com/homes/312-S-Bouquet-St-Pittsburgh-PA_rb/",
-    "summary": "מיקום מרכזי בלב אזור האוניברסיטאות. שוק שכירות סטודנטים יציב."
+    "summary": "מיקום אסטרטגי בלב Oakland, שוק שכירות סטודנטים מבוקש סמוך לאוניברסיטת פיטסבורג."
+  },
+  {
+    "state": "PA",
+    "city": "Pittsburgh",
+    "neighborhood": "Shadyside",
+    "address": "5405 Ellsworth Ave",
+    "price": 595000,
+    "beds": 2,
+    "baths": 4.0,
+    "sqft": 1600,
+    "type": "Townhouse",
+    "relisted": true,
+    "url": "https://www.zillow.com/homes/5405-Ellsworth-Ave-Pittsburgh-PA_rb/",
+    "summary": "Townhome יוקרתי בלב Shadyside סמוך ל-CMU, מרכזים מסחריים ובתי חולים."
+  },
+  {
+    "state": "PA",
+    "city": "Pittsburgh",
+    "neighborhood": "Lawrenceville",
+    "address": "4215 Butler St",
+    "price": 279000,
+    "beds": 3,
+    "baths": 2.0,
+    "sqft": 1450,
+    "type": "Single Family",
+    "relisted": false,
+    "url": "https://www.zillow.com/homes/4215-Butler-St-Pittsburgh-PA_rb/",
+    "summary": "בלב לורנסוויל הטרנדית, ביקוש שיא לשכירות צעירים ואנשי הייטק."
   },
   {
     "state": "PA",
@@ -39,7 +53,35 @@
     "type": "Single Family",
     "relisted": true,
     "url": "https://www.zillow.com/homes/7802-Hamilton-Ave-Pittsburgh-PA_rb/",
-    "summary": "נכס באזור בהתחדשות עירונית, פוטנציאל השבחה ותשואה מעל 9%."
+    "summary": "אזור בהתחדשות עירונית מואצת, פוטנציאל השבחה גבוה ותשואה מעל 9%."
+  },
+  {
+    "state": "PA",
+    "city": "Pittsburgh",
+    "neighborhood": "Squirrel Hill",
+    "address": "5812 Forbes Ave",
+    "price": 420000,
+    "beds": 4,
+    "baths": 2.5,
+    "sqft": 2100,
+    "type": "Single Family",
+    "relisted": false,
+    "url": "https://www.zillow.com/homes/5812-Forbes-Ave-Pittsburgh-PA_rb/",
+    "summary": "שכונה מבוקשת עם מערכת חינוך מובילה, יציבות ערך ושכירות גבוהה."
+  },
+  {
+    "state": "PA",
+    "city": "Pittsburgh",
+    "neighborhood": "South Side",
+    "address": "1914 Carson St",
+    "price": 235000,
+    "beds": 3,
+    "baths": 2.0,
+    "sqft": 1520,
+    "type": "Multi Family",
+    "relisted": false,
+    "url": "https://www.zillow.com/homes/1914-East-Carson-St-Pittsburgh-PA_rb/",
+    "summary": "נכס רב-משפחתי מניב בסאות' סייד, תפוסה מלאה של שוכרים."
   },
   {
     "state": "PA",
@@ -53,7 +95,7 @@
     "type": "Multi Family",
     "relisted": true,
     "url": "https://www.zillow.com/homes/2108-Point-Breeze-Ave-Philadelphia-PA_rb/",
-    "summary": "נכס רב-משפחתי מבוקש, מתאים למודל BRRRR עם תזרים חודשי גבוה."
+    "summary": "נכס רב-משפחתי מתאים למודל BRRRR, תזרים מזומנים גבוה ומיקום מתפתח."
   },
   {
     "state": "PA",
@@ -67,7 +109,35 @@
     "type": "Multi Family",
     "relisted": false,
     "url": "https://www.zillow.com/homes/3820-Powelton-Ave-Philadelphia-PA_rb/",
-    "summary": "סמוך ל-UPenn ו-Drexel. תפוסה מלאה לכל אורך השנה."
+    "summary": "סמוך לאוניברסיטאות UPenn ו-Drexel, תפוסה שנתית של 100%."
+  },
+  {
+    "state": "PA",
+    "city": "Philadelphia",
+    "neighborhood": "Fishtown",
+    "address": "1422 Frankford Ave",
+    "price": 360000,
+    "beds": 3,
+    "baths": 2.0,
+    "sqft": 1550,
+    "type": "Townhouse",
+    "relisted": false,
+    "url": "https://www.zillow.com/homes/1422-Frankford-Ave-Philadelphia-PA_rb/",
+    "summary": "השכונה הלוהטת ביותר בפילדלפיה, עליית ערך עקבית ותשואת שכירות מעולה."
+  },
+  {
+    "state": "PA",
+    "city": "Philadelphia",
+    "neighborhood": "Center City",
+    "address": "1704 Pine St",
+    "price": 499000,
+    "beds": 2,
+    "baths": 2.0,
+    "sqft": 1300,
+    "type": "Townhouse",
+    "relisted": true,
+    "url": "https://www.zillow.com/homes/1704-Pine-St-Philadelphia-PA_rb/",
+    "summary": "נכס פרימיום במרכז העיר ההיסטורי, מתאים להשכרה לטווח בינוני/ארוך."
   },
   {
     "state": "PA",
@@ -81,7 +151,21 @@
     "type": "Single Family",
     "relisted": false,
     "url": "https://www.zillow.com/homes/628-N-7th-St-Allentown-PA_rb/",
-    "summary": "אזור Lehigh Valley בצמיחה דמוגרפית מהירה וביקוש שכירות חזק."
+    "summary": "מרכז עמק ליהיי (Lehigh Valley), מוקד תעסוקה לוגיסטי בצמיחה מהירה."
+  },
+  {
+    "state": "PA",
+    "city": "Allentown",
+    "neighborhood": "West End",
+    "address": "1932 W Chew St",
+    "price": 245000,
+    "beds": 3,
+    "baths": 2.0,
+    "sqft": 1600,
+    "type": "Single Family",
+    "relisted": false,
+    "url": "https://www.zillow.com/homes/1932-W-Chew-St-Allentown-PA_rb/",
+    "summary": "שכונה שקטה ומבוקשת סמוך לפארקים ולמוסדות חינוך, מצוין למשפחות."
   },
   {
     "state": "PA",
@@ -95,7 +179,21 @@
     "type": "Single Family",
     "relisted": true,
     "url": "https://www.zillow.com/homes/415-N-11th-St-Reading-PA_rb/",
-    "summary": "מחיר כניסה נמוך ותשואת Cash-on-Cash גבוהה במיוחד."
+    "summary": "מחיר כניסה נמוך ותשואת Cash-on-Cash גבוהה של מעל 11%."
+  },
+  {
+    "state": "PA",
+    "city": "Reading",
+    "neighborhood": "Centre Park",
+    "address": "720 N 5th St",
+    "price": 169000,
+    "beds": 4,
+    "baths": 2.0,
+    "sqft": 1750,
+    "type": "Multi Family",
+    "relisted": false,
+    "url": "https://www.zillow.com/homes/720-N-5th-St-Reading-PA_rb/",
+    "summary": "נכס רב-משפחתי היסטורי משופץ עם פוטנציאל פיצול יחידות."
   },
   {
     "state": "PA",
@@ -109,7 +207,21 @@
     "type": "Single Family",
     "relisted": false,
     "url": "https://www.zillow.com/homes/512-W-4th-St-Erie-PA_rb/",
-    "summary": "קרבה לאזור המפרץ המתחדש של אירי, עלויות תחזוקה נמוכות."
+    "summary": "קרבה לאזור המפרץ המתחדש של אירי, עלויות תחזוקה נמוכות ותשואה יציבה."
+  },
+  {
+    "state": "PA",
+    "city": "Erie",
+    "neighborhood": "Downtown",
+    "address": "138 E 8th St",
+    "price": 125000,
+    "beds": 3,
+    "baths": 1.5,
+    "sqft": 1300,
+    "type": "Single Family",
+    "relisted": true,
+    "url": "https://www.zillow.com/homes/138-E-8th-St-Erie-PA_rb/",
+    "summary": "הזדמנות להשבחה מהירה, שוק שכירות מקומי ער."
   },
   {
     "state": "PA",
@@ -123,6 +235,20 @@
     "type": "Single Family",
     "relisted": false,
     "url": "https://www.zillow.com/homes/1610-Sanderson-Ave-Scranton-PA_rb/",
-    "summary": "שכונת Green Ridge המבוקשת, נכס במצב מצוין עם שוכרים קיימים."
+    "summary": "שכונת גרין רידג' המבוקשת בסקרנטון, נכס במצב מצוין עם שוכרים יציבים."
+  },
+  {
+    "state": "PA",
+    "city": "Scranton",
+    "neighborhood": "Hill Section",
+    "address": "819 Taylor Ave",
+    "price": 155000,
+    "beds": 4,
+    "baths": 2.0,
+    "sqft": 1700,
+    "type": "Multi Family",
+    "relisted": false,
+    "url": "https://www.zillow.com/homes/819-Taylor-Ave-Scranton-PA_rb/",
+    "summary": "אזור Hill Section סמוך לאוניברסיטת סקרנטון ולבית החולים המרכזי."
   }
 ]
