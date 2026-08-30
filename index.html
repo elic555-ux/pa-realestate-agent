@@ -33,7 +33,7 @@
             <div class="flex items-center gap-4">
                 <div class="text-xs text-slate-400 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-full flex items-center gap-1.5">
                     <span>סריקה אחרונה:</span>
-                    <strong class="text-slate-200" id="lastScanTime" dir="ltr">29/08/2026, 13:00 EST</strong>
+                    <strong class="text-slate-200" id="lastScanTime" dir="ltr">30/08/2026, 15:55 EST</strong>
                 </div>
                 <div class="flex items-center gap-2 bg-slate-800/80 border border-emerald-500/40 px-3 py-1.5 rounded-full text-xs text-emerald-400">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -254,7 +254,7 @@
                 state: "PA",
                 city: "Pittsburgh",
                 neighborhood: "Shadyside",
-                address: "5240 Ellsworth Ave",
+                address: "5405 Ellsworth Ave",
                 price: 190000,
                 beds: 3,
                 baths: 2,
@@ -545,6 +545,9 @@
             grid.innerHTML = '';
 
             filtered.forEach(p => {
+                const searchTarget = encodeURIComponent(`${p.address} ${p.city} ${p.state || 'PA'}`);
+                const propertyLink = `https://www.google.com/search?q=${searchTarget}+Zillow+Realtor`;
+
                 const card = `
                     <div class="bg-[#111c38] border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl hover:border-slate-500 transition flex flex-col justify-between text-right">
                         <div>
@@ -591,7 +594,7 @@
                         </div>
 
                         <div class="p-5 pt-0">
-                            <a href="https://www.realtor.com/realestateandhomes-search/${encodeURIComponent(p.city)}_${p.state || 'PA'}" target="_blank" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-md shadow-blue-600/30">
+                            <a href="${propertyLink}" target="_blank" rel="noopener noreferrer" class="block w-full text-center bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2.5 rounded-xl transition shadow-md shadow-blue-600/30">
                                 צפה בעמוד הנכס המלא ↗
                             </a>
                         </div>
