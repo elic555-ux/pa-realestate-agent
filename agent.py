@@ -2,177 +2,99 @@ import os
 import json
 import requests
 
-FIRECRAWL_API_KEY = os.environ.get("FIRECRAWL_API_KEY", "")
+RAPIDAPI_KEY = os.environ.get("RAPIDAPI_KEY", "")
+RAPIDAPI_HOST = "realty-in-us.p.rapidapi.com"
 
-# מאגר עשיר, מגוון ומאומת של נכסים אמיתיים בכל ערי ושכונות פנסילבניה
-REAL_PROPERTIES_DATABASE = [
-    # Pittsburgh
-    {
-        "state": "PA", "city": "Pittsburgh", "neighborhood": "Oakland",
-        "address": "312 S Bouquet St", "price": 185000, "beds": 3, "baths": 1.5, "sqft": 1380,
-        "type": "Single Family", "relisted": False,
-        "url": "https://www.zillow.com/homes/312-S-Bouquet-St-Pittsburgh-PA_rb/",
-        "summary": "מיקום אסטרטגי בלב Oakland, שוק שכירות סטודנטים מבוקש סמוך לאוניברסיטת פיטסבורג."
-    },
-    {
-        "state": "PA", "city": "Pittsburgh", "neighborhood": "Shadyside",
-        "address": "5405 Ellsworth Ave", "price": 595000, "beds": 2, "baths": 4.0, "sqft": 1600,
-        "type": "Townhouse", "relisted": True,
-        "url": "https://www.zillow.com/homes/5405-Ellsworth-Ave-Pittsburgh-PA_rb/",
-        "summary": "Townhome יוקרתי בלב Shadyside סמוך ל-CMU, מרכזים מסחריים ובתי חולים."
-    },
-    {
-        "state": "PA", "city": "Pittsburgh", "neighborhood": "Lawrenceville",
-        "address": "4215 Butler St", "price": 279000, "beds": 3, "baths": 2.0, "sqft": 1450,
-        "type": "Single Family", "relisted": False,
-        "url": "https://www.zillow.com/homes/4215-Butler-St-Pittsburgh-PA_rb/",
-        "summary": "בלב לורנסוויל הטרנדית, ביקוש שיא לשכירות צעירים ואנשי הייטק."
-    },
-    {
-        "state": "PA", "city": "Pittsburgh", "neighborhood": "East Liberty",
-        "address": "7802 Hamilton Ave", "price": 165000, "beds": 2, "baths": 1.0, "sqft": 1100,
-        "type": "Single Family", "relisted": True,
-        "url": "https://www.zillow.com/homes/7802-Hamilton-Ave-Pittsburgh-PA_rb/",
-        "summary": "אזור בהתחדשות עירונית מואצת, פוטנציאל השבחה גבוה ותשואה מעל 9%."
-    },
-    {
-        "state": "PA", "city": "Pittsburgh", "neighborhood": "Squirrel Hill",
-        "address": "5812 Forbes Ave", "price": 420000, "beds": 4, "baths": 2.5, "sqft": 2100,
-        "type": "Single Family", "relisted": False,
-        "url": "https://www.zillow.com/homes/5812-Forbes-Ave-Pittsburgh-PA_rb/",
-        "summary": "שכונה מבוקשת עם מערכת חינוך מובילה, יציבות ערך ושכירות גבוהה."
-    },
-    {
-        "state": "PA", "city": "Pittsburgh", "neighborhood": "South Side",
-        "address": "1914 Carson St", "price": 235000, "beds": 3, "baths": 2.0, "sqft": 1520,
-        "type": "Multi Family", "relisted": False,
-        "url": "https://www.zillow.com/homes/1914-East-Carson-St-Pittsburgh-PA_rb/",
-        "summary": "נכס רב-משפחתי מניב בסאות' סייד, תפוסה מלאה של שוכרים."
-    },
-
-    # Philadelphia
-    {
-        "state": "PA", "city": "Philadelphia", "neighborhood": "Point Breeze",
-        "address": "2108 Point Breeze Ave", "price": 195000, "beds": 3, "baths": 2.0, "sqft": 1400,
-        "type": "Multi Family", "relisted": True,
-        "url": "https://www.zillow.com/homes/2108-Point-Breeze-Ave-Philadelphia-PA_rb/",
-        "summary": "נכס רב-משפחתי מתאים למודל BRRRR, תזרים מזומנים גבוה ומיקום מתפתח."
-    },
-    {
-        "state": "PA", "city": "Philadelphia", "neighborhood": "University City",
-        "address": "3820 Powelton Ave", "price": 285000, "beds": 4, "baths": 2.5, "sqft": 1850,
-        "type": "Multi Family", "relisted": False,
-        "url": "https://www.zillow.com/homes/3820-Powelton-Ave-Philadelphia-PA_rb/",
-        "summary": "סמוך לאוניברסיטאות UPenn ו-Drexel, תפוסה שנתית של 100%."
-    },
-    {
-        "state": "PA", "city": "Philadelphia", "neighborhood": "Fishtown",
-        "address": "1422 Frankford Ave", "price": 360000, "beds": 3, "baths": 2.0, "sqft": 1550,
-        "type": "Townhouse", "relisted": False,
-        "url": "https://www.zillow.com/homes/1422-Frankford-Ave-Philadelphia-PA_rb/",
-        "summary": "השכונה הלוהטת ביותר בפילדלפיה, עליית ערך עקבית ותשואת שכירות מעולה."
-    },
-    {
-        "state": "PA", "city": "Philadelphia", "neighborhood": "Center City",
-        "address": "1704 Pine St", "price": 499000, "beds": 2, "baths": 2.0, "sqft": 1300,
-        "type": "Townhouse", "relisted": True,
-        "url": "https://www.zillow.com/homes/1704-Pine-St-Philadelphia-PA_rb/",
-        "summary": "נכס פרימיום במרכז העיר ההיסטורי, מתאים להשכרה לטווח בינוני/ארוך."
-    },
-
-    # Allentown
-    {
-        "state": "PA", "city": "Allentown", "neighborhood": "Center City",
-        "address": "628 N 7th St", "price": 179000, "beds": 4, "baths": 2.0, "sqft": 1680,
-        "type": "Single Family", "relisted": False,
-        "url": "https://www.zillow.com/homes/628-N-7th-St-Allentown-PA_rb/",
-        "summary": "מרכז עמק ליהיי (Lehigh Valley), מוקד תעסוקה לוגיסטי בצמיחה מהירה."
-    },
-    {
-        "state": "PA", "city": "Allentown", "neighborhood": "West End",
-        "address": "1932 W Chew St", "price": 245000, "beds": 3, "baths": 2.0, "sqft": 1600,
-        "type": "Single Family", "relisted": False,
-        "url": "https://www.zillow.com/homes/1932-W-Chew-St-Allentown-PA_rb/",
-        "summary": "שכונה שקטה ומבוקשת סמוך לפארקים ולמוסדות חינוך, מצוין למשפחות."
-    },
-
-    # Reading
-    {
-        "state": "PA", "city": "Reading", "neighborhood": "Downtown",
-        "address": "415 N 11th St", "price": 139000, "beds": 3, "baths": 1.5, "sqft": 1320,
-        "type": "Single Family", "relisted": True,
-        "url": "https://www.zillow.com/homes/415-N-11th-St-Reading-PA_rb/",
-        "summary": "מחיר כניסה נמוך ותשואת Cash-on-Cash גבוהה של מעל 11%."
-    },
-    {
-        "state": "PA", "city": "Reading", "neighborhood": "Centre Park",
-        "address": "720 N 5th St", "price": 169000, "beds": 4, "baths": 2.0, "sqft": 1750,
-        "type": "Multi Family", "relisted": False,
-        "url": "https://www.zillow.com/homes/720-N-5th-St-Reading-PA_rb/",
-        "summary": "נכס רב-משפחתי היסטורי משופץ עם פוטנציאל פיצול יחידות."
-    },
-
-    # Erie
-    {
-        "state": "PA", "city": "Erie", "neighborhood": "Bayfront",
-        "address": "512 W 4th St", "price": 149000, "beds": 3, "baths": 1.0, "sqft": 1250,
-        "type": "Single Family", "relisted": False,
-        "url": "https://www.zillow.com/homes/512-W-4th-St-Erie-PA_rb/",
-        "summary": "קרבה לאזור המפרץ המתחדש של אירי, עלויות תחזוקה נמוכות ותשואה יציבה."
-    },
-    {
-        "state": "PA", "city": "Erie", "neighborhood": "Downtown",
-        "address": "138 E 8th St", "price": 125000, "beds": 3, "baths": 1.5, "sqft": 1300,
-        "type": "Single Family", "relisted": True,
-        "url": "https://www.zillow.com/homes/138-E-8th-St-Erie-PA_rb/",
-        "summary": "הזדמנות להשבחה מהירה, שוק שכירות מקומי ער."
-    },
-
-    # Scranton
-    {
-        "state": "PA", "city": "Scranton", "neighborhood": "Green Ridge",
-        "address": "1610 Sanderson Ave", "price": 162000, "beds": 3, "baths": 2.0, "sqft": 1500,
-        "type": "Single Family", "relisted": False,
-        "url": "https://www.zillow.com/homes/1610-Sanderson-Ave-Scranton-PA_rb/",
-        "summary": "שכונת גרין רידג' המבוקשת בסקרנטון, נכס במצב מצוין עם שוכרים יציבים."
-    },
-    {
-        "state": "PA", "city": "Scranton", "neighborhood": "Hill Section",
-        "address": "819 Taylor Ave", "price": 155000, "beds": 4, "baths": 2.0, "sqft": 1700,
-        "type": "Multi Family", "relisted": False,
-        "url": "https://www.zillow.com/homes/819-Taylor-Ave-Scranton-PA_rb/",
-        "summary": "אזור Hill Section סמוך לאוניברסיטת סקרנטון ולבית החולים המרכזי."
-    }
+TARGET_CITIES = [
+    {"city": "Pittsburgh", "state_code": "PA"},
+    {"city": "Philadelphia", "state_code": "PA"},
+    {"city": "Allentown", "state_code": "PA"},
+    {"city": "Reading", "state_code": "PA"},
+    {"city": "Erie", "state_code": "PA"},
+    {"city": "Scranton", "state_code": "PA"}
 ]
 
-def run_agent():
-    # סריקה חיה מהירה אם יש מפתח API מוגדר
-    if FIRECRAWL_API_KEY:
+def fetch_on_market_deals():
+    if not RAPIDAPI_KEY:
+        print("[Agent] שגיאה: RAPIDAPI_KEY אינו מוגדר.")
+        return []
+
+    url = f"https://{RAPIDAPI_HOST}/properties/v3/list"
+    headers = {
+        "X-RapidAPI-Key": RAPIDAPI_KEY,
+        "X-RapidAPI-Host": RAPIDAPI_HOST,
+        "Content-Type": "application/json"
+    }
+
+    scraped_properties = []
+
+    for target in TARGET_CITIES:
+        city = target["city"]
+        state = target["state_code"]
+        print(f"[Agent] סורק עסקאות והורדות מחיר ב-{city}, {state}...")
+
+        payload = {
+            "limit": 15,
+            "offset": 0,
+            "status": ["for_sale"],
+            "sort": {"direction": "desc", "field": "list_date"},
+            "city": city,
+            "state_code": state
+        }
+
         try:
-            url = "https://api.firecrawl.dev/v1/search"
-            headers = {"Authorization": f"Bearer {FIRECRAWL_API_KEY}", "Content-Type": "application/json"}
-            payload = {"query": "site:zillow.com/homedetails for sale Pittsburgh PA", "limit": 4}
-            res = requests.post(url, headers=headers, json=payload, timeout=10)
+            res = requests.post(url, json=payload, headers=headers, timeout=25)
             if res.status_code == 200:
-                data = res.json().get("data", [])
-                for item in data:
-                    u = item.get("url", "")
-                    t = item.get("title", "")
-                    if "homedetails" in u:
-                        addr = t.split("|")[0].strip() if "|" in t else t
-                        REAL_PROPERTIES_DATABASE.insert(0, {
-                            "state": "PA", "city": "Pittsburgh", "neighborhood": "General",
-                            "address": addr, "price": 230000, "beds": 3, "baths": 2.0, "sqft": 1400,
-                            "type": "Single Family", "relisted": False, "url": u,
-                            "summary": "נכס חדש שאותר בסריקת שוק חיה בזמן אמת."
-                        })
-        except Exception as e:
-            print(f"Live API note: {e}")
+                data = res.json()
+                listings = data.get("data", {}).get("home_search", {}).get("results", [])
+
+                for item in listings:
+                    desc = item.get("description", {})
+                    loc = item.get("location", {}).get("address", {})
+                    flags = item.get("flags", {})
+
+                    price = item.get("list_price") or desc.get("price") or 0
+                    beds = desc.get("beds") or 0
+                    baths = desc.get("baths_consolidated") or desc.get("baths_full") or 0
+                    sqft = desc.get("sqft") or 0
+                    prop_type = desc.get("type", "single_family").replace("_", " ").title()
+                    prop_id = item.get("property_id", "")
+                    
+                    is_price_cut = flags.get("is_price_reduced", False)
+                    realtor_url = f"https://www.realtor.com/realestateandhomes-detail/{prop_id}" if prop_id else "https://www.realtor.com"
+
+                    scraped_properties.append({
+                        "id": prop_id,
+                        "state": state,
+                        "city": city,
+                        "neighborhood": loc.get("neighborhood_name") or "General",
+                        "address": loc.get("line") or f"{city} Property",
+                        "price": price,
+                        "beds": int(beds) if beds else 0,
+                        "baths": float(baths) if baths else 0.0,
+                        "sqft": int(sqft) if sqft else 0,
+                        "type": prop_type,
+                        "relisted": is_price_cut,
+                        "deal_type": "Price Drop" if is_price_cut else "Active MLS",
+                        "url": realtor_url,
+                        "summary": f"אותרה הזדמנות ב-{city}. מחיר מבוקש: ${price:,}." if price else f"נכס פעיל ב-{city}."
+                    })
+            else:
+                print(f"[Agent] שגיאת API עבור {city}: קוד {res.status_code}")
+        except Exception as err:
+            print(f"[Agent] שגיאה בקריאה ל-{city}: {err}")
+
+    return scraped_properties
+
+def save_listings(data):
+    if not data:
+        print("[Agent] לא נמצאו נתונים לשמירה.")
+        return
 
     with open("properties.json", "w", encoding="utf-8") as f:
-        json.dump(REAL_PROPERTIES_DATABASE, f, indent=2, ensure_ascii=False)
-    
-    print(f"Agent finished successfully! Updated {len(REAL_PROPERTIES_DATABASE)} properties across all PA cities.")
+        json.dump(data, f, indent=2, ensure_ascii=False)
+    print(f"[Agent] סיום מוצלח: {len(data)} נכסים נשמרו ב-properties.json.")
 
 if __name__ == "__main__":
-    run_agent()
+    deals = fetch_on_market_deals()
+    save_listings(deals)
