@@ -1,64 +1,36 @@
-import os
-import json
-import requests
+name: Run Real Estate Intelligence Agent
 
-FIRECRAWL_API_KEY = os.environ.get("FIRECRAWL_API_KEY")
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
-def fetch_live_properties():
-    if not FIRECRAWL_API_KEY:
-        print("Error: FIRECRAWL_API_KEY is not set.")
-        return []
+permissions:
+  contents: write
 
-    url = "https://api.firecrawl.dev/v1/search"
-    headers = {
-        "Authorization": f"Bearer {FIRECRAWL_API_KEY}",
-        "Content-Type": "application/json"
-    }
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    payload = {
-        "query": "site:zillow.com/homedetails for sale Pittsburgh PA",
-        "limit": 6
-    }
+      - name: Setup Python
+        uses: setup-python@v5
+        with:
+          python-version: '3.10'
 
-    print("Running Firecrawl live search...")
-    try:
-        response = requests.post(url, headers=headers, json=payload, timeout=40)
-        data = response.json()
-        results = data.get("data", [])
-        
-        properties = []
-        for item in results:
-            url_val = item.get("url", "")
-            title_val = item.get("title", "")
-            desc_val = item.get("description", "")
-            
-            if "homedetails" in url_val:
-                address_clean = title_val.split("|")[0].strip() if "|" in title_val else title_val
-                properties.append({
-                    "city": "Pittsburgh",
-                    "neighborhood": "General",
-                    "address": address_clean,
-                    "state": "PA",
-                    "price": 245000,
-                    "beds": 3,
-                    "baths": 2.0,
-                    "sqft": 1450,
-                    "type": "Single Family",
-                    "url": url_val,
-                    "summary": desc_val[:140] if desc_val else "נכס מאומת שנמצא בסריקה חיה",
-                    "relisted": False
-                })
+      - name: Install Dependencies
+        run: pip install requests
 
-        return properties
-    except Exception as e:
-        print(f"Scrape failed: {e}")
-        return []
+      - name: Run Scraper
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: python agent.py
 
-if __name__ == "__main__":
-    live_listings = fetch_live_properties()
-    if live_listings:
-        with open("properties.json", "w", encoding="utf-8") as f:
-            json.dump(live_listings, f, indent=2, ensure_ascii=False)
-        print(f"Successfully updated properties.json with {len(live_listings)} live listings.")
-    else:
-        print("No new listings found, keeping existing properties.json.")
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add properties.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update properties.json [skip ci]" && git push)
