@@ -108,24 +108,6 @@
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $120,000."
   },
   {
-    "id": "3736021812",
-    "state": "PA",
-    "county": "Philadelphia",
-    "city": "Philadelphia",
-    "zip": "19103",
-    "neighborhood": "Philadelphia",
-    "address": "1919 Chestnut St Apt 2703",
-    "price": 355000,
-    "beds": 1,
-    "baths": 1.0,
-    "sqft": 837,
-    "type": "Condos",
-    "relisted": null,
-    "deal_type": "Active MLS",
-    "url": "https://www.realtor.com/realestateandhomes-detail/3736021812",
-    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $355,000."
-  },
-  {
     "id": "4164113669",
     "state": "PA",
     "county": "Philadelphia",
@@ -142,6 +124,24 @@
     "deal_type": "Active MLS",
     "url": "https://www.realtor.com/realestateandhomes-detail/4164113669",
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $775,000."
+  },
+  {
+    "id": "3736021812",
+    "state": "PA",
+    "county": "Philadelphia",
+    "city": "Philadelphia",
+    "zip": "19103",
+    "neighborhood": "Philadelphia",
+    "address": "1919 Chestnut St Apt 2703",
+    "price": 355000,
+    "beds": 1,
+    "baths": 1.0,
+    "sqft": 837,
+    "type": "Condos",
+    "relisted": null,
+    "deal_type": "Active MLS",
+    "url": "https://www.realtor.com/realestateandhomes-detail/3736021812",
+    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $355,000."
   },
   {
     "id": "4804946734",
@@ -2700,6 +2700,24 @@
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $493,000."
   },
   {
+    "id": "4888948327",
+    "state": "PA",
+    "county": "Philadelphia",
+    "city": "Philadelphia",
+    "zip": "19124",
+    "neighborhood": "Philadelphia",
+    "address": "1666 Conklin St",
+    "price": 279999,
+    "beds": 4,
+    "baths": 2.0,
+    "sqft": 1717,
+    "type": "Townhomes",
+    "relisted": null,
+    "deal_type": "Active MLS",
+    "url": "https://www.realtor.com/realestateandhomes-detail/4888948327",
+    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $279,999."
+  },
+  {
     "id": "4860069850",
     "state": "PA",
     "county": "Philadelphia",
@@ -3580,24 +3598,6 @@
     "deal_type": "Active MLS",
     "url": "https://www.realtor.com/realestateandhomes-detail/3627289882",
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $224,900."
-  },
-  {
-    "id": "3101481954",
-    "state": "PA",
-    "county": "Philadelphia",
-    "city": "Philadelphia",
-    "zip": "19124",
-    "neighborhood": "Philadelphia",
-    "address": "900 Marcella St",
-    "price": 215000,
-    "beds": 0,
-    "baths": 0.0,
-    "sqft": 1212,
-    "type": "Multi Family",
-    "relisted": null,
-    "deal_type": "Active MLS",
-    "url": "https://www.realtor.com/realestateandhomes-detail/3101481954",
-    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $215,000."
   },
   {
     "id": "4938705880",
@@ -4926,10 +4926,10 @@
     "baths": 2.0,
     "sqft": 927,
     "type": "Condos",
-    "relisted": true,
-    "deal_type": "Price Drop / Motivated",
+    "relisted": false,
+    "deal_type": "Active MLS",
     "url": "https://www.realtor.com/realestateandhomes-detail/9414138666",
-    "summary": "אותרה עסקת Price Drop / Motivated במחוז Allegheny (Pittsburgh). מחיר מבוקש: $499,900."
+    "summary": "אותרה עסקת Active MLS במחוז Allegheny (Pittsburgh). מחיר מבוקש: $499,900."
   },
   {
     "id": "3730390466",
@@ -5400,24 +5400,6 @@
     "summary": "אותרה עסקת Active MLS במחוז Allegheny (Pittsburgh). מחיר מבוקש: $1,440,000."
   },
   {
-    "id": "4789596621",
-    "state": "PA",
-    "county": "Allegheny",
-    "city": "Pittsburgh",
-    "zip": "15210",
-    "neighborhood": "Allegheny",
-    "address": "59 Petunia St",
-    "price": 139900,
-    "beds": 4,
-    "baths": 3.0,
-    "sqft": 2780,
-    "type": "Single Family",
-    "relisted": null,
-    "deal_type": "Foreclosure / Sheriff Sale",
-    "url": "https://www.realtor.com/realestateandhomes-detail/4789596621",
-    "summary": "אותרה עסקת Foreclosure / Sheriff Sale במחוז Allegheny (Pittsburgh). מחיר מבוקש: $139,900."
-  },
-  {
     "id": "4578551365",
     "state": "PA",
     "county": "Allegheny",
@@ -5434,6 +5416,24 @@
     "deal_type": "Foreclosure / Sheriff Sale",
     "url": "https://www.realtor.com/realestateandhomes-detail/4578551365",
     "summary": "אותרה עסקת Foreclosure / Sheriff Sale במחוז Allegheny (Pittsburgh). מחיר מבוקש: $29,900."
+  },
+  {
+    "id": "4789596621",
+    "state": "PA",
+    "county": "Allegheny",
+    "city": "Pittsburgh",
+    "zip": "15210",
+    "neighborhood": "Allegheny",
+    "address": "59 Petunia St",
+    "price": 139900,
+    "beds": 4,
+    "baths": 3.0,
+    "sqft": 2780,
+    "type": "Single Family",
+    "relisted": null,
+    "deal_type": "Foreclosure / Sheriff Sale",
+    "url": "https://www.realtor.com/realestateandhomes-detail/4789596621",
+    "summary": "אותרה עסקת Foreclosure / Sheriff Sale במחוז Allegheny (Pittsburgh). מחיר מבוקש: $139,900."
   },
   {
     "id": "3242961539",
