@@ -180,24 +180,6 @@
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $120,000."
   },
   {
-    "id": "4164113669",
-    "state": "PA",
-    "county": "Philadelphia",
-    "city": "Philadelphia",
-    "zip": "19103",
-    "neighborhood": "Philadelphia",
-    "address": "2201 Arch St Unit 111",
-    "price": 775000,
-    "beds": 3,
-    "baths": 2.0,
-    "sqft": 1766,
-    "type": "Condos",
-    "relisted": null,
-    "deal_type": "Active MLS",
-    "url": "https://www.realtor.com/realestateandhomes-detail/4164113669",
-    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $775,000."
-  },
-  {
     "id": "3736021812",
     "state": "PA",
     "county": "Philadelphia",
@@ -214,6 +196,24 @@
     "deal_type": "Active MLS",
     "url": "https://www.realtor.com/realestateandhomes-detail/3736021812",
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $355,000."
+  },
+  {
+    "id": "4164113669",
+    "state": "PA",
+    "county": "Philadelphia",
+    "city": "Philadelphia",
+    "zip": "19103",
+    "neighborhood": "Philadelphia",
+    "address": "2201 Arch St Unit 111",
+    "price": 775000,
+    "beds": 3,
+    "baths": 2.0,
+    "sqft": 1766,
+    "type": "Condos",
+    "relisted": null,
+    "deal_type": "Active MLS",
+    "url": "https://www.realtor.com/realestateandhomes-detail/4164113669",
+    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $775,000."
   },
   {
     "id": "4804946734",
@@ -1216,7 +1216,7 @@
     "price": 260000,
     "beds": 0,
     "baths": 0.0,
-    "sqft": 10368,
+    "sqft": 1009,
     "type": "Multi Family",
     "relisted": null,
     "deal_type": "Active MLS",
@@ -1800,13 +1800,13 @@
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $45,000."
   },
   {
-    "id": "9137646857",
+    "id": "9734771726",
     "state": "PA",
     "county": "Philadelphia",
     "city": "Philadelphia",
     "zip": "19147",
     "neighborhood": "Philadelphia",
-    "address": "S Alder St",
+    "address": "4 S Alder St Unit 4",
     "price": 935000,
     "beds": 3,
     "baths": 2.0,
@@ -1814,7 +1814,7 @@
     "type": "Townhomes",
     "relisted": null,
     "deal_type": "Active MLS",
-    "url": "https://www.realtor.com/realestateandhomes-detail/9137646857",
+    "url": "https://www.realtor.com/realestateandhomes-detail/9734771726",
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $935,000."
   },
   {
@@ -5400,6 +5400,24 @@
     "summary": "אותרה עסקת Active MLS במחוז Allegheny (Pittsburgh). מחיר מבוקש: $479,000."
   },
   {
+    "id": "4430312611",
+    "state": "PA",
+    "county": "Allegheny",
+    "city": "Pittsburgh",
+    "zip": "15210",
+    "neighborhood": "Allegheny",
+    "address": "1633 Brownsville Rd",
+    "price": 349900,
+    "beds": 8,
+    "baths": 4.0,
+    "sqft": 0,
+    "type": "Multi Family",
+    "relisted": null,
+    "deal_type": "Active MLS",
+    "url": "https://www.realtor.com/realestateandhomes-detail/4430312611",
+    "summary": "אותרה עסקת Active MLS במחוז Allegheny (Pittsburgh). מחיר מבוקש: $349,900."
+  },
+  {
     "id": "4387162717",
     "state": "PA",
     "county": "Allegheny",
@@ -5562,24 +5580,6 @@
     "summary": "אותרה עסקת Active MLS במחוז Allegheny (Pittsburgh). מחיר מבוקש: $155,000."
   },
   {
-    "id": "4578551365",
-    "state": "PA",
-    "county": "Allegheny",
-    "city": "Pittsburgh",
-    "zip": "15210",
-    "neighborhood": "Allegheny",
-    "address": "63 Petunia St",
-    "price": 29900,
-    "beds": 5,
-    "baths": 2.0,
-    "sqft": 2498,
-    "type": "Single Family",
-    "relisted": null,
-    "deal_type": "Foreclosure / Sheriff Sale",
-    "url": "https://www.realtor.com/realestateandhomes-detail/4578551365",
-    "summary": "אותרה עסקת Foreclosure / Sheriff Sale במחוז Allegheny (Pittsburgh). מחיר מבוקש: $29,900."
-  },
-  {
     "id": "4789596621",
     "state": "PA",
     "county": "Allegheny",
@@ -5596,6 +5596,24 @@
     "deal_type": "Foreclosure / Sheriff Sale",
     "url": "https://www.realtor.com/realestateandhomes-detail/4789596621",
     "summary": "אותרה עסקת Foreclosure / Sheriff Sale במחוז Allegheny (Pittsburgh). מחיר מבוקש: $139,900."
+  },
+  {
+    "id": "4578551365",
+    "state": "PA",
+    "county": "Allegheny",
+    "city": "Pittsburgh",
+    "zip": "15210",
+    "neighborhood": "Allegheny",
+    "address": "63 Petunia St",
+    "price": 29900,
+    "beds": 5,
+    "baths": 2.0,
+    "sqft": 2498,
+    "type": "Single Family",
+    "relisted": null,
+    "deal_type": "Foreclosure / Sheriff Sale",
+    "url": "https://www.realtor.com/realestateandhomes-detail/4578551365",
+    "summary": "אותרה עסקת Foreclosure / Sheriff Sale במחוז Allegheny (Pittsburgh). מחיר מבוקש: $29,900."
   },
   {
     "id": "3242961539",
@@ -6282,24 +6300,6 @@
     "summary": "אותרה עסקת Active MLS במחוז Allegheny (Pittsburgh). מחיר מבוקש: $87,500."
   },
   {
-    "id": "4918641578",
-    "state": "PA",
-    "county": "Allegheny",
-    "city": "Pittsburgh",
-    "zip": "15210",
-    "neighborhood": "Allegheny",
-    "address": "2428 Arlington Ave",
-    "price": 199900,
-    "beds": 0,
-    "baths": 0.0,
-    "sqft": 0,
-    "type": "Multi Family",
-    "relisted": null,
-    "deal_type": "Active MLS",
-    "url": "https://www.realtor.com/realestateandhomes-detail/4918641578",
-    "summary": "אותרה עסקת Active MLS במחוז Allegheny (Pittsburgh). מחיר מבוקש: $199,900."
-  },
-  {
     "id": "4844739884",
     "state": "PA",
     "county": "Lehigh",
@@ -6532,6 +6532,24 @@
     "deal_type": "Active MLS",
     "url": "https://www.realtor.com/realestateandhomes-detail/9851666141",
     "summary": "אותרה עסקת Active MLS במחוז Lehigh (Allentown). מחיר מבוקש: $279,900."
+  },
+  {
+    "id": "4017350760",
+    "state": "PA",
+    "county": "Berks",
+    "city": "Reading",
+    "zip": "19601",
+    "neighborhood": "Berks",
+    "address": "611 Thorn St",
+    "price": 210000,
+    "beds": 4,
+    "baths": 1.0,
+    "sqft": 1332,
+    "type": "Townhomes",
+    "relisted": null,
+    "deal_type": "Active MLS",
+    "url": "https://www.realtor.com/realestateandhomes-detail/4017350760",
+    "summary": "אותרה עסקת Active MLS במחוז Berks (Reading). מחיר מבוקש: $210,000."
   },
   {
     "id": "3602543553",
@@ -7414,24 +7432,6 @@
     "deal_type": "Price Drop / Motivated",
     "url": "https://www.realtor.com/realestateandhomes-detail/9819268518",
     "summary": "אותרה עסקת Price Drop / Motivated במחוז Berks (Reading). מחיר מבוקש: $299,900."
-  },
-  {
-    "id": "3593599727",
-    "state": "PA",
-    "county": "Berks",
-    "city": "Reading",
-    "zip": "19601",
-    "neighborhood": "Berks",
-    "address": "1034 Washington St",
-    "price": 190000,
-    "beds": 4,
-    "baths": 1.0,
-    "sqft": 1380,
-    "type": "Townhomes",
-    "relisted": true,
-    "deal_type": "Price Drop / Motivated",
-    "url": "https://www.realtor.com/realestateandhomes-detail/3593599727",
-    "summary": "אותרה עסקת Price Drop / Motivated במחוז Berks (Reading). מחיר מבוקש: $190,000."
   },
   {
     "id": "9479574080",
