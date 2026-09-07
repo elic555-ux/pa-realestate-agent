@@ -180,24 +180,6 @@
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $120,000."
   },
   {
-    "id": "3736021812",
-    "state": "PA",
-    "county": "Philadelphia",
-    "city": "Philadelphia",
-    "zip": "19103",
-    "neighborhood": "Philadelphia",
-    "address": "1919 Chestnut St Apt 2703",
-    "price": 355000,
-    "beds": 1,
-    "baths": 1.0,
-    "sqft": 837,
-    "type": "Condos",
-    "relisted": null,
-    "deal_type": "Active MLS",
-    "url": "https://www.realtor.com/realestateandhomes-detail/3736021812",
-    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $355,000."
-  },
-  {
     "id": "4164113669",
     "state": "PA",
     "county": "Philadelphia",
@@ -214,6 +196,24 @@
     "deal_type": "Active MLS",
     "url": "https://www.realtor.com/realestateandhomes-detail/4164113669",
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $775,000."
+  },
+  {
+    "id": "3736021812",
+    "state": "PA",
+    "county": "Philadelphia",
+    "city": "Philadelphia",
+    "zip": "19103",
+    "neighborhood": "Philadelphia",
+    "address": "1919 Chestnut St Apt 2703",
+    "price": 355000,
+    "beds": 1,
+    "baths": 1.0,
+    "sqft": 837,
+    "type": "Condos",
+    "relisted": null,
+    "deal_type": "Active MLS",
+    "url": "https://www.realtor.com/realestateandhomes-detail/3736021812",
+    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $355,000."
   },
   {
     "id": "4804946734",
@@ -1800,6 +1800,24 @@
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $45,000."
   },
   {
+    "id": "417000965302",
+    "state": "PA",
+    "county": "Philadelphia",
+    "city": "Philadelphia",
+    "zip": "19147",
+    "neighborhood": "Philadelphia",
+    "address": "717 S Columbus Blvd.",
+    "price": 414500,
+    "beds": 2,
+    "baths": 2.0,
+    "sqft": 1253,
+    "type": "Condo",
+    "relisted": null,
+    "deal_type": "Active MLS",
+    "url": "https://www.realtor.com/realestateandhomes-detail/417000965302",
+    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $414,500."
+  },
+  {
     "id": "9734771726",
     "state": "PA",
     "county": "Philadelphia",
@@ -2376,24 +2394,6 @@
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $650,000."
   },
   {
-    "id": "417000965302",
-    "state": "PA",
-    "county": "Philadelphia",
-    "city": "Philadelphia",
-    "zip": "19147",
-    "neighborhood": "Philadelphia",
-    "address": "717 S Columbus Blvd.",
-    "price": 414500,
-    "beds": 2,
-    "baths": 2.0,
-    "sqft": 1253,
-    "type": "Condo",
-    "relisted": null,
-    "deal_type": "Active MLS",
-    "url": "https://www.realtor.com/realestateandhomes-detail/417000965302",
-    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $414,500."
-  },
-  {
     "id": "4652194279",
     "state": "PA",
     "county": "Philadelphia",
@@ -2698,6 +2698,24 @@
     "deal_type": "Active MLS",
     "url": "https://www.realtor.com/realestateandhomes-detail/4109444532",
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $650,000."
+  },
+  {
+    "id": "3619575832",
+    "state": "PA",
+    "county": "Philadelphia",
+    "city": "Philadelphia",
+    "zip": "19124",
+    "neighborhood": "Philadelphia",
+    "address": "4030 K St",
+    "price": 239900,
+    "beds": 4,
+    "baths": 2.0,
+    "sqft": 1440,
+    "type": "Townhomes",
+    "relisted": null,
+    "deal_type": "Active MLS",
+    "url": "https://www.realtor.com/realestateandhomes-detail/3619575832",
+    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $239,900."
   },
   {
     "id": "4342110670",
@@ -3580,24 +3598,6 @@
     "deal_type": "Active MLS",
     "url": "https://www.realtor.com/realestateandhomes-detail/3628471020",
     "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $234,000."
-  },
-  {
-    "id": "4804996320",
-    "state": "PA",
-    "county": "Philadelphia",
-    "city": "Philadelphia",
-    "zip": "19124",
-    "neighborhood": "Philadelphia",
-    "address": "1636 Margaret St",
-    "price": 18000,
-    "beds": 0,
-    "baths": 0.0,
-    "sqft": 0,
-    "type": "Land",
-    "relisted": null,
-    "deal_type": "Active MLS",
-    "url": "https://www.realtor.com/realestateandhomes-detail/4804996320",
-    "summary": "אותרה עסקת Active MLS במחוז Philadelphia (Philadelphia). מחיר מבוקש: $18,000."
   },
   {
     "id": "4199829667",
